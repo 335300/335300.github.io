@@ -7,7 +7,7 @@
 name=Josué Burgos
 
 title1=Pforzheim MDBM
-title2=2024 National Teaching Award Laureate
+title2=
 
 expertise=Agentic workflows, Process Management, Quality Assurance, Vibecoding
 
