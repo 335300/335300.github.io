@@ -6,8 +6,8 @@
 
 name=Josué Burgos
 
-title1=Pforzheim MDBM
-title2=
+title1=Pforzheim
+title2=Digital Business Management
 
 expertise=Agentic workflows, Process Management, Quality Assurance, Vibecoding
 
