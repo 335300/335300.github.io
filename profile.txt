@@ -14,7 +14,7 @@ expertise=Agentic workflows, Process Management, Quality Assurance, Vibecoding
 education=B.A. Business Engineering, Asunción-Heidelberg - M.Sc. Digital Business Management, Pforzheim
 
 email=josueburgos036@gmail.com
-linkedin=www.linkedin.com/in/josue-burgos
+linkedin=http://www.linkedin.com/in/josue-burgos
 
 about1=Originally from Paraguay and married with a German girl
 about2=I create apps with AI for fun
