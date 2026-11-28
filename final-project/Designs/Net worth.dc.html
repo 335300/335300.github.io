@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Net worth</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<style>body{margin:0;background:#DDE2E9;-webkit-font-smoothing:antialiased}a{color:#24508F;text-decoration:none}a:hover{color:#183A6B;text-decoration:underline}</style>
+</helmet>
+<section style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Helvetica,Arial,sans-serif;font-variant-numeric:tabular-nums;padding:48px;display:flex;flex-direction:column;gap:24px">
+  <div style="display:flex;flex-direction:column;gap:6px;color:#1E293B">
+    <div style="font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#475569">Personal Centwise · Screens</div>
+    <h1 style="margin:0;font-size:28px;line-height:34px;font-weight:600">Net worth</h1>
+    <div style="display:flex;gap:16px;font-size:13px;flex-wrap:wrap"><a href="#N1">N1 Personal · light</a><a href="#N2">N2 Personal · dark</a><span style="color:#5E6E82">· Personal profile only ·</span><a href="Overview.dc.html">Overview</a><a href="Transactions.dc.html">Transactions</a><a href="Calendar.dc.html">Calendar</a><a href="Forecast.dc.html">Forecast</a><a href="Settings.dc.html">Settings</a><a href="Style Guide.dc.html">Style guide</a></div>
+  </div>
+  <div style="display:flex;gap:48px;flex-wrap:wrap;align-items:flex-start">
+
+  <sc-for list="{{ modes }}" as="m" hint-placeholder-count="2">
+  <div id="{{ m.id }}" style="display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;align-items:center;gap:10px"><span style="background:#1E293B;color:#FFFFFF;font-size:13px;font-weight:600;padding:3px 8px;border-radius:6px">{{ m.id }}</span><span style="font-size:15px;font-weight:600;color:#1E293B">{{ m.label }}</span></div>
+    <div data-screen-label="{{ m.label }}" style="{{ m.vars }}">
+    <div style="width:1440px;background:var(--bg);color:var(--ink);border-radius:12px;overflow:hidden;box-shadow:0 24px 64px rgba(15,23,42,.18);border:1px solid var(--border);position:relative">
+      <div style="height:28px;background:var(--surface);display:flex;align-items:center;gap:8px;padding:0 12px"><span style="width:12px;height:12px;border-radius:50%;background:#FF5F57"></span><span style="width:12px;height:12px;border-radius:50%;background:#FEBC2E"></span><span style="width:12px;height:12px;border-radius:50%;background:#28C840"></span></div>
+      <div style="position:sticky;top:0;z-index:3;background:var(--surface);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center;gap:20px;padding:0 24px">
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:24px;height:24px;border-radius:6px;background:var(--logo)"></span><span style="font-size:15px;font-weight:600">Centwise</span></div>
+        <nav aria-label="Main" style="display:flex;gap:2px;padding:3px;background:var(--neutral-tint);border-radius:8px">
+          <sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="6">
+            <a href="{{ tb.href }}" aria-current="{{ tb.cur }}" style="height:30px;padding:0 12px;border-radius:6px;background:{{ tb.bg }};box-shadow:{{ tb.sh }};color:{{ tb.fg }};font-size:13px;font-weight:{{ tb.w }};display:flex;align-items:center;gap:6px;text-decoration:none" style-hover="color:var(--ink);text-decoration:none">{{ tb.label }}<span style="font-size:12px;font-weight:500;color:var(--ink-muted)">{{ tb.key }}</span></a>
+          </sc-for>
+        </nav>
+        <div style="flex:1"></div>
+        <sc-for list="{{ dropdowns }}" as="dd" hint-placeholder-count="3">
+          <button style="height:32px;padding:0 10px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;cursor:pointer" style-hover="background:var(--neutral-tint)"><span style="color:var(--ink-muted);font-size:12px">{{ dd.k }}</span>{{ dd.v }}<span aria-hidden="true" style="font-size:10px;color:var(--ink-soft)">▼</span></button>
+        </sc-for>
+      </div>
+
+      <div style="padding:24px 32px 88px;display:flex;flex-direction:column;gap:20px">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px">
+          <div style="display:flex;flex-direction:column;gap:2px"><h2 style="margin:0;font-size:22px;line-height:28px;font-weight:600">Net worth</h2><span style="font-size:13px;color:var(--ink-soft)">Everything you own minus what you owe · investments at market value · updated today, 08:12</span></div>
+          <button style="height:32px;padding:0 14px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:500;cursor:pointer" style-hover="background:var(--neutral-tint)">Add account</button>
+        </div>
+
+        <div style="display:grid;grid-template-columns:minmax(0,1.3fr) repeat(3,minmax(0,1fr));gap:16px">
+          <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:20px;display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:13px;font-weight:500;color:var(--ink-soft)">{{ k.label }}</span><button aria-label="{{ k.help }}" style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;color:var(--ink-muted);border:none;background:transparent;padding:0;cursor:pointer"><span style="width:14px;height:14px;border-radius:50%;border:1.5px solid currentColor;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;line-height:1">i</span></button></div>
+              <span style="font-size:{{ k.size }};line-height:34px;font-weight:600;letter-spacing:-.01em">{{ k.value }}</span>
+              <span style="font-size:13px;line-height:18px;color:var(--ink-soft);display:flex;gap:6px;align-items:baseline"><span aria-hidden="true" style="color:{{ k.cc }};font-size:12px">{{ k.ci }}</span>{{ k.note }}</span>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:16px 20px 20px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font-size:16px;line-height:22px;font-weight:600">Net worth over 12 months</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted)">month-end · bars show what you own, numbers on top are net worth</span></div>
+          <span style="font-size:15px;line-height:21px;font-weight:600">Up 9.275 € in 12 months — about 9 of every 10 euros came from what you saved; the rest is your investments growing.</span>
+          <svg viewBox="0 0 1300 300" role="img" aria-label="Net worth rose from 14.900 euros in December 2025 to 24.175 euros in November 2026." style="width:100%;height:auto;display:block;overflow:visible">
+            <path d="{{ nw.grid }}" style="stroke:var(--border);stroke-width:1;fill:none"></path>
+            <sc-for list="{{ nw.yLabels }}" as="yl" hint-placeholder-count="6"><text x="56" y="{{ yl.y }}" text-anchor="end" dominant-baseline="middle" style="fill:var(--ink-muted);font-size:12px;font-weight:500">{{ yl.t }}</text></sc-for>
+            <sc-for list="{{ nw.bars }}" as="b" hint-placeholder-count="12">
+              <rect x="{{ b.x }}" y="{{ b.y1 }}" width="{{ b.w }}" height="{{ b.h1 }}" style="fill:var(--chart-1)"></rect>
+              <rect x="{{ b.x }}" y="{{ b.y2 }}" width="{{ b.w }}" height="{{ b.h2 }}" style="fill:var(--invest)"></rect>
+              <rect x="{{ b.x }}" y="{{ b.y3 }}" width="{{ b.w }}" height="{{ b.h3 }}" rx="3" style="fill:var(--chart-2)"></rect>
+              <text x="{{ b.cx }}" y="{{ b.ty }}" text-anchor="middle" style="fill:{{ b.tc }};font-size:12px;font-weight:{{ b.tw }}">{{ b.net }}</text>
+              <text x="{{ b.cx }}" y="290" text-anchor="middle" style="fill:var(--ink-muted);font-size:12px;font-weight:500">{{ b.m }}</text>
+            </sc-for>
+            <sc-for list="{{ nw.direct }}" as="d" hint-placeholder-count="3">
+              <line x1="{{ d.x1 }}" x2="{{ d.x2 }}" y1="{{ d.y }}" y2="{{ d.y }}" style="stroke:var(--ink-muted);stroke-width:1"></line>
+              <text x="{{ d.tx }}" y="{{ d.y }}" dominant-baseline="middle" style="fill:var(--ink-soft);font-size:12px;font-weight:600">{{ d.t }}</text>
+            </sc-for>
+          </svg>
+        </div>
+
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:16px;align-items:start">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);overflow:hidden">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;padding:16px 20px 8px"><span style="font-size:16px;line-height:22px;font-weight:600">What makes it up</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted)">guaraníes at 8.160 ₲ per euro</span></div>
+            <div style="display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) 150px 130px 150px;gap:12px;padding:0 20px;height:32px;align-items:center;border-bottom:1px solid var(--border-strong);font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)"><span>Account</span><span>Share</span><span style="text-align:right">In its currency</span><span style="text-align:right">Change · Oct</span><span style="text-align:right">In euros</span></div>
+            <sc-for list="{{ parts }}" as="p" hint-placeholder-count="5">
+              <div style="display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) 150px 130px 150px;gap:12px;padding:0 20px;min-height:48px;align-items:center;border-bottom:1px solid var(--border);font-size:13px;font-weight:var(--w-table)" style-hover="background:var(--neutral-tint)">
+                <span style="display:flex;align-items:center;gap:10px;min-width:0"><span style="width:10px;height:10px;border-radius:3px;background:{{ p.dot }};flex:none"></span><span style="display:flex;flex-direction:column;min-width:0"><span style="font-weight:500">{{ p.n }}</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">{{ p.kind }}</span></span></span>
+                <span style="display:flex;align-items:center;gap:8px"><span style="flex:1;height:6px;border-radius:999px;background:var(--track);overflow:hidden"><span style="display:block;height:100%;width:{{ p.share }};background:{{ p.dot }}"></span></span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft);width:34px;text-align:right">{{ p.share }}</span></span>
+                <span style="text-align:right;color:var(--ink-soft)">{{ p.orig }}</span>
+                <span style="text-align:right;color:{{ p.chc }};display:flex;justify-content:flex-end;gap:4px;align-items:baseline"><span aria-hidden="true" style="font-size:12px">{{ p.chi }}</span>{{ p.ch }}</span>
+                <span style="text-align:right;font-weight:500">{{ p.eur }}</span>
+              </div>
+            </sc-for>
+            <div style="display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) 150px 130px 150px;gap:12px;padding:0 20px;height:40px;align-items:center;font-size:13px;font-weight:600;border-top:1px solid var(--border-strong)"><span>Net worth</span><span></span><span></span><span style="text-align:right;color:var(--positive)">+1.209,62 €</span><span style="text-align:right">24.174,56 €</span></div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:16px 20px 20px;display:flex;flex-direction:column;gap:12px">
+              <span style="font-size:16px;line-height:22px;font-weight:600">Exchange rate</span>
+              <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+                <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">Guaraníes per euro<span style="position:relative;display:flex;align-items:center"><input inputmode="decimal" value="8.160" style="width:100%;height:32px;padding:0 26px 0 10px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;text-align:right;box-sizing:border-box"><span style="position:absolute;right:10px;font-size:13px;color:var(--ink-muted)">₲</span></span></label>
+                <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">Rate date<input value="18.11.2026" style="height:32px;padding:0 10px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;box-sizing:border-box"></label>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">Saved 18.11. · used for ₲ accounts and transfers</span><button style="height:32px;padding:0 14px;border-radius:6px;border:none;background:var(--primary);color:var(--on-primary);font:inherit;font-size:13px;font-weight:600;cursor:pointer" style-hover="background:var(--primary-hover)">Save rate</button></div>
+            </div>
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:16px 20px 20px;display:flex;flex-direction:column;gap:12px">
+              <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:16px;line-height:22px;font-weight:600">Other accounts</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted)">not in the bank import</span></div>
+              <sc-for list="{{ others }}" as="o" hint-placeholder-count="2">
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding-bottom:10px;border-bottom:1px solid var(--border);font-size:13px"><span style="display:flex;flex-direction:column"><span style="font-weight:500">{{ o.n }}</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">{{ o.k }}</span></span><span style="text-align:right">{{ o.v }}</span></div>
+              </sc-for>
+              <div style="display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:8px;background:var(--bg);border:1px solid var(--border)">
+                <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">Account name<input placeholder="For example: Bausparvertrag" style="height:32px;padding:0 10px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;box-sizing:border-box"></label>
+                <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
+                  <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">Account kind<select style="height:32px;padding:0 8px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px"><option>Savings</option><option>Investment</option><option>Debt</option><option>Other</option></select></label>
+                  <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">Account currency<select style="height:32px;padding:0 8px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px"><option>Euro (€)</option><option>Guaraní (₲)</option></select></label>
+                </div>
+                <button disabled style="align-self:flex-end;height:32px;padding:0 14px;border-radius:6px;border:none;background:var(--neutral-tint);color:var(--ink-muted);font:inherit;font-size:13px;font-weight:600;cursor:not-allowed">Add account</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);overflow:hidden">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;padding:16px 20px 4px"><span style="font-size:16px;line-height:22px;font-weight:600">What your transfers really cost</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted)">euros sent to ₲ accounts · compared with the rate of the day</span></div>
+          <div style="padding:4px 20px 12px;display:flex;align-items:center;gap:12px"><span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 8px 0 5px;border-radius:6px;background:var(--positive-tint);color:var(--positive);font-size:12px;font-weight:var(--w-sm)"><span aria-hidden="true" style="width:14px;height:14px;border-radius:50%;border:1.5px solid currentColor;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;line-height:1">✓</span>Getting cheaper</span><span style="font-size:14px;line-height:20px">Your last transfer lost only <b style="font-weight:600">0,8 %</b> to the exchange rate — the cheapest so far.</span></div>
+          <div style="display:grid;grid-template-columns:100px repeat(5,minmax(0,1fr));gap:12px;padding:0 20px;height:32px;align-items:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border-strong);font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)"><span>Date</span><span style="text-align:right">Payment</span><span style="text-align:right">Arrived</span><span style="text-align:right">Your rate</span><span style="text-align:right">Rate of the day</span><span style="text-align:right">Cost</span></div>
+          <sc-for list="{{ transfers }}" as="t" hint-placeholder-count="3">
+            <div style="display:grid;grid-template-columns:100px repeat(5,minmax(0,1fr));gap:12px;padding:0 20px;height:{{ rowH }};align-items:center;border-bottom:1px solid var(--border);font-size:13px;font-weight:var(--w-table)" style-hover="background:var(--neutral-tint)"><span style="color:var(--ink-soft)">{{ t.d }}</span><span style="text-align:right">{{ t.pay }}</span><span style="text-align:right">{{ t.arr }}</span><span style="text-align:right">{{ t.yr }}</span><span style="text-align:right;color:var(--ink-soft)">{{ t.dr }}</span><span style="text-align:right">{{ t.cost }} <span style="color:var(--ink-soft)">· {{ t.pct }}</span></span></div>
+          </sc-for>
+          <div style="display:grid;grid-template-columns:100px repeat(5,minmax(0,1fr));gap:12px;padding:0 20px;height:40px;align-items:center;font-size:13px;font-weight:600"><span>Total</span><span style="text-align:right">2.300,00 €</span><span></span><span></span><span></span><span style="text-align:right">−40,18 € <span style="color:var(--ink-soft);font-weight:500">· 1,7 %</span></span></div>
+        </div>
+      </div>
+      <button aria-label="Calculator (⌘K)" title="Calculator (⌘K)" style="position:absolute;right:24px;bottom:24px;width:48px;height:48px;border-radius:999px;border:none;background:var(--primary);color:var(--on-primary);font:inherit;font-size:20px;font-weight:600;box-shadow:var(--shadow-pop);cursor:pointer" style-hover="background:var(--primary-hover)">±</button>
+    </div>
+    </div>
+  </div>
+  </sc-for>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"rowDensity":{"editor":"enum","options":["comfortable","compact"],"default":"comfortable","tsType":"&#39;comfortable&#39;|&#39;compact&#39;"}}'>
+const BASE = {
+  light: { 'bg':'#F7F8FA','surface':'#FFFFFF','surface-raised':'#FFFFFF','border':'#E2E8F0','border-strong':'#7D8A9E','ink':'#1E293B','ink-soft':'#475569','ink-muted':'#5E6E82','primary':'#24508F','primary-hover':'#1D4278','primary-tint':'#EAF0F8','secondary':'#0F766E','secondary-tint':'#E6F4F1','positive':'#0F766E','positive-tint':'#E6F4F1','negative':'#B42318','negative-tint':'#FCEBE9','warning':'#B45309','warning-tint':'#FDF1E3','warning-ink':'#92400E','info':'#24508F','info-tint':'#EAF0F8','neutral-tint':'#F1F5F9','invest':'#7C4DBE','invest-tint':'#F1EBFA','gold':'#F2C14E','gold-ink':'#8A6100','logo':'#6D28D9','focus-ring':'#24508F','on-primary':'#FFFFFF','track':'#E2E8F0','shadow':'0 1px 2px rgba(15,23,42,.06)','shadow-pop':'0 8px 24px rgba(15,23,42,.12)','band50':'rgba(36,80,143,.24)','band80':'rgba(36,80,143,.12)','w-sm':'500','w-table':'400',
+    chart:['#24508F','#E69F00','#56B4E9','#009E73','#CC79A7','#D55E00','#8C6D31','#94A3B8'] },
+  dark: { 'bg':'#111827','surface':'#1A2332','surface-raised':'#222D3F','border':'#2A3546','border-strong':'#64748B','ink':'#E6EAF0','ink-soft':'#C8D1DC','ink-muted':'#AEB9C8','primary':'#9BBDF0','primary-hover':'#B4CDF4','primary-tint':'#1B2E4D','secondary':'#5ECDBB','secondary-tint':'#12352F','positive':'#5ECDBB','positive-tint':'#12352F','negative':'#F7A891','negative-tint':'#3D1F1A','warning':'#E8B04A','warning-tint':'#3A2A12','warning-ink':'#E8B04A','info':'#9BBDF0','info-tint':'#1B2E4D','neutral-tint':'#243042','invest':'#C3AEF0','invest-tint':'#2B2347','gold':'#F2C14E','gold-ink':'#F2C14E','logo':'#A78BFA','focus-ring':'#9BBDF0','on-primary':'#111827','track':'#334155','shadow':'none','shadow-pop':'none','band50':'rgba(155,189,240,.24)','band80':'rgba(155,189,240,.12)','w-sm':'600','w-table':'500',
+    chart:['#7AA7E6','#F0B640','#7CC8F0','#33C49A','#DE9AC2','#F08A4B','#C9A86A','#8D9AAD'] }
+};
+function toVars(P) { const v = {}; Object.keys(P).forEach(k => { if (k !== 'chart') v['--' + k] = P[k]; }); P.chart.forEach((c, i) => v['--chart-' + (i + 1)] = c); return v; }
+const eur = (n, dec = 2, sign = false) => { if (n == null) return '—'; const s = Math.abs(n).toLocaleString('de-DE', { minimumFractionDigits: dec, maximumFractionDigits: dec }); return (n < 0 ? '−' : (sign && n > 0 ? '+' : '')) + s + ' €'; };
+const pyg = n => Math.round(n).toLocaleString('de-DE') + ' ₲';
+const PAGES = ['Overview.dc.html', 'Transactions.dc.html', 'Calendar.dc.html', 'Forecast.dc.html', 'Net worth.dc.html', 'Settings.dc.html'];
+const tabsFor = (labels, active) => labels.map((label, i) => ({ label, key: '⌘' + (i + 1), href: PAGES[i], cur: i === active ? 'page' : 'false', bg: i === active ? 'var(--surface)' : 'transparent', sh: i === active ? '0 1px 2px rgba(15,23,42,.12)' : 'none', fg: i === active ? 'var(--ink)' : 'var(--ink-soft)', w: i === active ? 600 : 500 }));
+
+const RATE = 8160;
+const M = ['Dec ’25', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'];
+const BANK = [9200, 9450, 9600, 9900, 10050, 10400, 10600, 10750, 11100, 11300, 11650, 12064];
+const INV = [5100, 5650, 6050, 6600, 6950, 7600, 8150, 8650, 9450, 10000, 10950, 11420];
+const OTH = [950, 960, 980, 1000, 1010, 1030, 1040, 1050, 1070, 1080, 1100, 1103];
+const OWE = [350, 420, 380, 300, 410, 380, 520, 460, 390, 430, 735, 412];
+
+function nwChart() {
+  const W = 1300, pl = 64, pr = 190, pt = 24, H = 300, pb = 32, yMax = 30000, step = 5000;
+  const y = v => pt + (yMax - v) / yMax * (H - pt - pb), h = v => v / yMax * (H - pt - pb);
+  const slot = (W - pl - pr) / 12, bw = slot * .62;
+  let grid = ''; const yLabels = [];
+  for (let v = 0; v <= yMax; v += step) { grid += `M${pl} ${y(v).toFixed(1)} L${W - pr + 16} ${y(v).toFixed(1)} `; yLabels.push({ y: y(v), t: eur(v, 0) }); }
+  const bars = M.map((m, i) => {
+    const x = pl + i * slot + (slot - bw) / 2, b = BANK[i], v = INV[i], o = OTH[i], last = i === 11;
+    const top = b + v + o, net = top - OWE[i];
+    return { m, x: x.toFixed(1), w: bw.toFixed(1), cx: (x + bw / 2).toFixed(1),
+      y1: y(b).toFixed(1), h1: h(b).toFixed(1), y2: y(b + v).toFixed(1), h2: h(v).toFixed(1), y3: y(top).toFixed(1), h3: h(o).toFixed(1),
+      ty: (y(top) - 8).toFixed(1), net: eur(net, 0), tc: last ? 'var(--ink)' : 'var(--ink-soft)', tw: last ? 700 : 500 };
+  });
+  const lx = pl + 11 * slot + (slot + bw) / 2;
+  const direct = [
+    { y: y(BANK[11] / 2), t: 'Bank & savings · 12.064 €' },
+    { y: y(BANK[11] + INV[11] / 2), t: 'Investments · 11.420 €' },
+    { y: y(BANK[11] + INV[11] + OTH[11] / 2) - 6, t: 'Other · 1.103 €' }
+  ].map(d => ({ ...d, x1: lx + 4, x2: lx + 18, tx: lx + 24 }));
+  return { grid, yLabels, bars, direct };
+}
+
+class Component extends DCLogic {
+  renderVals() {
+    const compact = this.props.rowDensity === 'compact';
+    const total = 3284 + 8780 + 11420 + 9000000 / RATE;
+    const share = v => Math.round(v / total * 100) + '%';
+    return {
+      modes: [
+        { id:'N1', label:'Personal · light (default)', vars: toVars(BASE.light) },
+        { id:'N2', label:'Personal · dark', vars: toVars(BASE.dark) }
+      ],
+      tabs: tabsFor(['Overview', 'Transactions', 'Calendar', 'Forecast', 'Net worth', 'Settings'], 4),
+      dropdowns: [{ k:'Month', v:'November' }, { k:'Year', v:'2026' }, { k:'Profile', v:'Personal' }],
+      rowH: (compact ? 32 : 36) + 'px',
+      kpis: [
+        { label:'Net worth', value: eur(24175, 0), size:'28px', ci:'▲', cc:'var(--positive)', note:'1.210 € more than at the end of October', help:'About net worth' },
+        { label:'You own', value: eur(24587, 0), size:'20px', ci:'', cc:'var(--ink-soft)', note:'3 accounts and your ETF depot', help:'About what you own' },
+        { label:'You owe', value: eur(-412, 0), size:'20px', ci:'', cc:'var(--ink-soft)', note:'Credit card · paid off on 02.12.', help:'About what you owe' },
+        { label:'In guaraníes', value: pyg(Math.round(24174.56 * RATE / 1000) * 1000), size:'20px', ci:'', cc:'var(--ink-soft)', note:'At 8.160 ₲ per euro (18.11.)', help:'About the guaraní value' }
+      ],
+      nw: nwChart(),
+      parts: [
+        { n:'Girokonto · Bank', kind:'Bank account', dot:'var(--chart-1)', orig:'—', eurV: 3284, ch:'96,00 €', chi:'▲', chc:'var(--positive)' },
+        { n:'Tagesgeld', kind:'Savings · 8.780 € set aside for goals', dot:'var(--chart-1)', orig:'—', eurV: 8780, ch:'318,00 €', chi:'▲', chc:'var(--positive)' },
+        { n:'ETF depot · FTSE All-World', kind:'Investment · market value · +6,2 % since buying', dot:'var(--invest)', orig:'—', eurV: 11420, ch:'470,00 €', chi:'▲', chc:'var(--positive)' },
+        { n:'Savings account abroad', kind:'Other account', dot:'var(--chart-2)', orig: pyg(9000000), eurV: 9000000 / RATE, ch:'3,00 €', chi:'▲', chc:'var(--positive)' },
+        { n:'Kreditkarte', kind:'Debt · statement on 02.12.', dot:'var(--border-strong)', orig:'—', eurV: -412.38, ch:'322,62 €', chi:'▼', chc:'var(--ink-soft)' }
+      ].map(p => ({ ...p, eur: eur(p.eurV), share: p.eurV > 0 ? share(p.eurV) : '—' })),
+      others: [
+        { n:'Savings account abroad', k:'Savings · guaraní', v: pyg(9000000) },
+        { n:'Kreditkarte', k:'Debt · euro', v: eur(-412.38) }
+      ],
+      transfers: [
+        ['02.09.2026', 1000, 7845000, 7845, 8050],
+        ['03.10.2026', 500, 3990000, 7980, 8120],
+        ['05.11.2026', 800, 6470400, 8088, 8150]
+      ].map(([d, pay, arr, yr, dr]) => { const cost = pay - arr / dr; return { d, pay: eur(pay), arr: pyg(arr), yr: yr.toLocaleString('de-DE') + ' ₲', dr: dr.toLocaleString('de-DE') + ' ₲', cost: eur(-cost), pct: (cost / pay * 100).toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' %' }; })
+    };
+  }
+}
+</script>
+</body>
+</html>

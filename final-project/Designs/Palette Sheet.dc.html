@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>body{margin:0;background:#E9ECF1;-webkit-font-smoothing:antialiased}a{color:#24508F}a:hover{color:#183A6B}</style>
+</helmet>
+<div style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Helvetica,Arial,sans-serif;color:#1E293B;font-variant-numeric:tabular-nums;padding:40px 32px 64px;display:flex;flex-direction:column;gap:32px;max-width:1440px;margin:0 auto">
+  <header style="display:flex;flex-direction:column;gap:8px;max-width:900px">
+    <div style="font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#475569">Personal Centwise · Deliverable A</div>
+    <h1 style="margin:0;font-size:32px;line-height:38px;font-weight:600">Palette sheet</h1>
+    <p style="margin:0;font-size:14px;line-height:20px;color:#475569;text-wrap:pretty">Every token with hex, OKLCH, WCAG 2.2 contrast ratio and APCA Lc against bg and surface — computed live from the hex values below. Targets: body text ≥ 4,5:1 and |Lc| ≥ 75 · other text ≥ 4,5:1 and |Lc| ≥ 60 · UI borders ≥ 3:1. Status is always icon + word.</p>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:#475569"><a href="#light">Light</a><a href="#dark">Dark</a><a href="#cvd">Colour-vision simulation</a><a href="#changes">Changes to starting tokens</a></div>
+  </header>
+
+  <sc-for list="{{ modes }}" as="m" hint-placeholder-count="2">
+    <div style="{{ m.vars }}" id="{{ m.key }}">
+      <section style="background:var(--bg);color:var(--ink);border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:32px;border:1px solid var(--border)">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap">
+          <h2 style="margin:0;font-size:24px;line-height:30px;font-weight:600">{{ m.label }}</h2>
+          <div style="font-size:13px;color:var(--ink-soft)">{{ m.sub }}</div>
+        </div>
+        <sc-for list="{{ m.groups }}" as="g" hint-placeholder-count="4">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
+              <h3 style="margin:0;font-size:16px;line-height:22px;font-weight:600">{{ g.title }}</h3>
+              <span style="font-size:13px;color:var(--ink-muted)">{{ g.note }}</span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px">
+              <sc-for list="{{ g.tokens }}" as="t" hint-placeholder-count="6">
+                <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow)">
+                  <div style="height:64px;background:{{ t.fill }};border-bottom:1px solid var(--border)"></div>
+                  <div style="padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px">
+                    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px">
+                      <span style="font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:13px;font-weight:600">{{ t.name }}</span>
+                      <span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">{{ t.role }}</span>
+                    </div>
+                    <div style="font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:12px;font-weight:var(--w-sm);line-height:16px;color:var(--ink-soft);display:flex;flex-direction:column">
+                      <span>{{ t.hex }}</span><span>{{ t.oklch }}</span>
+                    </div>
+                    <div style="display:grid;grid-template-columns:auto 1fr 1fr;column-gap:10px;row-gap:2px;font-size:12px;font-weight:var(--w-sm);line-height:16px">
+                      <span style="color:var(--ink-muted)"></span><span style="color:var(--ink-muted)">WCAG</span><span style="color:var(--ink-muted)">APCA</span>
+                      <span style="color:var(--ink-soft)">on bg</span><span>{{ t.bgR }}</span><span>{{ t.bgLc }}</span>
+                      <span style="color:var(--ink-soft)">on surface</span><span>{{ t.sfR }}</span><span>{{ t.sfLc }}</span>
+                    </div>
+                    <div style="display:inline-flex;align-self:flex-start;align-items:center;gap:6px;padding:2px 8px 2px 4px;border-radius:6px;background:{{ t.st.bg }};color:{{ t.st.fg }};font-size:12px;font-weight:var(--w-sm);line-height:18px">
+                      <span style="width:14px;height:14px;border-radius:50%;border:1.5px solid currentColor;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;line-height:1">{{ t.st.icon }}</span>{{ t.st.word }}
+                    </div>
+                    <p style="margin:0;font-size:12px;font-weight:var(--w-sm);line-height:17px;color:var(--ink-soft);text-wrap:pretty">{{ t.why }}</p>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <h3 style="margin:0;font-size:16px;line-height:22px;font-weight:600">Key text pairings</h3>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)">
+            <div style="display:grid;grid-template-columns:minmax(0,2.2fr) minmax(0,1.6fr) 90px 80px minmax(0,1.4fr);gap:12px;padding:10px 16px;font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted);border-bottom:1px solid var(--border)">
+              <span>Pairing</span><span>Sample</span><span style="text-align:right">WCAG</span><span style="text-align:right">APCA</span><span>Result</span>
+            </div>
+            <sc-for list="{{ m.pairs }}" as="p" hint-placeholder-count="8">
+              <div style="display:grid;grid-template-columns:minmax(0,2.2fr) minmax(0,1.6fr) 90px 80px minmax(0,1.4fr);gap:12px;padding:8px 16px;font-size:13px;align-items:center;border-bottom:1px solid var(--border)">
+                <span style="font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:12px;font-weight:var(--w-sm)">{{ p.label }}</span>
+                <span style="background:{{ p.bgc }};color:{{ p.fgc }};border-radius:6px;padding:4px 8px;font-size:13px;font-weight:500;align-self:start">{{ p.sample }}</span>
+                <span style="text-align:right">{{ p.r }}</span>
+                <span style="text-align:right">{{ p.lc }}</span>
+                <span style="display:inline-flex;align-items:center;gap:6px;color:{{ p.st.fg }};font-size:12px;font-weight:var(--w-sm)"><span style="width:14px;height:14px;border-radius:50%;border:1.5px solid currentColor;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;line-height:1">{{ p.st.icon }}</span>{{ p.st.word }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div id="cvd" style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
+            <h3 style="margin:0;font-size:16px;line-height:22px;font-weight:600">Colour-vision simulation</h3>
+            <span style="font-size:13px;color:var(--ink-muted)">Machado et al. 2009, severity 1,0, applied in linear sRGB</span>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow);overflow-x:auto">
+            <div style="display:grid;grid-template-columns:120px repeat(11,minmax(52px,1fr));gap:6px;font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted);min-width:760px">
+              <span></span>
+              <sc-for list="{{ m.cvdHead }}" as="h" hint-placeholder-count="11"><span style="text-align:center">{{ h }}</span></sc-for>
+            </div>
+            <sc-for list="{{ m.cvd }}" as="row" hint-placeholder-count="3">
+              <div style="display:grid;grid-template-columns:120px repeat(11,minmax(52px,1fr));gap:6px;align-items:center;min-width:760px">
+                <span style="font-size:13px;font-weight:500">{{ row.label }}</span>
+                <sc-for list="{{ row.cells }}" as="c" hint-placeholder-count="11"><span style="height:40px;border-radius:6px;background:{{ c }}"></span></sc-for>
+              </div>
+            </sc-for>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:8px;padding-top:12px;border-top:1px solid var(--border)">
+              <sc-for list="{{ m.deltas }}" as="d" hint-placeholder-count="3">
+                <div style="display:flex;flex-direction:column;gap:4px;font-size:13px">
+                  <span style="font-weight:600">{{ d.label }}</span>
+                  <span style="color:var(--ink-soft)">positive ↔ negative ΔE<sub>ok</sub> {{ d.pn }} · ΔL {{ d.pnL }}</span>
+                  <span style="color:var(--ink-soft)">positive ↔ warning ΔE<sub>ok</sub> {{ d.pw }}</span>
+                  <span style="color:var(--ink-soft)">negative ↔ warning ΔE<sub>ok</sub> {{ d.nw }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <p style="margin:0;font-size:13px;color:var(--ink-soft);text-wrap:pretty">Teal and brick stay apart mainly on the blue–yellow axis under deuteranopia and protanopia. Negative and warning converge (ΔE<sub>ok</sub> is small), which is why amber and red are never used without their icon and word: <b>!</b> Close to limit vs <b>×</b> Over budget.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </sc-for>
+
+  <section id="changes" style="background:#FFFFFF;border:1px solid #E2E8F0;border-radius:16px;padding:28px 32px;display:flex;flex-direction:column;gap:12px;max-width:960px">
+    <h2 style="margin:0;font-size:20px;line-height:26px;font-weight:600">Changes to the starting tokens</h2>
+    <ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px;font-size:14px;line-height:20px;color:#475569">
+      <li><b style="color:#1E293B">Dark primary-tint / info-tint #1E3354 → #1B2E4D.</b> Primary text (#9BBDF0) on the old tint measured Lc 59,8 — just under the 60 floor for readable text. The new value is 1 step darker and reaches Lc 61.</li>
+      <li><b style="color:#1E293B">Added dark warning-ink #E8B04A, gold-ink #F2C14E, info #9BBDF0.</b> The starting set had no dark equivalents; on dark grounds the base colours already pass as text.</li>
+      <li><b style="color:#1E293B">Dark logo #A78BFA is graphic-only.</b> It measures Lc ≈ 48, fine for a mark, so the “Centwise” wordmark is set in ink.</li>
+      <li><b style="color:#1E293B">No other values changed.</b> Light warning #B45309 (Lc 70) and ink-muted (Lc 72 on bg) pass for labels but not body text, so body-size warnings use warning-ink and ink-muted is restricted to ≥ 13px.</li>
+      <li><b style="color:#1E293B">Chart fills under 3:1</b> (e.g. chart-2 #E69F00, chart-3 #56B4E9 on white) are allowed only with direct value labels, which WCAG 1.4.11 accepts as the information carrier.</li>
+    </ul>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const LIGHT = {
+  'bg':'#F7F8FA','surface':'#FFFFFF','surface-raised':'#FFFFFF','border':'#E2E8F0','border-strong':'#7D8A9E',
+  'ink':'#1E293B','ink-soft':'#475569','ink-muted':'#5E6E82',
+  'primary':'#24508F','primary-tint':'#EAF0F8','secondary':'#0F766E','secondary-tint':'#E6F4F1','positive':'#0F766E','positive-tint':'#E6F4F1',
+  'negative':'#B42318','negative-tint':'#FCEBE9','warning':'#B45309','warning-tint':'#FDF1E3','warning-ink':'#92400E',
+  'info':'#24508F','info-tint':'#EAF0F8','neutral-tint':'#F1F5F9','invest':'#7C4DBE','invest-tint':'#F1EBFA',
+  'gold':'#F2C14E','gold-ink':'#8A6100','logo':'#6D28D9','focus-ring':'#24508F',
+  chart:['#24508F','#E69F00','#56B4E9','#009E73','#CC79A7','#D55E00','#8C6D31','#94A3B8'],
+  seq:['#EAF0F8','#C5D5EC','#9BB8DE','#6E97CB','#4775B0','#24508F','#183A6B'],
+  div:['#24508F','#6E97CB','#C5D5EC','#F1F5F9','#F6D3A8','#E39A4F','#B45309'],
+  onPrimary:'#FFFFFF', shadow:'0 1px 2px rgba(15,23,42,.06)'
+};
+const DARK = {
+  'bg':'#111827','surface':'#1A2332','surface-raised':'#222D3F','border':'#2A3546','border-strong':'#64748B',
+  'ink':'#E6EAF0','ink-soft':'#C8D1DC','ink-muted':'#AEB9C8',
+  'primary':'#9BBDF0','primary-tint':'#1B2E4D','secondary':'#5ECDBB','secondary-tint':'#12352F','positive':'#5ECDBB','positive-tint':'#12352F',
+  'negative':'#F7A891','negative-tint':'#3D1F1A','warning':'#E8B04A','warning-tint':'#3A2A12','warning-ink':'#E8B04A',
+  'info':'#9BBDF0','info-tint':'#1B2E4D','neutral-tint':'#243042','invest':'#C3AEF0','invest-tint':'#2B2347',
+  'gold':'#F2C14E','gold-ink':'#F2C14E','logo':'#A78BFA','focus-ring':'#9BBDF0',
+  chart:['#7AA7E6','#F0B640','#7CC8F0','#33C49A','#DE9AC2','#F08A4B','#C9A86A','#8D9AAD'],
+  seq:['#EAF0F8','#C5D5EC','#9BB8DE','#6E97CB','#4775B0','#24508F','#183A6B'],
+  div:['#24508F','#6E97CB','#C5D5EC','#F1F5F9','#F6D3A8','#E39A4F','#B45309'],
+  onPrimary:'#111827', shadow:'none'
+};
+const ROLE = {
+  'bg':'surface','surface':'surface','surface-raised':'surface','border':'fill','border-strong':'ui',
+  'ink':'body','ink-soft':'body','ink-muted':'text','primary':'text','secondary':'text','positive':'text','negative':'text',
+  'warning':'text','warning-ink':'body','info':'text','invest':'text','gold':'fill','gold-ink':'text','logo':'ui','focus-ring':'ui'
+};
+const WHY = {
+  'bg':'A barely cool off-white lowers glare versus pure white and lets white cards lift without heavy shadows.',
+  'surface':'Pure white cards give dense numbers the highest-contrast ground.',
+  'surface-raised':'Same white as cards; a soft shadow separates popovers so they feel close, not loud.',
+  'border':'Hairline that structures tables quietly; decorative only, never the sole edge of an input.',
+  'border-strong':'Input and control outlines clear 3:1 so fields are always findable.',
+  'ink':'Deep slate instead of black keeps body text crisp without harsh vibration.',
+  'ink-soft':'Secondary copy still clears the body-text APCA target, so supporting text never strains.',
+  'ink-muted':'Lowest text tier for captions and axis labels at ≥ 13px; still passes AA.',
+  'primary':'Steady navy signals reliability and carries actions, focus and forecasts without meaning good or bad.',
+  'primary-tint':'Faint navy wash for selected rows; primary text on it stays comfortably legible.',
+  'secondary':'Shares teal with positive so there is exactly one “good” colour in the app.',
+  'secondary-tint':'Same tint as positive-tint — one good colour, one tint.',
+  'positive':'Teal reads as healthy without the neon of pure green and stays apart from red for colour-blind users.',
+  'positive-tint':'Light teal ground for positive badges; teal text on it passes AA.',
+  'negative':'Muted brick red, reserved for exceeded budgets and real losses — never a large fill.',
+  'negative-tint':'Soft blush behind over-budget badges: visible but not alarming.',
+  'warning':'Burnt amber for approaching limits — warm enough to notice, calm enough not to panic.',
+  'warning-tint':'Cream ground for warning badges; text on it uses warning-ink.',
+  'warning-ink':'Darker amber keeps warning text on its tint above Lc 75.',
+  'info':'Info reuses navy so neutral notices never compete with status colours.',
+  'info-tint':'Identical to primary-tint, keeping one blue family.',
+  'neutral-tint':'Quiet grey fill for “no budget” tracks, chips and skeletons.',
+  'invest':'Violet separates investments from cash flow without carrying a good/bad meaning.',
+  'invest-tint':'Pale violet ground for investment chips and tiles.',
+  'gold':'Celebration fill for reached goals only — rare, so it stays special; never text.',
+  'gold-ink':'Text-safe gold for “Goal reached” labels.',
+  'logo':'Brand violet lives only in the logo mark so it never collides with data colours.',
+  'focus-ring':'2px ring + 2px offset, visible on every surface for keyboard users.'
+};
+const WHY_DARK = {
+  'bg':'Deep blue-grey, not black, reduces halation around light text.',
+  'surface':'One lightness step above bg; elevation is shown by lightness, not shadow.',
+  'surface-raised':'A further step lighter for popovers and menus.',
+  'border':'Low-contrast hairline that divides rows without striping the screen.',
+  'ink':'Off-white avoids the glare of pure white on dark.',
+  'ink-soft':'Softer tier that still reaches body-text APCA on dark surfaces.',
+  'ink-muted':'Caption tier; small text in dark mode gets +100 weight.',
+  'primary':'Lightened, desaturated navy keeps its identity and stays readable on dark.',
+  'primary-tint':'Darkened from #1E3354 so primary text on it reaches Lc 60.',
+  'positive':'Softer, lighter teal avoids neon glow while staying apart from salmon-red.',
+  'secondary':'Shares the dark teal with positive — still one good colour.',
+  'negative':'Desaturated salmon reads as “attention” without the vibration of saturated red on dark.',
+  'warning':'Soft amber that stays legible as text on dark surfaces.',
+  'warning-ink':'New: on dark, warning itself is used for badge and label text (Lc ≥ 60); body-length warnings use ink.',
+  'info':'New: matches dark primary.',
+  'gold-ink':'New: on dark, gold itself is text-safe.',
+  'logo':'Graphic-only (Lc ≈ 48); the wordmark is set in ink.'
+};
+const CHART_NAMES = ['navy','orange','sky','bluish green','reddish purple','vermillion','ochre','Other'];
+
+const hexRgb = h => [1,3,5].map(i => parseInt(h.slice(i,i+2),16)/255);
+const toLin = c => c <= 0.04045 ? c/12.92 : Math.pow((c+0.055)/1.055, 2.4);
+const toS = c => { c = Math.min(1, Math.max(0, c)); return c <= 0.0031308 ? 12.92*c : 1.055*Math.pow(c,1/2.4)-0.055; };
+const rgbHex = a => '#' + a.map(c => Math.round(c*255).toString(16).padStart(2,'0')).join('').toUpperCase();
+const relLum = h => { const [r,g,b] = hexRgb(h).map(toLin); return .2126*r+.7152*g+.0722*b; };
+const ratio = (a,b) => { const x = relLum(a), y = relLum(b); return (Math.max(x,y)+.05)/(Math.min(x,y)+.05); };
+const sY = h => { const [r,g,b] = hexRgb(h).map(c => Math.pow(c,2.4)); return .2126729*r+.7151522*g+.072175*b; };
+function apca(t, b) {
+  let T = sY(t), B = sY(b); const f = y => y > .022 ? y : y + Math.pow(.022-y, 1.414); T = f(T); B = f(B);
+  if (Math.abs(B-T) < .0005) return 0; let s;
+  if (B > T) { s = (Math.pow(B,.56)-Math.pow(T,.57))*1.14; return s < .1 ? 0 : (s-.027)*100; }
+  s = (Math.pow(B,.65)-Math.pow(T,.62))*1.14; return s > -.1 ? 0 : (s+.027)*100;
+}
+function oklab(lin) {
+  const [r,g,b] = lin;
+  const l = Math.cbrt(.4122214708*r+.5363325363*g+.0514459929*b), m = Math.cbrt(.2119034982*r+.6806995451*g+.1073969566*b), s = Math.cbrt(.0883024619*r+.2817188376*g+.6299787005*b);
+  return [.2104542553*l+.793617785*m-.0040720468*s, 1.9779984951*l-2.428592205*m+.4505937099*s, .0259040371*l+.7827717662*m-.808675766*s];
+}
+const labOf = h => oklab(hexRgb(h).map(toLin));
+function oklchStr(h, alpha) {
+  const [L,a,b] = labOf(h); const C = Math.sqrt(a*a+b*b); let H = Math.atan2(b,a)*180/Math.PI; if (H < 0) H += 360;
+  return `oklch(${(L*100).toFixed(1)}% ${C.toFixed(3)} ${C < .002 ? 0 : H.toFixed(1)}${alpha ? ' / ' + alpha : ''})`;
+}
+const MAT = {
+  deut: [[.367322,.860646,-.227968],[.280085,.672501,.047413],[-.01182,.04294,.968881]],
+  prot: [[.152286,1.052583,-.204868],[.114503,.786281,.099216],[-.003882,-.048116,1.051998]]
+};
+function sim(h, k) { if (!k) return h; const v = hexRgb(h).map(toLin); const M = MAT[k]; return rgbHex(M.map(r => toS(r[0]*v[0]+r[1]*v[1]+r[2]*v[2]))); }
+const dE = (a,b) => { const x = labOf(a), y = labOf(b); return Math.hypot(x[0]-y[0], x[1]-y[1], x[2]-y[2])*100; };
+const de = n => n.toFixed(1).replace('.', ',');
+const fr = n => n.toFixed(2).replace('.', ',') + ':1';
+const fl = n => (n < 0 ? '−' : '') + Math.abs(n).toFixed(1).replace('.', ',');
+const ST = {
+  pass: w => ({ icon:'✓', word:w, fg:'var(--positive)', bg:'var(--positive-tint)' }),
+  fail: w => ({ icon:'×', word:w, fg:'var(--negative)', bg:'var(--negative-tint)' }),
+  info: w => ({ icon:'i', word:w, fg:'var(--info)', bg:'var(--info-tint)' }),
+  neutral: w => ({ icon:'–', word:w, fg:'var(--ink-soft)', bg:'var(--neutral-tint)' })
+};
+function status(role, r, lc) {
+  const L = Math.abs(lc);
+  if (role === 'body') return r >= 4.5 && L >= 75 ? ST.pass('Passes body text') : ST.fail('Below body target');
+  if (role === 'text') return r >= 4.5 && L >= 60 ? ST.pass('Passes readable text') : ST.fail('Below text target');
+  if (role === 'ui') return r >= 3 ? ST.pass('Passes UI 3:1') : ST.fail('Below UI 3:1');
+  if (role === 'chart') return r >= 3 ? ST.pass('Passes graphic 3:1') : ST.info('Use with direct label');
+  return ST.neutral('Not used for text');
+}
+const ROLE_LABEL = { body:'body text', text:'text ≥ 12px', ui:'UI / graphic', chart:'chart identity', fill:'fill only', surface:'surface' };
+
+function token(P, name, hex, role, why, fill) {
+  const rb = ratio(hex, P.bg), rs = ratio(hex, P.surface), lb = apca(hex, P.bg), ls = apca(hex, P.surface);
+  const worstR = Math.min(rb, rs), worstL = Math.abs(lb) < Math.abs(ls) ? lb : ls;
+  return { name, hex, fill: fill || hex, oklch: oklchStr(hex), role: ROLE_LABEL[role], bgR: fr(rb), sfR: fr(rs), bgLc: fl(lb), sfLc: fl(ls), st: status(role, worstR, worstL), why };
+}
+function pair(label, fg, bg, sample, role) {
+  const r = ratio(fg, bg), lc = apca(fg, bg);
+  return { label, fgc: fg, bgc: bg, sample, r: fr(r), lc: fl(lc), st: status(role, r, lc) };
+}
+function buildMode(key, P) {
+  const dark = key === 'dark';
+  const why = n => (dark && WHY_DARK[n]) || WHY[n];
+  const roleOf = n => (dark && n === 'warning-ink') ? 'text' : (ROLE[n] || 'fill');
+  const T = names => names.map(n => token(P, n, P[n], roleOf(n), why(n)));
+  const vars = {};
+  Object.keys(P).forEach(k => { if (typeof P[k] === 'string' && P[k][0] === '#') vars['--' + k] = P[k]; });
+  vars['--shadow'] = P.shadow; vars['--w-sm'] = dark ? 600 : 500;
+  const groups = [
+    { title:'Surfaces & lines', note:'', tokens:T(['bg','surface','surface-raised','border','border-strong','focus-ring']) },
+    { title:'Ink', note:'Three text tiers only', tokens:T(['ink','ink-soft','ink-muted']) },
+    { title:'Action & status', note:'One good colour: teal', tokens:T(['primary','secondary','positive','negative','warning','warning-ink','info','invest']) },
+    { title:'Tints', note:'Backgrounds for badges, chips and selection', tokens:T(['primary-tint','secondary-tint','positive-tint','negative-tint','warning-tint','info-tint','neutral-tint','invest-tint']) },
+    { title:'Celebration & brand', note:'', tokens:T(['gold','gold-ink','logo']) },
+    { title:'Chart identity', note:'Okabe–Ito based · categorical only, never good/bad', tokens:P.chart.map((h,i) => token(P, 'chart-' + (i+1), h, 'chart', `${CHART_NAMES[i]} — ${i === 7 ? 'neutral grey for the “Other” bucket.' : 'identity colour, always with a direct label.'}`)) },
+    { title:'Sequential', note:'Single-hue navy for magnitude (calendar heat, density)', tokens:P.seq.map((h,i) => token(P, 'seq-' + (i+1), h, 'fill', i === 0 ? 'Lightest step equals primary-tint so “a little” never looks empty.' : 'Even OKLCH lightness step toward deep navy.')) },
+    { title:'Diverging', note:'Blue–neutral–orange · avoids red/green for above/below', tokens:P.div.map((h,i) => token(P, 'div-' + (i+1), h, 'fill', i === 3 ? 'Neutral midpoint = “as usual”.' : i < 3 ? 'Below usual — blue side.' : 'Above usual — orange side, not red.')) },
+    { title:'Forecast bands', note:'Primary at fixed opacity', tokens:[
+      { ...token(P, 'forecast-band-50', P.primary, 'fill', '24% of primary: the likely half of outcomes.'), hex: 'primary · 24%', oklch: oklchStr(P.primary, '0.24'), fill: hexA(P.primary, .24), bgR:'—', sfR:'—', bgLc:'—', sfLc:'—' },
+      { ...token(P, 'forecast-band-80', P.primary, 'fill', '12% of primary: 8 of 10 likely futures fall inside.'), hex: 'primary · 12%', oklch: oklchStr(P.primary, '0.12'), fill: hexA(P.primary, .12), bgR:'—', sfR:'—', bgLc:'—', sfLc:'—' }
+    ] }
+  ];
+  const pairs = [
+    pair('ink on surface', P.ink, P.surface, '1.234,56 €', 'body'),
+    pair('on-primary on primary (button)', P.onPrimary, P.primary, 'Save transaction', 'text'),
+    pair('primary on primary-tint (selected row)', P.primary, P['primary-tint'], 'Selected', 'text'),
+    pair('positive on positive-tint', P.positive, P['positive-tint'], '✓ On track', 'text'),
+    pair('negative on negative-tint', P.negative, P['negative-tint'], '× Over budget', 'text'),
+    pair('warning-ink on warning-tint', P['warning-ink'], P['warning-tint'], '! Close to limit', 'text'),
+    pair('info on info-tint', P.info, P['info-tint'], 'i Info', 'text'),
+    pair('invest on invest-tint', P.invest, P['invest-tint'], 'ETF savings', 'text'),
+    pair('ink-soft on neutral-tint', P['ink-soft'], P['neutral-tint'], '– No budget', 'text'),
+    pair('gold-ink on surface', P['gold-ink'], P.surface, '★ Goal reached', 'text'),
+    pair('ink on gold (celebration)', dark ? P.bg : P.ink, P.gold, 'Reached', 'text')
+  ];
+  const keys = [P.positive, P.negative, P.warning, ...P.chart];
+  const cvd = [['Normal', null], ['Deuteranopia', 'deut'], ['Protanopia', 'prot']].map(([label, k]) => ({ label, cells: keys.map(h => sim(h, k)) }));
+  const deltas = [['Normal', null], ['Deuteranopia', 'deut'], ['Protanopia', 'prot']].map(([label, k]) => {
+    const p = sim(P.positive, k), n = sim(P.negative, k), w = sim(P.warning, k);
+    return { label, pn: de(dE(p,n)), pnL: de(Math.abs(labOf(p)[0]-labOf(n)[0])*100), pw: de(dE(p,w)), nw: de(dE(n,w)) };
+  });
+  return {
+    key, label: dark ? 'Dark mode' : 'Light mode (default)',
+    sub: dark ? 'Tuned separately — no pure black, no pure white text, lighter desaturated semantics' : 'Cool neutrals · navy actions · teal as the only good colour',
+    vars, groups, pairs, cvd, deltas,
+    cvdHead: ['pos','neg','warn','c-1','c-2','c-3','c-4','c-5','c-6','c-7','c-8']
+  };
+}
+function hexA(h, a) { const [r,g,b] = hexRgb(h).map(c => Math.round(c*255)); return `rgba(${r},${g},${b},${a})`; }
+let CACHE = null;
+
+class Component extends DCLogic {
+  renderVals() {
+    if (!CACHE) CACHE = [buildMode('light', LIGHT), buildMode('dark', DARK)];
+    return { modes: CACHE };
+  }
+}
+</script>
+</body>
+</html>

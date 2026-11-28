@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calendar</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<style>body{margin:0;background:#DDE2E9;-webkit-font-smoothing:antialiased}a{color:#24508F;text-decoration:none}a:hover{color:#183A6B;text-decoration:underline}</style>
+</helmet>
+<section style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Helvetica,Arial,sans-serif;font-variant-numeric:tabular-nums;padding:48px;display:flex;flex-direction:column;gap:24px">
+  <div style="display:flex;flex-direction:column;gap:6px;color:#1E293B">
+    <div style="font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#475569">Personal Centwise · Screens</div>
+    <h1 style="margin:0;font-size:28px;line-height:34px;font-weight:600">Calendar</h1>
+    <div style="display:flex;gap:16px;font-size:13px;flex-wrap:wrap"><a href="#K1">K1 Personal · light</a><a href="#K2">K2 Personal · dark</a><a href="#K3">K3 Joint · light</a><span style="color:#5E6E82">·</span><a href="Overview.dc.html">Overview</a><a href="Transactions.dc.html">Transactions</a><a href="Forecast.dc.html">Forecast</a><a href="Net worth.dc.html">Net worth</a><a href="Settings.dc.html">Settings</a><a href="Style Guide.dc.html">Style guide</a></div>
+  </div>
+  <div style="display:flex;gap:48px;flex-wrap:wrap;align-items:flex-start">
+
+  <sc-for list="{{ modes }}" as="m" hint-placeholder-count="2">
+  <div id="{{ m.id }}" style="display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;align-items:center;gap:10px"><span style="background:#1E293B;color:#FFFFFF;font-size:13px;font-weight:600;padding:3px 8px;border-radius:6px">{{ m.id }}</span><span style="font-size:15px;font-weight:600;color:#1E293B">{{ m.label }}</span></div>
+    <div data-screen-label="{{ m.label }}" style="{{ m.vars }}">
+    <div style="width:1440px;background:var(--bg);color:var(--ink);border-radius:12px;overflow:hidden;box-shadow:0 24px 64px rgba(15,23,42,.18);border:1px solid var(--border);position:relative">
+      <div style="height:28px;background:var(--surface);display:flex;align-items:center;gap:8px;padding:0 12px"><span style="width:12px;height:12px;border-radius:50%;background:#FF5F57"></span><span style="width:12px;height:12px;border-radius:50%;background:#FEBC2E"></span><span style="width:12px;height:12px;border-radius:50%;background:#28C840"></span></div>
+      <div style="position:sticky;top:0;z-index:3;background:var(--surface);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center;gap:20px;padding:0 24px">
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:24px;height:24px;border-radius:6px;background:var(--logo)"></span><span style="font-size:15px;font-weight:600">Centwise</span></div>
+        <nav aria-label="Main" style="display:flex;gap:2px;padding:3px;background:var(--neutral-tint);border-radius:8px">
+          <sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="6">
+            <a href="{{ tb.href }}" aria-current="{{ tb.cur }}" style="height:30px;padding:0 12px;border-radius:6px;background:{{ tb.bg }};box-shadow:{{ tb.sh }};color:{{ tb.fg }};font-size:13px;font-weight:{{ tb.w }};display:flex;align-items:center;gap:6px;text-decoration:none" style-hover="color:var(--ink);text-decoration:none">{{ tb.label }}<span style="font-size:12px;font-weight:500;color:var(--ink-muted)">{{ tb.key }}</span></a>
+          </sc-for>
+        </nav>
+        <div style="flex:1"></div>
+        <sc-for list="{{ dropdowns }}" as="dd" hint-placeholder-count="3">
+          <button style="height:32px;padding:0 10px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;cursor:pointer" style-hover="background:var(--neutral-tint)"><span style="color:var(--ink-muted);font-size:12px">{{ dd.k }}</span>{{ dd.v }}<span aria-hidden="true" style="font-size:10px;color:var(--ink-soft)">▼</span></button>
+        </sc-for>
+      </div>
+
+      <div style="padding:24px 32px 88px;display:flex;flex-direction:column;gap:20px">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px">
+          <div style="display:flex;flex-direction:column;gap:2px"><h2 style="margin:0;font-size:22px;line-height:28px;font-weight:600">Calendar</h2><span style="font-size:13px;color:var(--ink-soft)">Bills, income and goal saving by day · your Apple Calendar next to it</span></div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button aria-label="Previous month" style="width:32px;height:32px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:14px;cursor:pointer">‹</button>
+            <span style="font-size:15px;font-weight:600;min-width:120px;text-align:center">November 2026</span>
+            <button aria-label="Next month" style="width:32px;height:32px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:14px;cursor:pointer">›</button>
+            <button style="height:32px;padding:0 12px;border-radius:6px;border:none;background:transparent;color:var(--primary);font:inherit;font-size:13px;font-weight:500;cursor:pointer" style-hover="background:var(--primary-tint)">Today</button>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px">
+          <sc-for list="{{ summary }}" as="k" hint-placeholder-count="3">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:12px 16px;display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+              <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;font-weight:500;color:var(--ink-soft)">{{ k.label }}</span><span style="font-size:12px;font-weight:var(--w-sm);color:{{ k.nc }};display:flex;gap:5px;align-items:center"><span aria-hidden="true">{{ k.ni }}</span>{{ k.note }}</span></div>
+              <span style="font-size:20px;line-height:26px;font-weight:600">{{ k.value }}</span>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:16px;align-items:start">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);overflow:hidden">
+            <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border-bottom:1px solid var(--border-strong)">
+              <sc-for list="{{ weekdays }}" as="w" hint-placeholder-count="7"><span style="padding:8px 10px;font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">{{ w }}</span></sc-for>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr))">
+              <sc-for list="{{ cells }}" as="d" hint-placeholder-count="42">
+                <button onClick="{{ d.pick }}" aria-label="{{ d.aria }}" aria-pressed="{{ d.pressed }}" style="position:relative;height:124px;padding:6px 6px 6px;border:none;border-right:1px solid var(--border);border-bottom:1px solid var(--border);background:{{ d.bg }};box-shadow:{{ d.ring }};color:var(--ink);font:inherit;text-align:left;display:flex;flex-direction:column;gap:3px;cursor:pointer;overflow:hidden" style-hover="background:var(--neutral-tint)">
+                  <sc-if value="{{ d.lecture }}" hint-placeholder-val="{{ true }}"><span aria-hidden="true" style="position:absolute;left:0;right:0;top:0;height:3px;background:var(--info);opacity:.45"></span></sc-if>
+                  <span style="display:flex;align-items:center;justify-content:space-between;height:24px"><span style="min-width:24px;height:24px;padding:0 4px;box-sizing:border-box;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:{{ d.nw }};background:{{ d.numBg }};color:{{ d.numFg }}">{{ d.n }}</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted)">{{ d.more }}</span></span>
+                  <sc-for list="{{ d.items }}" as="it" hint-placeholder-count="2">
+                    <span style="display:flex;align-items:center;gap:4px;height:20px;padding:0 5px;border-radius:4px;background:{{ it.bg }};color:{{ it.fg }};font-size:12px;font-weight:var(--w-sm);white-space:nowrap;overflow:hidden;border-left:{{ it.bl }};opacity:{{ it.op }}"><span aria-hidden="true" style="flex:none;width:12px;text-align:center">{{ it.icon }}</span><span style="overflow:hidden;text-overflow:ellipsis;flex:1">{{ it.label }}</span><span style="flex:none">{{ it.amt }}</span></span>
+                  </sc-for>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="background:var(--surface-raised);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);display:flex;flex-direction:column">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:16px 16px 4px;gap:8px"><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;line-height:22px;font-weight:600">{{ day.title }}</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">{{ day.sub }}</span></div><button aria-label="Close day" style="width:28px;height:28px;border-radius:6px;border:none;background:transparent;color:var(--ink-soft);font:inherit;font-size:15px;cursor:pointer" style-hover="background:var(--neutral-tint)">×</button></div>
+              <sc-if value="{{ day.empty }}" hint-placeholder-val="{{ false }}"><span style="padding:12px 16px 16px;font-size:13px;color:var(--ink-soft)">Nothing on this day.</span></sc-if>
+              <div style="padding:4px 16px 0">
+                <sc-for list="{{ day.items }}" as="it" hint-placeholder-count="2">
+                  <div style="display:flex;flex-direction:column;gap:4px;padding:10px 0;border-bottom:1px solid var(--border)">
+                    <div style="display:flex;justify-content:space-between;gap:8px;font-size:13px"><span style="font-weight:500">{{ it.label }}</span><span style="color:{{ it.amtFg }};font-weight:600">{{ it.amtFull }}</span></div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span style="display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 7px 0 4px;border-radius:6px;background:{{ it.badgeBg }};color:{{ it.badgeFg }};font-size:12px;font-weight:var(--w-sm)"><span aria-hidden="true" style="width:13px;height:13px;border-radius:50%;border:1.5px solid currentColor;display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;line-height:1">{{ it.badgeIcon }}</span>{{ it.badge }}</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">{{ it.meta }}</span></div>
+                  </div>
+                </sc-for>
+              </div>
+              <sc-if value="{{ day.hasAfter }}" hint-placeholder-val="{{ true }}"><div style="padding:12px 16px 16px;display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--ink-soft)">Balance after this day</span><span style="font-weight:600">{{ day.after }}</span></div></sc-if>
+              <sc-if value="{{ day.noAfter }}" hint-placeholder-val="{{ false }}"><div style="height:12px"></div></sc-if>
+            </div>
+
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:16px;display:flex;flex-direction:column;gap:12px">
+              <span style="font-size:16px;line-height:22px;font-weight:600">Show in the calendar</span>
+              <label style="display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer"><input type="checkbox" checked="{{ showMoney }}" onChange="{{ toggleMoney }}" style="width:16px;height:16px;margin:0;accent-color:var(--primary)">Money <span style="color:var(--ink-soft)">· bills, income, goal saving</span></label>
+              <label style="display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer"><input type="checkbox" checked="{{ showEvents }}" onChange="{{ toggleEvents }}" style="width:16px;height:16px;margin:0;accent-color:var(--primary)">Events <span style="color:var(--ink-soft)">· from Apple Calendar</span></label>
+              <div role="list" aria-label="Legend" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px;padding-top:12px;border-top:1px solid var(--border)">
+                <sc-for list="{{ legend }}" as="l" hint-placeholder-count="6">
+                  <span role="listitem" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)"><span aria-hidden="true" style="width:20px;height:16px;border-radius:4px;background:{{ l.bg }};color:{{ l.fg }};border-left:{{ l.bl }};display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">{{ l.icon }}</span>{{ l.t }}</span>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button aria-label="Calculator (⌘K)" title="Calculator (⌘K)" style="position:absolute;right:24px;bottom:24px;width:48px;height:48px;border-radius:999px;border:none;background:var(--primary);color:var(--on-primary);font:inherit;font-size:20px;font-weight:600;box-shadow:var(--shadow-pop);cursor:pointer" style-hover="background:var(--primary-hover)">±</button>
+    </div>
+    </div>
+  </div>
+  </sc-for>
+
+  <div id="K3" style="display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;align-items:center;gap:10px"><span style="background:#1E293B;color:#FFFFFF;font-size:13px;font-weight:600;padding:3px 8px;border-radius:6px">K3</span><span style="font-size:15px;font-weight:600;color:#1E293B">Joint profile · light · 14px minimum</span></div>
+    <div data-screen-label="Joint calendar" style="{{ jointVars }}">
+    <div style="width:1200px;background:var(--bg);color:var(--ink);border-radius:12px;overflow:hidden;box-shadow:0 24px 64px rgba(15,23,42,.18);border:1px solid var(--border)">
+      <div style="height:28px;background:var(--surface);display:flex;align-items:center;gap:8px;padding:0 12px"><span style="width:12px;height:12px;border-radius:50%;background:#FF5F57"></span><span style="width:12px;height:12px;border-radius:50%;background:#FEBC2E"></span><span style="width:12px;height:12px;border-radius:50%;background:#28C840"></span></div>
+      <div style="background:var(--surface);border-bottom:1px solid var(--border);height:64px;display:flex;align-items:center;gap:24px;padding:0 32px">
+        <div style="display:flex;align-items:center;gap:10px"><span style="width:28px;height:28px;border-radius:7px;background:var(--logo)"></span><span style="font-size:17px;font-weight:600">Centwise</span></div>
+        <nav aria-label="Main" style="display:flex;gap:2px;padding:3px;background:var(--neutral-tint);border-radius:10px">
+          <sc-for list="{{ jointTabs }}" as="tb" hint-placeholder-count="4">
+            <a href="{{ tb.href }}" aria-current="{{ tb.cur }}" style="height:38px;padding:0 18px;border-radius:8px;background:{{ tb.bg }};box-shadow:{{ tb.sh }};color:{{ tb.fg }};font-size:15px;font-weight:{{ tb.w }};display:flex;align-items:center;text-decoration:none" style-hover="color:var(--ink);text-decoration:none">{{ tb.label }}</a>
+          </sc-for>
+        </nav>
+        <div style="flex:1"></div>
+        <button style="height:38px;padding:0 14px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:15px;font-weight:500;display:flex;align-items:center;gap:8px">November 2026<span aria-hidden="true" style="font-size:14px;color:var(--ink-soft)">▾</span></button>
+        <button style="height:38px;padding:0 14px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:15px;font-weight:500;display:flex;align-items:center;gap:8px">Joint<span aria-hidden="true" style="font-size:14px;color:var(--ink-soft)">▾</span></button>
+      </div>
+
+      <div style="padding:32px 40px 40px;display:flex;flex-direction:column;gap:24px">
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <span style="font-size:15px;color:var(--ink-soft)">Our shared account · November</span>
+          <h2 style="margin:0;font-size:32px;line-height:40px;font-weight:600">3 bills left this month — 310 € in total.</h2>
+          <span style="font-size:16px;line-height:24px;color:var(--ink-soft);display:flex;gap:8px;align-items:center"><span aria-hidden="true" style="color:var(--positive)">✓</span>There is enough money in the account for all of them.</span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);overflow:hidden">
+            <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border-bottom:1px solid var(--border-strong)">
+              <sc-for list="{{ weekdaysLong }}" as="w" hint-placeholder-count="7"><span style="padding:10px 12px;font-size:14px;font-weight:500;color:var(--ink-soft)">{{ w }}</span></sc-for>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr))">
+              <sc-for list="{{ jointCells }}" as="d" hint-placeholder-count="42">
+                <div style="height:104px;padding:8px;box-sizing:border-box;border-right:1px solid var(--border);border-bottom:1px solid var(--border);background:{{ d.bg }};display:flex;flex-direction:column;gap:4px">
+                  <span style="align-self:flex-start;min-width:28px;height:28px;padding:0 6px;box-sizing:border-box;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;font-size:15px;font-weight:{{ d.nw }};background:{{ d.numBg }};color:{{ d.numFg }}">{{ d.n }}</span>
+                  <sc-for list="{{ d.items }}" as="it" hint-placeholder-count="1">
+                    <span style="display:flex;flex-direction:column;padding:2px 6px;border-radius:6px;background:{{ it.bg }};color:{{ it.fg }};font-size:14px;line-height:18px;font-weight:500"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ it.icon }} {{ it.label }}</span><span>{{ it.amt }}</span></span>
+                  </sc-for>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);display:flex;flex-direction:column">
+              <span style="font-size:18px;line-height:24px;font-weight:600;padding:20px 20px 8px">Still to pay</span>
+              <div style="padding:0 20px">
+                <sc-for list="{{ jointDue }}" as="b" hint-placeholder-count="3">
+                  <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:10px 0;border-bottom:1px solid var(--border);font-size:15px"><span style="font-weight:500">{{ b.n }}</span><span style="text-align:right;font-weight:500">{{ b.a }}</span><span style="font-size:14px;color:var(--ink-soft)">{{ b.d }}</span></div>
+                </sc-for>
+              </div>
+              <div style="padding:14px 20px 20px;display:flex;justify-content:space-between;font-size:15px"><span style="color:var(--ink-soft)">Left after these</span><span style="font-weight:600">1.830 €</span></div>
+            </div>
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:20px;display:flex;flex-direction:column;gap:8px">
+              <span style="font-size:18px;line-height:24px;font-weight:600">Money expected</span>
+              <span style="font-size:15px;line-height:22px;color:var(--ink-soft)">Next monthly transfers: <b style="font-weight:600;color:var(--ink)">900 € from each of us</b> on 15 December.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{}'>
+const BASE = {
+  light: { 'bg':'#F7F8FA','surface':'#FFFFFF','surface-raised':'#FFFFFF','border':'#E2E8F0','border-strong':'#7D8A9E','ink':'#1E293B','ink-soft':'#475569','ink-muted':'#5E6E82','primary':'#24508F','primary-hover':'#1D4278','primary-tint':'#EAF0F8','secondary':'#0F766E','secondary-tint':'#E6F4F1','positive':'#0F766E','positive-tint':'#E6F4F1','negative':'#B42318','negative-tint':'#FCEBE9','warning':'#B45309','warning-tint':'#FDF1E3','warning-ink':'#92400E','info':'#24508F','info-tint':'#EAF0F8','neutral-tint':'#F1F5F9','invest':'#7C4DBE','invest-tint':'#F1EBFA','gold':'#F2C14E','gold-ink':'#8A6100','logo':'#6D28D9','focus-ring':'#24508F','on-primary':'#FFFFFF','track':'#E2E8F0','shadow':'0 1px 2px rgba(15,23,42,.06)','shadow-pop':'0 8px 24px rgba(15,23,42,.12)','band50':'rgba(36,80,143,.24)','band80':'rgba(36,80,143,.12)','w-sm':'500','w-table':'400',
+    chart:['#24508F','#E69F00','#56B4E9','#009E73','#CC79A7','#D55E00','#8C6D31','#94A3B8'] },
+  dark: { 'bg':'#111827','surface':'#1A2332','surface-raised':'#222D3F','border':'#2A3546','border-strong':'#64748B','ink':'#E6EAF0','ink-soft':'#C8D1DC','ink-muted':'#AEB9C8','primary':'#9BBDF0','primary-hover':'#B4CDF4','primary-tint':'#1B2E4D','secondary':'#5ECDBB','secondary-tint':'#12352F','positive':'#5ECDBB','positive-tint':'#12352F','negative':'#F7A891','negative-tint':'#3D1F1A','warning':'#E8B04A','warning-tint':'#3A2A12','warning-ink':'#E8B04A','info':'#9BBDF0','info-tint':'#1B2E4D','neutral-tint':'#243042','invest':'#C3AEF0','invest-tint':'#2B2347','gold':'#F2C14E','gold-ink':'#F2C14E','logo':'#A78BFA','focus-ring':'#9BBDF0','on-primary':'#111827','track':'#334155','shadow':'none','shadow-pop':'none','band50':'rgba(155,189,240,.24)','band80':'rgba(155,189,240,.12)','w-sm':'600','w-table':'500',
+    chart:['#7AA7E6','#F0B640','#7CC8F0','#33C49A','#DE9AC2','#F08A4B','#C9A86A','#8D9AAD'] }
+};
+function toVars(P) { const v = {}; Object.keys(P).forEach(k => { if (k !== 'chart') v['--' + k] = P[k]; }); P.chart.forEach((c, i) => v['--chart-' + (i + 1)] = c); return v; }
+const eur = (n, dec = 2, sign = false) => { if (n == null) return '—'; const s = Math.abs(n).toLocaleString('de-DE', { minimumFractionDigits: dec, maximumFractionDigits: dec }); return (n < 0 ? '−' : (sign && n > 0 ? '+' : '')) + s + ' €'; };
+const PAGES = ['Overview.dc.html', 'Transactions.dc.html', 'Calendar.dc.html', 'Forecast.dc.html', 'Net worth.dc.html', 'Settings.dc.html'];
+const tabsFor = (labels, active) => labels.map((label, i) => ({ label, key: '⌘' + (i + 1), href: PAGES[i], cur: i === active ? 'page' : 'false', bg: i === active ? 'var(--surface)' : 'transparent', sh: i === active ? '0 1px 2px rgba(15,23,42,.12)' : 'none', fg: i === active ? 'var(--ink)' : 'var(--ink-soft)', w: i === active ? 600 : 500 }));
+
+const TODAY = 19, BALANCE = 3284;
+const WD = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+// kind: in (income), bill, inv (investment), goal (earmark), event
+const ITEMS = {
+  '11-2': [['bill', 'Spotify Family', -17.99], ['bill', 'Fitnessstudio', -29.90]],
+  '11-3': [['event', 'Team sync', '10:00']],
+  '11-5': [['bill', 'Rundfunkbeitrag', -55.08]],
+  '11-10': [['event', 'Study group', '17:00']],
+  '11-15': [['inv', 'ETF savings plan', -500], ['bill', 'Transfer to Joint', -900]],
+  '11-18': [['in', 'Salary', 3420], ['bill', 'Stadtwerke', -86]],
+  '11-19': [['event', 'Running club', '18:30']],
+  '11-21': [['bill', 'Rent · Wohnbau Süd', -1150]],
+  '11-24': [['bill', 'Telekom Mobilfunk', -39.95], ['event', 'Seminar', '14:00']],
+  '11-27': [['event', 'Dinner with friends', '19:30']],
+  '11-28': [['bill', 'Allianz Haftpflicht', -136.53]],
+  '11-30': [['goal', 'Emergency fund', 300]],
+  '12-1': [['bill', 'Spotify Family', -17.99]],
+  '12-2': [['bill', 'Fitnessstudio', -29.90]]
+};
+function days() {
+  const out = []; const start = new Date(2026, 9, 26);
+  for (let i = 0; i < 42; i++) { const dt = new Date(start); dt.setDate(start.getDate() + i); out.push({ m: dt.getMonth() + 1, n: dt.getDate(), wd: i % 7 }); }
+  return out;
+}
+function runningAfter(n) { let b = BALANCE; for (let d = TODAY; d <= n; d++) (ITEMS['11-' + d] || []).forEach(([k, , a]) => { if ((k === 'bill' || k === 'inv' || k === 'in') && d > TODAY) b += a; }); return b; }
+function look(kind, a, past) {
+  if (kind === 'in') return { icon: past ? '✓' : '+', bg: 'var(--positive-tint)', fg: 'var(--positive)', bl: 'none' };
+  if (kind === 'inv') return { icon: past ? '✓' : '○', bg: 'var(--invest-tint)', fg: 'var(--invest)', bl: 'none' };
+  if (kind === 'goal') return { icon: '→', bg: 'var(--secondary-tint)', fg: 'var(--secondary)', bl: 'none' };
+  if (kind === 'event') return { icon: '▫', bg: 'transparent', fg: 'var(--ink-soft)', bl: '2px solid var(--chart-3)' };
+  return { icon: past ? '✓' : '○', bg: 'var(--neutral-tint)', fg: 'var(--ink)', bl: 'none' };
+}
+
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { pick: '11-21', money: true, events: true }; }
+  renderVals() {
+    const st = this.state;
+    const show = k => (k === 'event' ? st.events : st.money);
+    const cells = days().map(d => {
+      const key = d.m + '-' + d.n, inMonth = d.m === 11, isToday = inMonth && d.n === TODAY;
+      const past = (d.m < 11) || (inMonth && d.n < TODAY) || (isToday);
+      const all = (ITEMS[key] || []).filter(([k]) => show(k));
+      const items = all.slice(0, 3).map(([k, label, a]) => {
+        const lk = look(k, a, past && k !== 'event' && !(isToday));
+        return { ...lk, label, amt: k === 'event' ? a : (k === 'goal' ? eur(a, 0) : eur(a, 0, true)), op: inMonth ? 1 : .55 };
+      });
+      return {
+        n: d.n, items, more: all.length > 3 ? '+' + (all.length - 3) : '',
+        lecture: true,
+        bg: !inMonth ? 'var(--bg)' : 'transparent',
+        ring: st.pick === key ? 'inset 0 0 0 2px var(--focus-ring)' : 'none', pressed: st.pick === key ? 'true' : 'false',
+        numBg: isToday ? 'var(--primary)' : 'transparent', numFg: isToday ? 'var(--on-primary)' : (inMonth ? 'var(--ink)' : 'var(--ink-muted)'), nw: isToday ? 600 : 500,
+        aria: `${WD[d.wd]} ${d.n}.${d.m}.${isToday ? ', today' : ''}${all.length ? ', ' + all.length + ' items' : ''}`,
+        pick: () => this.setState({ pick: key })
+      };
+    });
+    const [pm, pn] = st.pick.split('-').map(Number);
+    const wdIdx = days().find(d => d.m === pm && d.n === pn).wd;
+    const future = pm > 11 || (pm === 11 && pn > TODAY);
+    const pItems = (ITEMS[st.pick] || []).filter(([k]) => show(k)).map(([k, label, a]) => {
+      const amtFull = k === 'event' ? a : (k === 'goal' ? eur(a) : eur(a, 2, true));
+      let badge, badgeBg, badgeFg, badgeIcon, meta;
+      if (k === 'event') { badge = 'Event'; badgeBg = 'var(--neutral-tint)'; badgeFg = 'var(--ink-soft)'; badgeIcon = '–'; meta = 'Apple Calendar'; }
+      else if (k === 'goal') { badge = 'Set aside'; badgeBg = 'var(--secondary-tint)'; badgeFg = 'var(--secondary)'; badgeIcon = '→'; meta = 'Stays in your account'; }
+      else if (k === 'in') { badge = future ? 'Money expected' : 'Arrived'; badgeBg = 'var(--positive-tint)'; badgeFg = 'var(--positive)'; badgeIcon = future ? '+' : '✓'; meta = 'Girokonto'; }
+      else { badge = future ? 'Still to pay' : 'Paid'; badgeBg = future ? 'var(--info-tint)' : 'var(--neutral-tint)'; badgeFg = future ? 'var(--info)' : 'var(--ink-soft)'; badgeIcon = future ? 'i' : '✓'; meta = k === 'inv' ? 'Investment · Depot' : 'Monthly bill'; }
+      return { label, amtFull, amtFg: k === 'in' ? 'var(--positive)' : 'var(--ink)', badge, badgeBg, badgeFg, badgeIcon, meta };
+    });
+    const day = {
+      title: `${WD[wdIdx]}, ${pn} ${pm === 11 ? 'November' : pm === 12 ? 'December' : 'October'}`,
+      sub: pm === 11 && pn === TODAY ? 'Today' : (future ? 'Planned' : 'Booked'),
+      items: pItems, empty: pItems.length === 0,
+      hasAfter: future && pm === 11, noAfter: !(future && pm === 11), after: eur(runningAfter(pn), 2)
+    };
+    const jdays = days().map(d => {
+      const inMonth = d.m === 11, isToday = inMonth && d.n === TODAY;
+      const J = { '11-3': ['✓', 'Internet', -39.99], '11-5': ['✓', 'Streaming', -13.99], '11-15': ['+', 'From both of us', 1800], '11-21': ['○', 'Car insurance', -180], '11-24': ['○', 'Electricity', -86], '11-30': ['○', 'Home insurance', -44], '12-3': ['○', 'Internet', -39.99] }[d.m + '-' + d.n];
+      return { n: d.n, bg: inMonth ? 'transparent' : 'var(--bg)', numBg: isToday ? 'var(--primary)' : 'transparent', numFg: isToday ? 'var(--on-primary)' : (inMonth ? 'var(--ink)' : 'var(--ink-muted)'), nw: isToday ? 600 : 500,
+        items: J ? [{ icon: J[0], label: J[1], amt: eur(J[2], 0, true), bg: J[2] > 0 ? 'var(--positive-tint)' : 'var(--neutral-tint)', fg: J[2] > 0 ? 'var(--positive)' : (J[0] === '✓' || !inMonth ? 'var(--ink-soft)' : 'var(--ink)') }] : [] };
+    });
+    return {
+      modes: [
+        { id:'K1', label:'Personal · light (default)', vars: toVars(BASE.light) },
+        { id:'K2', label:'Personal · dark', vars: toVars(BASE.dark) }
+      ],
+      jointVars: toVars(BASE.light),
+      tabs: tabsFor(['Overview', 'Transactions', 'Calendar', 'Forecast', 'Net worth', 'Settings'], 2),
+      jointTabs: tabsFor(['Overview', 'Transactions', 'Calendar', 'Forecast'], 2),
+      dropdowns: [{ k:'Month', v:'November' }, { k:'Year', v:'2026' }, { k:'Profile', v:'Personal' }],
+      summary: [
+        { label:'Still to pay this month', value: eur(-1326.48, 0), ni:'○', note:'3 bills · next on Saturday', nc:'var(--ink-soft)' },
+        { label:'Money expected', value: eur(0, 0), ni:'✓', note:'Salary arrived on 18.11.', nc:'var(--ink-soft)' },
+        { label:'Balance after all bills', value: eur(1958, 0), ni:'✓', note:'All bills are covered', nc:'var(--positive)' }
+      ],
+      weekdays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      weekdaysLong: WD,
+      cells, day,
+      showMoney: st.money, showEvents: st.events,
+      toggleMoney: () => this.setState({ money: !st.money }),
+      toggleEvents: () => this.setState({ events: !st.events }),
+      legend: [
+        { icon:'○', t:'Bill still to pay', bg:'var(--neutral-tint)', fg:'var(--ink)', bl:'none' },
+        { icon:'✓', t:'Paid or arrived', bg:'var(--neutral-tint)', fg:'var(--ink-soft)', bl:'none' },
+        { icon:'+', t:'Income', bg:'var(--positive-tint)', fg:'var(--positive)', bl:'none' },
+        { icon:'○', t:'Investment', bg:'var(--invest-tint)', fg:'var(--invest)', bl:'none' },
+        { icon:'→', t:'Set aside for a goal', bg:'var(--secondary-tint)', fg:'var(--secondary)', bl:'none' },
+        { icon:'▫', t:'Calendar event', bg:'transparent', fg:'var(--ink-soft)', bl:'2px solid var(--chart-3)' },
+        { icon:'', t:'Lecture period (top line)', bg:'linear-gradient(var(--info) 0 3px, transparent 3px)', fg:'var(--info)', bl:'none' }
+      ],
+      jointCells: jdays,
+      jointDue: [['Car insurance', 'Saturday, 21 November', -180], ['Electricity', 'Tuesday, 24 November', -86], ['Home insurance', 'Monday, 30 November', -44]].map(([n, d, a]) => ({ n, d, a: eur(a, 0) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

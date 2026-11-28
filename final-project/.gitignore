@@ -1,0 +1,61 @@
+# --- Personal data: never commit it ---
+# The real data lives outside the project folder; these catch accidental copies.
+data.json
+*.data.json
+backups/
+*.backup.json
+personal/
+exports/
+*.ofx
+*.qif
+*.mt940
+# Bank statements dropped in by mistake
+statements/
+
+# Secrets
+.env
+.env.*
+*.pem
+*.key
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+backend/build/
+backend/dist/
+
+# Node / frontend
+node_modules/
+frontend/dist/
+
+# Packaging
+release/
+
+# macOS
+.DS_Store
+
+# Generated icon files (assets/make_icon.py is the source)
+assets/icon-1024.png
+assets/icon.iconset/
+
+# Dev screenshots
+frontend/test-results/
+
+# Real statements, payslips and analyses with real figures: keep out of git
+Bank statements/
+Payslips/
+AI output/*
+# …except the screens guide the agents keep current (no real figures)
+!AI output/2026-11-16-app-screens-guide.md
+
+# The made-up sample data is part of the project (no real figures)
+!sample-data/
+!sample-data/**
+sample-data/electron-profile/
+sample-data/backups/
+sample-data/joint/backups/

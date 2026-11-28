@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Transactions</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<style>body{margin:0;background:#DDE2E9;-webkit-font-smoothing:antialiased}a{color:#24508F;text-decoration:none}a:hover{color:#183A6B;text-decoration:underline}input::placeholder{color:var(--ink-muted);opacity:1}</style>
+</helmet>
+<section style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Helvetica,Arial,sans-serif;font-variant-numeric:tabular-nums;padding:48px;display:flex;flex-direction:column;gap:24px">
+  <div style="display:flex;flex-direction:column;gap:6px;color:#1E293B">
+    <div style="font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#475569">Personal Centwise · Screens</div>
+    <h1 style="margin:0;font-size:28px;line-height:34px;font-weight:600">Transactions</h1>
+    <div style="display:flex;gap:16px;font-size:13px;flex-wrap:wrap"><a href="#T1">T1 Personal · light</a><a href="#T2">T2 Personal · dark</a><a href="#T3">T3 Joint · light</a><span style="color:#5E6E82">·</span><a href="Overview.dc.html">Overview</a><a href="Calendar.dc.html">Calendar</a><a href="Forecast.dc.html">Forecast</a><a href="Net worth.dc.html">Net worth</a><a href="Settings.dc.html">Settings</a><a href="Style Guide.dc.html">Style guide</a></div>
+  </div>
+  <div style="display:flex;gap:48px;flex-wrap:wrap;align-items:flex-start">
+
+  <sc-for list="{{ modes }}" as="m" hint-placeholder-count="2">
+  <div id="{{ m.id }}" style="display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;align-items:center;gap:10px"><span style="background:#1E293B;color:#FFFFFF;font-size:13px;font-weight:600;padding:3px 8px;border-radius:6px">{{ m.id }}</span><span style="font-size:15px;font-weight:600;color:#1E293B">{{ m.label }}</span></div>
+    <div data-screen-label="{{ m.label }}" style="{{ m.vars }}">
+    <div style="width:1440px;background:var(--bg);color:var(--ink);border-radius:12px;overflow:hidden;box-shadow:0 24px 64px rgba(15,23,42,.18);border:1px solid var(--border);position:relative">
+      <div style="height:28px;background:var(--surface);display:flex;align-items:center;gap:8px;padding:0 12px"><span style="width:12px;height:12px;border-radius:50%;background:#FF5F57"></span><span style="width:12px;height:12px;border-radius:50%;background:#FEBC2E"></span><span style="width:12px;height:12px;border-radius:50%;background:#28C840"></span></div>
+      <div style="position:sticky;top:0;z-index:3;background:var(--surface);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center;gap:20px;padding:0 24px">
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:24px;height:24px;border-radius:6px;background:var(--logo)"></span><span style="font-size:15px;font-weight:600">Centwise</span></div>
+        <nav aria-label="Main" style="display:flex;gap:2px;padding:3px;background:var(--neutral-tint);border-radius:8px">
+          <sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="6">
+            <a href="{{ tb.href }}" aria-current="{{ tb.cur }}" style="height:30px;padding:0 12px;border-radius:6px;background:{{ tb.bg }};box-shadow:{{ tb.sh }};color:{{ tb.fg }};font-size:13px;font-weight:{{ tb.w }};display:flex;align-items:center;gap:6px;text-decoration:none" style-hover="color:var(--ink);text-decoration:none">{{ tb.label }}<span style="font-size:12px;font-weight:500;color:var(--ink-muted)">{{ tb.key }}</span></a>
+          </sc-for>
+        </nav>
+        <div style="flex:1"></div>
+        <sc-for list="{{ dropdowns }}" as="dd" hint-placeholder-count="3">
+          <button style="height:32px;padding:0 10px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;cursor:pointer" style-hover="background:var(--neutral-tint)"><span style="color:var(--ink-muted);font-size:12px">{{ dd.k }}</span>{{ dd.v }}<span aria-hidden="true" style="font-size:10px;color:var(--ink-soft)">▼</span></button>
+        </sc-for>
+      </div>
+
+      <div style="padding:24px 32px 88px;display:flex;flex-direction:column;gap:20px">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px">
+          <div style="display:flex;flex-direction:column;gap:2px"><h2 style="margin:0;font-size:22px;line-height:28px;font-weight:600">Transactions</h2><span style="font-size:13px;color:var(--ink-soft)">November 2026 · 64 transactions · last import today, 08:12</span></div>
+          <div style="display:flex;gap:8px">
+            <button style="height:32px;padding:0 12px;border-radius:6px;border:none;background:transparent;color:var(--primary);font:inherit;font-size:13px;font-weight:500;cursor:pointer" style-hover="background:var(--primary-tint)">Categories</button>
+            <button style="height:32px;padding:0 14px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:500;cursor:pointer" style-hover="background:var(--neutral-tint)">Tax export</button>
+            <button style="height:32px;padding:0 14px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:500;cursor:pointer" style-hover="background:var(--neutral-tint)">Import CSV</button>
+            <button style="height:32px;padding:0 14px;border-radius:6px;border:none;background:var(--primary);color:var(--on-primary);font:inherit;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;cursor:pointer" style-hover="background:var(--primary-hover)">Add transaction<span style="font-size:12px;font-weight:500;opacity:.85">⌘N</span></button>
+          </div>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <label style="position:relative;display:flex;align-items:center;flex:1;min-width:240px"><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Search</span><span aria-hidden="true" style="position:absolute;left:10px;font-size:13px;color:var(--ink-muted)">⌕</span><input type="search" placeholder="Search payee, note or amount" style="width:100%;height:32px;padding:0 44px 0 28px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;box-sizing:border-box"><span style="position:absolute;right:8px;font-size:12px;font-weight:500;color:var(--ink-muted)">⌘F</span></label>
+          <sc-for list="{{ filters }}" as="f" hint-placeholder-count="3">
+            <label style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">{{ f.k }}<select style="height:32px;padding:0 8px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px"><option>{{ f.v }}</option></select></label>
+          </sc-for>
+          <div role="group" aria-label="Show transactions as" style="display:flex;gap:2px;padding:3px;background:var(--neutral-tint);border-radius:8px">
+            <button aria-pressed="true" style="height:26px;padding:0 10px;border-radius:6px;border:none;background:var(--surface);box-shadow:0 1px 2px rgba(15,23,42,.12);color:var(--ink);font:inherit;font-size:13px;font-weight:600">Table</button>
+            <button aria-pressed="false" style="height:26px;padding:0 10px;border-radius:6px;border:none;background:transparent;color:var(--ink-soft);font:inherit;font-size:13px;font-weight:500;cursor:pointer">Calendar</button>
+          </div>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);display:flex;flex-direction:column;position:relative;z-index:2">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:16px 20px 8px"><div style="display:flex;align-items:baseline;gap:12px"><span style="font-size:16px;line-height:22px;font-weight:600">Quick entry</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted)">Tab moves on · Enter adds a row · today and Girokonto are filled in</span></div><button style="height:28px;padding:0 10px;border-radius:6px;border:none;background:transparent;color:var(--ink-soft);font:inherit;font-size:13px;font-weight:500;cursor:pointer" style-hover="background:var(--neutral-tint)">Hide</button></div>
+          <div style="display:grid;grid-template-columns:150px minmax(0,2fr) minmax(0,1.4fr) 160px minmax(0,1fr) 32px;gap:8px;padding:0 20px;height:28px;align-items:center;font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)"><span>Date</span><span>Payee</span><span>Category</span><span style="text-align:right">Amount</span><span>Account</span><span></span></div>
+          <sc-for list="{{ entry }}" as="e" hint-placeholder-count="3">
+            <div style="display:grid;grid-template-columns:150px minmax(0,2fr) minmax(0,1.4fr) 160px minmax(0,1fr) 32px;gap:8px;padding:4px 20px;align-items:start;position:relative">
+              <input aria-label="Date" value="{{ e.d }}" style="height:32px;padding:0 10px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;box-sizing:border-box;width:100%">
+              <input aria-label="Payee" value="{{ e.p }}" placeholder="Who did you pay?" style="height:32px;padding:0 10px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;box-sizing:border-box;width:100%">
+              <div style="position:relative">
+                <button aria-label="Category" aria-expanded="{{ e.open }}" style="width:100%;height:32px;padding:0 10px;border-radius:6px;border:1px solid {{ e.catBorder }};box-shadow:{{ e.catRing }};background:var(--surface);color:{{ e.catFg }};font:inherit;font-size:13px;display:flex;align-items:center;gap:8px;text-align:left;cursor:pointer"><span style="width:8px;height:8px;border-radius:50%;background:{{ e.dot }};flex:none"></span><span style="flex:1">{{ e.c }}</span><span aria-hidden="true" style="font-size:10px;color:var(--ink-soft)">▼</span></button>
+                <sc-if value="{{ e.isOpen }}" hint-placeholder-val="{{ false }}">
+                  <div role="listbox" aria-label="Category" style="position:absolute;top:38px;left:0;width:260px;background:var(--surface-raised);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow-pop);padding:6px;z-index:5;display:flex;flex-direction:column">
+                    <span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted);padding:4px 8px">Recent</span>
+                    <sc-for list="{{ recent }}" as="o" hint-placeholder-count="3">
+                      <div role="option" aria-selected="{{ o.sel }}" style="height:32px;padding:0 8px;border-radius:6px;display:flex;align-items:center;gap:8px;font-size:13px;background:{{ o.bg }}"><span style="width:8px;height:8px;border-radius:50%;background:{{ o.dot }}"></span><span style="flex:1">{{ o.n }}</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted)">{{ o.k }}</span></div>
+                    </sc-for>
+                    <div style="height:1px;background:var(--border);margin:4px 0"></div>
+                    <span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted);padding:4px 8px">All categories</span>
+                    <sc-for list="{{ allCats }}" as="o" hint-placeholder-count="3">
+                      <div role="option" aria-selected="false" style="height:32px;padding:0 8px;border-radius:6px;display:flex;align-items:center;gap:8px;font-size:13px"><span style="width:8px;height:8px;border-radius:50%;background:{{ o.dot }}"></span>{{ o.n }}</div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:4px">
+                <div style="position:relative;display:flex;align-items:center"><input aria-label="Amount in euros" aria-invalid="{{ e.err }}" value="{{ e.a }}" placeholder="0,00" style="width:100%;height:32px;padding:0 26px 0 10px;border-radius:6px;border:{{ e.amtBorder }};background:var(--surface);color:var(--ink);font:inherit;font-size:13px;text-align:right;box-sizing:border-box"><span style="position:absolute;right:10px;font-size:13px;color:var(--ink-muted)">€</span></div>
+                <sc-if value="{{ e.hasErr }}" hint-placeholder-val="{{ false }}"><span style="display:flex;gap:5px;align-items:center;font-size:12px;font-weight:var(--w-sm);color:var(--negative)"><span aria-hidden="true" style="width:13px;height:13px;border-radius:50%;border:1.5px solid currentColor;display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;line-height:1">×</span>Use a number like 12,50</span></sc-if>
+              </div>
+              <button aria-label="Account" style="height:32px;padding:0 10px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;display:flex;align-items:center;justify-content:space-between;cursor:pointer">{{ e.acc }}<span aria-hidden="true" style="font-size:10px;color:var(--ink-soft)">▼</span></button>
+              <button aria-label="Remove row" style="width:32px;height:32px;border-radius:6px;border:none;background:transparent;color:var(--ink-muted);font:inherit;font-size:15px;cursor:pointer" style-hover="background:var(--neutral-tint);color:var(--ink)">×</button>
+            </div>
+          </sc-for>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 20px 16px;margin-top:4px;border-top:1px solid var(--border)">
+            <span style="font-size:13px;color:var(--ink-soft)">Fix 1 amount to save all rows. Nothing is saved until you press Save.</span>
+            <div style="display:flex;gap:8px">
+              <button style="height:32px;padding:0 12px;border-radius:6px;border:none;background:transparent;color:var(--primary);font:inherit;font-size:13px;font-weight:500;cursor:pointer" style-hover="background:var(--primary-tint)">+ Add row</button>
+              <button disabled style="height:32px;padding:0 14px;border-radius:6px;border:none;background:var(--neutral-tint);color:var(--ink-muted);font:inherit;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;cursor:not-allowed">Save 3 rows<span style="font-size:12px;font-weight:500">⌘↵</span></button>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);overflow:hidden">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;min-height:32px;background:{{ bar.bg }}">
+              <sc-if value="{{ bar.any }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;align-items:center;gap:12px;flex:1"><span style="font-size:13px;font-weight:600">{{ bar.text }}</span><span style="font-size:13px;color:var(--ink-soft)">{{ bar.sum }}</span><div style="flex:1"></div>
+                  <button style="height:28px;padding:0 10px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:500;cursor:pointer">Change category</button>
+                  <button style="height:28px;padding:0 10px;border-radius:6px;border:1px solid var(--negative);background:var(--surface);color:var(--negative);font:inherit;font-size:13px;font-weight:500;cursor:pointer">Delete…</button>
+                  <button onClick="{{ clearSel }}" style="height:28px;padding:0 10px;border-radius:6px;border:none;background:transparent;color:var(--ink-soft);font:inherit;font-size:13px;font-weight:500;cursor:pointer">Clear</button>
+                </div>
+              </sc-if>
+              <sc-if value="{{ bar.none }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;align-items:center;gap:20px;flex:1;font-size:13px"><span style="font-weight:600">November</span><span style="color:var(--ink-soft)">Cash in <b style="font-weight:600;color:var(--positive)">+4.180,00 €</b></span><span style="color:var(--ink-soft)">Cash out <b style="font-weight:600;color:var(--ink)">−3.568,00 €</b></span><span style="color:var(--ink-soft)">Kept <b style="font-weight:600;color:var(--ink)">+612,00 €</b></span></div>
+              </sc-if>
+            </div>
+            <div style="position:sticky;top:56px;display:grid;grid-template-columns:28px 72px minmax(0,2fr) minmax(0,1.3fr) minmax(0,1fr) 130px 64px;gap:12px;padding:0 20px;height:32px;align-items:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border-strong);font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft);background:var(--surface)"><span></span><span>Date</span><span>Payee</span><span>Category</span><span>Account</span><span style="text-align:right">Amount ▾</span><span></span></div>
+            <sc-for list="{{ groups }}" as="g" hint-placeholder-count="5">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:0 20px 0 60px;height:28px;background:var(--bg);border-bottom:1px solid var(--border);font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)"><span>{{ g.day }}</span><span>{{ g.total }}</span></div>
+              <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="2">
+                <div style="display:grid;grid-template-columns:28px 72px minmax(0,2fr) minmax(0,1.3fr) minmax(0,1fr) 130px 64px;gap:12px;padding:0 20px;height:{{ rowH }};align-items:center;border-bottom:1px solid var(--border);font-size:13px;font-weight:var(--w-table);background:{{ r.bg }};box-shadow:{{ r.ring }}" style-hover="background:var(--neutral-tint)">
+                  <input type="checkbox" aria-label="{{ r.selLabel }}" checked="{{ r.sel }}" onChange="{{ r.toggle }}" style="width:16px;height:16px;margin:0;accent-color:var(--primary);cursor:pointer">
+                  <span style="color:var(--ink-soft)">{{ r.d }}</span>
+                  <span style="display:flex;align-items:center;gap:8px;min-width:0"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.p }}</span><sc-if value="{{ r.hasTag }}" hint-placeholder-val="{{ false }}"><span style="flex:none;font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft);border:1px solid var(--border-strong);border-radius:6px;padding:0 6px;line-height:18px">{{ r.tag }}</span></sc-if></span>
+                  <span><span style="display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:999px;background:{{ r.chipBg }};color:{{ r.chipFg }};font-size:12px;font-weight:var(--w-sm)"><span style="width:8px;height:8px;border-radius:50%;background:{{ r.dot }}"></span>{{ r.c }}</span></span>
+                  <span style="color:var(--ink-soft)">{{ r.acc }}</span>
+                  <span style="text-align:right;color:{{ r.ac }}">{{ r.a }}</span>
+                  <span style="display:flex;justify-content:flex-end;gap:2px;opacity:{{ r.actOp }}"><button aria-label="Edit" style="width:28px;height:28px;border-radius:6px;border:none;background:transparent;color:var(--ink-soft);font:inherit;font-size:13px;cursor:pointer" style-hover="background:var(--neutral-tint)">✎</button><button aria-label="Delete" style="width:28px;height:28px;border-radius:6px;border:none;background:transparent;color:var(--ink-soft);font:inherit;font-size:14px;cursor:pointer" style-hover="background:var(--negative-tint);color:var(--negative)">×</button></span>
+                </div>
+              </sc-for>
+            </sc-for>
+            <div style="display:grid;grid-template-columns:28px 72px minmax(0,2fr) minmax(0,1.3fr) minmax(0,1fr) 130px 64px;gap:12px;padding:0 20px;height:40px;align-items:center;font-size:13px;font-weight:600;border-top:1px solid var(--border-strong)"><span></span><span></span><span>Shown: 12 of 64</span><span></span><span style="color:var(--ink-soft);font-weight:500">Sum</span><span style="text-align:right">{{ shownSum }}</span><span></span></div>
+            <div style="padding:10px 20px 14px;display:flex;justify-content:space-between;font-size:13px;color:var(--ink-soft)"><span>↑↓ move · Space selects · Enter edits · ⌫ deletes (asks first)</span><a href="#" style="font-weight:500;color:var(--primary)">Show 52 more</a></div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:14px 16px;display:flex;flex-direction:column;gap:10px">
+              <span style="display:inline-flex;align-self:flex-start;align-items:center;gap:6px;height:24px;padding:0 8px 0 5px;border-radius:6px;background:var(--info-tint);color:var(--info);font-size:12px;font-weight:var(--w-sm)"><span aria-hidden="true" style="width:14px;height:14px;border-radius:50%;border:1.5px solid currentColor;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;line-height:1">i</span>Suggestion</span>
+              <span style="font-size:14px;line-height:20px"><b style="font-weight:600">“Netflix” appeared 3 months in a row</b> <span style="color:var(--ink-soft)">for 13,99 €. Add it as a monthly bill so it shows in the calendar and forecast?</span></span>
+              <div style="display:flex;gap:8px"><button style="height:32px;padding:0 12px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:500;cursor:pointer">Add as a bill</button><button style="height:32px;padding:0 12px;border-radius:6px;border:none;background:transparent;color:var(--ink-soft);font:inherit;font-size:13px;font-weight:500;cursor:pointer">No thanks</button></div>
+            </div>
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);display:flex;flex-direction:column">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;padding:16px 16px 8px"><span style="font-size:16px;line-height:22px;font-weight:600">Recurring bills</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted)">1.580,94 € / month</span></div>
+              <div style="padding:0 16px">
+                <sc-for list="{{ bills }}" as="b" hint-placeholder-count="5">
+                  <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px"><span style="font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ b.n }}</span><span style="text-align:right">{{ b.a }}</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">{{ b.r }}</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft);text-align:right">{{ b.from }}</span></div>
+                </sc-for>
+              </div>
+              <div style="padding:10px 16px 14px"><button style="height:32px;padding:0 10px;border-radius:6px;border:none;background:transparent;color:var(--primary);font:inherit;font-size:13px;font-weight:500;cursor:pointer;margin-left:-10px" style-hover="background:var(--primary-tint)">+ Add bill</button></div>
+            </div>
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);display:flex;flex-direction:column">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;padding:16px 16px 4px"><span style="font-size:16px;line-height:22px;font-weight:600">Payee rules</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted)">used on import</span></div>
+              <span style="font-size:13px;color:var(--ink-soft);padding:0 16px 8px">When the payee contains the text, the category is filled in for you.</span>
+              <div style="padding:0 16px">
+                <sc-for list="{{ rules }}" as="r" hint-placeholder-count="4">
+                  <div style="display:grid;grid-template-columns:minmax(0,1fr) 16px minmax(0,1fr);gap:8px;align-items:center;height:36px;border-bottom:1px solid var(--border);font-size:13px"><span style="font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:12px;font-weight:var(--w-sm);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.t }}</span><span aria-hidden="true" style="color:var(--ink-muted)">→</span><span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)"><span style="width:8px;height:8px;border-radius:50%;background:{{ r.dot }}"></span>{{ r.c }}</span></div>
+                </sc-for>
+              </div>
+              <div style="padding:10px 16px 14px"><button style="height:32px;padding:0 10px;border-radius:6px;border:none;background:transparent;color:var(--primary);font:inherit;font-size:13px;font-weight:500;cursor:pointer;margin-left:-10px" style-hover="background:var(--primary-tint)">+ Add rule</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button aria-label="Calculator (⌘K)" title="Calculator (⌘K)" style="position:absolute;right:24px;bottom:24px;width:48px;height:48px;border-radius:999px;border:none;background:var(--primary);color:var(--on-primary);font:inherit;font-size:20px;font-weight:600;box-shadow:var(--shadow-pop);cursor:pointer" style-hover="background:var(--primary-hover)">±</button>
+    </div>
+    </div>
+  </div>
+  </sc-for>
+
+  <div id="T3" style="display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;align-items:center;gap:10px"><span style="background:#1E293B;color:#FFFFFF;font-size:13px;font-weight:600;padding:3px 8px;border-radius:6px">T3</span><span style="font-size:15px;font-weight:600;color:#1E293B">Joint profile · light · 14px minimum</span></div>
+    <div data-screen-label="Joint transactions" style="{{ jointVars }}">
+    <div style="width:1200px;background:var(--bg);color:var(--ink);border-radius:12px;overflow:hidden;box-shadow:0 24px 64px rgba(15,23,42,.18);border:1px solid var(--border)">
+      <div style="height:28px;background:var(--surface);display:flex;align-items:center;gap:8px;padding:0 12px"><span style="width:12px;height:12px;border-radius:50%;background:#FF5F57"></span><span style="width:12px;height:12px;border-radius:50%;background:#FEBC2E"></span><span style="width:12px;height:12px;border-radius:50%;background:#28C840"></span></div>
+      <div style="background:var(--surface);border-bottom:1px solid var(--border);height:64px;display:flex;align-items:center;gap:24px;padding:0 32px">
+        <div style="display:flex;align-items:center;gap:10px"><span style="width:28px;height:28px;border-radius:7px;background:var(--logo)"></span><span style="font-size:17px;font-weight:600">Centwise</span></div>
+        <nav aria-label="Main" style="display:flex;gap:2px;padding:3px;background:var(--neutral-tint);border-radius:10px">
+          <sc-for list="{{ jointTabs }}" as="tb" hint-placeholder-count="4">
+            <a href="{{ tb.href }}" aria-current="{{ tb.cur }}" style="height:38px;padding:0 18px;border-radius:8px;background:{{ tb.bg }};box-shadow:{{ tb.sh }};color:{{ tb.fg }};font-size:15px;font-weight:{{ tb.w }};display:flex;align-items:center;text-decoration:none" style-hover="color:var(--ink);text-decoration:none">{{ tb.label }}</a>
+          </sc-for>
+        </nav>
+        <div style="flex:1"></div>
+        <button style="height:38px;padding:0 14px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:15px;font-weight:500;display:flex;align-items:center;gap:8px">November 2026<span aria-hidden="true" style="font-size:14px;color:var(--ink-soft)">▾</span></button>
+        <button style="height:38px;padding:0 14px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:15px;font-weight:500;display:flex;align-items:center;gap:8px">Joint<span aria-hidden="true" style="font-size:14px;color:var(--ink-soft)">▾</span></button>
+      </div>
+
+      <div style="padding:32px 40px 40px;display:flex;flex-direction:column;gap:24px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px">
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <span style="font-size:15px;color:var(--ink-soft)">Our shared account · November</span>
+            <h2 style="margin:0;font-size:32px;line-height:40px;font-weight:600">Everything we paid together</h2>
+          </div>
+          <button style="height:44px;padding:0 18px;border-radius:8px;border:none;background:var(--primary);color:var(--on-primary);font:inherit;font-size:15px;font-weight:600;cursor:pointer" style-hover="background:var(--primary-hover)">Add a payment</button>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px">
+          <sc-for list="{{ jointSum }}" as="k" hint-placeholder-count="3">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:20px 24px;display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:15px;font-weight:500;color:var(--ink-soft)">{{ k.label }}</span>
+              <span style="font-size:28px;line-height:34px;font-weight:600;color:{{ k.c }}">{{ k.value }}</span>
+              <span style="font-size:14px;line-height:20px;color:var(--ink-soft)">{{ k.note }}</span>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="display:flex;gap:12px;align-items:center">
+          <label style="position:relative;display:flex;align-items:center;flex:1"><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Search</span><span aria-hidden="true" style="position:absolute;left:14px;font-size:15px;color:var(--ink-muted)">⌕</span><input type="search" placeholder="Search, for example “REWE” or “48,50”" style="width:100%;height:44px;padding:0 14px 0 36px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:15px;box-sizing:border-box"></label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:15px;color:var(--ink-soft)">Show<select style="height:44px;padding:0 12px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:15px"><option>Everything</option><option>Only money in</option><option>Only money out</option></select></label>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);overflow:hidden">
+          <sc-for list="{{ jointGroups }}" as="g" hint-placeholder-count="4">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:0 24px;height:40px;background:var(--bg);border-bottom:1px solid var(--border);font-size:14px;font-weight:600;color:var(--ink-soft)"><span>{{ g.day }}</span></div>
+            <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="2">
+              <div style="display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1.2fr) 180px;gap:16px;padding:0 24px;height:56px;align-items:center;border-bottom:1px solid var(--border);font-size:15px" style-hover="background:var(--neutral-tint)">
+                <span style="display:flex;flex-direction:column"><span style="font-weight:500">{{ r.p }}</span><span style="font-size:14px;color:var(--ink-soft)">{{ r.who }}</span></span>
+                <span><span style="display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:999px;background:var(--neutral-tint);color:var(--ink-soft);font-size:14px;font-weight:500"><span style="width:8px;height:8px;border-radius:50%;background:{{ r.dot }}"></span>{{ r.c }}</span></span>
+                <span style="text-align:right;color:{{ r.ac }};font-weight:500">{{ r.a }}</span>
+              </div>
+            </sc-for>
+          </sc-for>
+          <div style="padding:16px 24px;font-size:15px;color:var(--ink-soft)">That’s everything from 1 to 19 November.</div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"rowDensity":{"editor":"enum","options":["comfortable","compact"],"default":"comfortable","tsType":"&#39;comfortable&#39;|&#39;compact&#39;"}}'>
+const BASE = {
+  light: { 'bg':'#F7F8FA','surface':'#FFFFFF','surface-raised':'#FFFFFF','border':'#E2E8F0','border-strong':'#7D8A9E','ink':'#1E293B','ink-soft':'#475569','ink-muted':'#5E6E82','primary':'#24508F','primary-hover':'#1D4278','primary-tint':'#EAF0F8','secondary':'#0F766E','positive':'#0F766E','positive-tint':'#E6F4F1','negative':'#B42318','negative-tint':'#FCEBE9','warning':'#B45309','warning-tint':'#FDF1E3','warning-ink':'#92400E','info':'#24508F','info-tint':'#EAF0F8','neutral-tint':'#F1F5F9','invest':'#7C4DBE','invest-tint':'#F1EBFA','gold':'#F2C14E','gold-ink':'#8A6100','logo':'#6D28D9','focus-ring':'#24508F','on-primary':'#FFFFFF','track':'#E2E8F0','shadow':'0 1px 2px rgba(15,23,42,.06)','shadow-pop':'0 8px 24px rgba(15,23,42,.12)','band50':'rgba(36,80,143,.24)','band80':'rgba(36,80,143,.12)','w-sm':'500','w-table':'400',
+    chart:['#24508F','#E69F00','#56B4E9','#009E73','#CC79A7','#D55E00','#8C6D31','#94A3B8'] },
+  dark: { 'bg':'#111827','surface':'#1A2332','surface-raised':'#222D3F','border':'#2A3546','border-strong':'#64748B','ink':'#E6EAF0','ink-soft':'#C8D1DC','ink-muted':'#AEB9C8','primary':'#9BBDF0','primary-hover':'#B4CDF4','primary-tint':'#1B2E4D','secondary':'#5ECDBB','positive':'#5ECDBB','positive-tint':'#12352F','negative':'#F7A891','negative-tint':'#3D1F1A','warning':'#E8B04A','warning-tint':'#3A2A12','warning-ink':'#E8B04A','info':'#9BBDF0','info-tint':'#1B2E4D','neutral-tint':'#243042','invest':'#C3AEF0','invest-tint':'#2B2347','gold':'#F2C14E','gold-ink':'#F2C14E','logo':'#A78BFA','focus-ring':'#9BBDF0','on-primary':'#111827','track':'#334155','shadow':'none','shadow-pop':'none','band50':'rgba(155,189,240,.24)','band80':'rgba(155,189,240,.12)','w-sm':'600','w-table':'500',
+    chart:['#7AA7E6','#F0B640','#7CC8F0','#33C49A','#DE9AC2','#F08A4B','#C9A86A','#8D9AAD'] }
+};
+function toVars(P) { const v = {}; Object.keys(P).forEach(k => { if (k !== 'chart') v['--' + k] = P[k]; }); P.chart.forEach((c, i) => v['--chart-' + (i + 1)] = c); return v; }
+const eur = (n, dec = 2, sign = false) => { if (n == null) return '—'; const s = Math.abs(n).toLocaleString('de-DE', { minimumFractionDigits: dec, maximumFractionDigits: dec }); return (n < 0 ? '−' : (sign && n > 0 ? '+' : '')) + s + ' €'; };
+const PAGES = ['Overview.dc.html', 'Transactions.dc.html', 'Calendar.dc.html', 'Forecast.dc.html', 'Net worth.dc.html', 'Settings.dc.html'];
+const tabsFor = (labels, active) => labels.map((label, i) => ({ label, key: '⌘' + (i + 1), href: PAGES[i], cur: i === active ? 'page' : 'false', bg: i === active ? 'var(--surface)' : 'transparent', sh: i === active ? '0 1px 2px rgba(15,23,42,.12)' : 'none', fg: i === active ? 'var(--ink)' : 'var(--ink-soft)', w: i === active ? 600 : 500 }));
+const C = BASE.light.chart.map((_, i) => `var(--chart-${i + 1})`);
+const CAT = { Groceries:1, Income:4, Utilities:3, Household:7, 'Dining out':2, Investments:0, Clothing:5, Transport:6, Hobbies:4, Transfer:7, Entertainment:5, Internet:3 };
+
+const GROUPS = [
+  ['Thu 19.11.', [['g1','19.11.','REWE Markt','Groceries','Girokonto',-64.18], ['g2','19.11.','Bäckerei Veit','Groceries','Girokonto',-6.40]]],
+  ['Wed 18.11.', [['s1','18.11.','Salary · Müller & Partner','Income','Girokonto',3420], ['u1','18.11.','Stadtwerke','Utilities','Girokonto',-86]]],
+  ['Tue 17.11.', [['t1','17.11.','DB Fernverkehr','Transport','Kreditkarte',-29.90]]],
+  ['Mon 16.11.', [['d1','16.11.','Trattoria Da Enzo','Dining out','Kreditkarte',-48.50]]],
+  ['Sun 15.11.', [['i1','15.11.','ETF savings plan · FTSE All-World','Investments','Depot',-500], ['j1','15.11.','Transfer to Joint','Transfer','Girokonto',-900,'Personal ↔ Joint']]],
+  ['Fri 13.11.', [['z1','13.11.','Zalando','Clothing','Kreditkarte',-89.90], ['z2','13.11.','Zalando · return','Clothing','Kreditkarte',45.00,'Refund']]],
+  ['Thu 12.11.', [['h1','12.11.','Thalia','Hobbies','Kreditkarte',-24.99], ['g3','12.11.','Aldi Süd','Groceries','Girokonto',-41.87]]]
+];
+const FOCUS = 'd1';
+
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { sel: { z1: true, z2: true } }; }
+  renderVals() {
+    const sel = this.state.sel || {};
+    const compact = this.props.rowDensity === 'compact';
+    const toggle = id => () => { const s = { ...(this.state.sel || {}) }; if (s[id]) delete s[id]; else s[id] = true; this.setState({ sel: s }); };
+    const all = GROUPS.flatMap(g => g[1]);
+    const chosen = all.filter(r => sel[r[0]]);
+    const any = chosen.length > 0;
+    const groups = GROUPS.map(([day, rows]) => ({
+      day, total: eur(rows.reduce((s, r) => s + r[5], 0), 2, true),
+      rows: rows.map(([id, d, p, c, acc, a, tag]) => {
+        const isSel = !!sel[id], isFocus = id === FOCUS;
+        const inv = c === 'Investments';
+        return { d, p, c, acc, a: eur(a, 2, true), ac: a > 0 ? 'var(--positive)' : 'var(--ink)', dot: C[CAT[c]],
+          chipBg: inv ? 'var(--invest-tint)' : 'var(--neutral-tint)', chipFg: inv ? 'var(--invest)' : 'var(--ink-soft)',
+          hasTag: !!tag, tag: tag || '', sel: isSel, selLabel: 'Select ' + p, toggle: toggle(id),
+          bg: isSel ? 'var(--primary-tint)' : 'transparent', ring: isFocus ? 'inset 0 0 0 2px var(--focus-ring)' : 'none', actOp: isFocus ? 1 : 0 };
+      })
+    }));
+    const catOpt = n => ({ n, dot: C[CAT[n]] });
+    return {
+      modes: [
+        { id:'T1', label:'Personal · light (default)', vars: toVars(BASE.light) },
+        { id:'T2', label:'Personal · dark', vars: toVars(BASE.dark) }
+      ],
+      jointVars: toVars(BASE.light),
+      tabs: tabsFor(['Overview', 'Transactions', 'Calendar', 'Forecast', 'Net worth', 'Settings'], 1),
+      jointTabs: tabsFor(['Overview', 'Transactions', 'Calendar', 'Forecast'], 1),
+      dropdowns: [{ k:'Month', v:'November' }, { k:'Year', v:'2026' }, { k:'Profile', v:'Personal' }],
+      filters: [{ k:'Type', v:'All types' }, { k:'Month', v:'November' }, { k:'Category', v:'All categories' }],
+      rowH: (compact ? 32 : 36) + 'px',
+      groups, shownSum: eur(all.reduce((s, r) => s + r[5], 0), 2, true),
+      bar: { any, none: !any, bg: any ? 'var(--primary-tint)' : 'transparent', text: chosen.length + ' selected', sum: 'Sum ' + eur(chosen.reduce((s, r) => s + r[5], 0), 2, true) },
+      clearSel: () => this.setState({ sel: {} }),
+      entry: [
+        { d:'19.11.2026', p:'Rossmann', c:'Household', dot:C[CAT.Household], catFg:'var(--ink)', catBorder:'var(--border-strong)', catRing:'none', open:'false', isOpen:false, a:'12,95', err:'false', hasErr:false, amtBorder:'1px solid var(--border-strong)', acc:'Girokonto' },
+        { d:'19.11.2026', p:'Kino Rex', c:'Hobbies', dot:C[CAT.Hobbies], catFg:'var(--ink)', catBorder:'var(--border-strong)', catRing:'none', open:'false', isOpen:false, a:'12.5x', err:'true', hasErr:true, amtBorder:'2px solid var(--negative)', acc:'Kreditkarte' },
+        { d:'19.11.2026', p:'', c:'Choose category', dot:'var(--border-strong)', catFg:'var(--ink-muted)', catBorder:'var(--focus-ring)', catRing:'0 0 0 2px var(--surface), 0 0 0 4px var(--focus-ring)', open:'true', isOpen:true, a:'', err:'false', hasErr:false, amtBorder:'1px solid var(--border-strong)', acc:'Girokonto' }
+      ],
+      recent: [{ n:'Groceries', k:'used today', sel:'true', bg:'var(--primary-tint)' }, { n:'Dining out', k:'3 days ago', sel:'false', bg:'transparent' }, { n:'Household', k:'today', sel:'false', bg:'transparent' }].map(o => ({ ...o, dot: C[CAT[o.n]] })),
+      allCats: ['Clothing', 'Hobbies', 'Transport'].map(catOpt),
+      bills: [
+        { n:'Rent · Wohnbau Süd', a: eur(-1150), r:'Monthly · next 21.11.', from:'Paid from liquidity' },
+        { n:'Allianz Haftpflicht', a: eur(-136.53), r:'Yearly · next 28.11.', from:'Paid from sinking fund' },
+        { n:'Telekom Mobilfunk', a: eur(-39.95), r:'Monthly · next 24.11.', from:'Paid from liquidity' },
+        { n:'Fitnessstudio', a: eur(-29.90), r:'Monthly · next 02.12.', from:'Paid from liquidity' },
+        { n:'Spotify Family', a: eur(-17.99), r:'Monthly · next 01.12.', from:'Paid from liquidity' }
+      ],
+      rules: [['REWE', 'Groceries'], ['STADTWERKE', 'Utilities'], ['DB FERNVERKEHR', 'Transport'], ['VANGUARD FTSE', 'Investments']].map(([t, c]) => ({ t, c, dot: C[CAT[c]] })),
+      jointSum: [
+        { label:'Money in', value: eur(1800, 0, true), c:'var(--positive)', note:'900 € from each of us on the 15th.' },
+        { label:'Money out', value: eur(-1868, 0), c:'var(--ink)', note:'About 40 € less than usual.' },
+        { label:'Left in the account', value: eur(2140, 0), c:'var(--ink)', note:'Enough for the 3 bills still to come.' }
+      ],
+      jointGroups: [
+        ['Thursday, 19 November', [['REWE Markt', 'Paid by card', 'Groceries', -64.18]]],
+        ['Tuesday, 17 November', [['IKEA', 'Paid by card', 'Household', -129]]],
+        ['Monday, 16 November', [['Trattoria Da Enzo', 'Paid by card', 'Dining out', -48.5]]],
+        ['Sunday, 15 November', [['Monthly transfer', 'From Josué', 'Income', 900], ['Monthly transfer', 'From partner', 'Income', 900]]],
+        ['Thursday, 12 November', [['Aldi Süd', 'Paid by card', 'Groceries', -41.87], ['dm Drogerie', 'Paid by card', 'Household', -23.45]]]
+      ].map(([day, rows]) => ({ day, rows: rows.map(([p, who, c, a]) => ({ p, who, c, a: eur(a, 2, true), ac: a > 0 ? 'var(--positive)' : 'var(--ink)', dot: C[CAT[c]] })) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

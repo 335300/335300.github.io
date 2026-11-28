@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>body{margin:0;background:#E9ECF1;-webkit-font-smoothing:antialiased}a{color:#24508F;text-decoration:none}a:hover{color:#183A6B;text-decoration:underline}@media (prefers-reduced-motion: reduce){*{transition-property:opacity!important}}</style>
+</helmet>
+<div style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Helvetica,Arial,sans-serif;font-variant-numeric:tabular-nums;color:#1E293B;padding:40px 32px 64px;display:flex;flex-direction:column;gap:32px;max-width:1360px;margin:0 auto">
+  <header style="display:flex;flex-direction:column;gap:8px;max-width:900px">
+    <div style="font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#475569">Personal Centwise · Deliverable B</div>
+    <h1 style="margin:0;font-size:32px;line-height:38px;font-weight:600">Style guide &amp; components</h1>
+    <p style="margin:0;font-size:14px;line-height:20px;color:#475569;text-wrap:pretty">Foundations and the full component set, rendered from the same markup in light and dark. Every status is icon + word; every sign is −/+ or ▲/▼. Amounts are tabular, right-aligned, German-formatted with a no-break space before €.</p>
+    <div style="display:flex;gap:16px;font-size:13px"><a href="#sg-light">Light</a><a href="#sg-dark">Dark</a><a href="Palette Sheet.dc.html">Palette sheet</a><a href="Overview.dc.html">Overview screens</a></div>
+  </header>
+
+  <sc-for list="{{ modes }}" as="m" hint-placeholder-count="2">
+  <div style="{{ m.vars }}" id="{{ m.id }}">
+  <section style="background:var(--bg);color:var(--ink);border:1px solid var(--border);border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:40px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap">
+      <h2 style="margin:0;font-size:24px;line-height:30px;font-weight:600;white-space:nowrap;flex:none">{{ m.label }}</h2>
+      <span style="font-size:13px;color:var(--ink-soft)">{{ m.sub }}</span>
+    </div>
+
+    <!-- FOUNDATIONS -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:16px">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:20px;display:flex;flex-direction:column;gap:12px">
+        <div style="font-size:16px;line-height:22px;font-weight:600">Type scale · SF Pro</div>
+        <sc-for list="{{ m.type }}" as="t" hint-placeholder-count="7">
+          <div style="display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;align-items:baseline;padding:6px 0;border-bottom:1px solid var(--border)">
+            <div style="display:flex;flex-direction:column"><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">{{ t.name }}</span><span style="font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted)">{{ t.spec }}</span></div>
+            <span style="font-size:{{ t.size }};line-height:{{ t.lh }};font-weight:{{ t.w }}">{{ t.sample }}</span>
+          </div>
+        </sc-for>
+        <p style="margin:0;font-size:12px;font-weight:var(--w-sm);line-height:17px;color:var(--ink-soft)">Minimum 12px / 500. Dark mode: text ≤ 13px gets +100 weight. Joint profile: 14px minimum everywhere. All numbers: <span style="font-family:'SF Mono',ui-monospace,Menlo,monospace">font-variant-numeric: tabular-nums</span>.</p>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:20px;display:flex;flex-direction:column;gap:10px">
+          <div style="font-size:16px;line-height:22px;font-weight:600">Number formatting</div>
+          <sc-for list="{{ numbers }}" as="n" hint-placeholder-count="7">
+            <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:baseline;font-size:13px;padding:4px 0;border-bottom:1px solid var(--border)">
+              <span style="color:var(--ink-soft)">{{ n.label }}</span>
+              <span style="text-align:right;font-weight:600;color:{{ n.color }}">{{ n.value }}</span>
+            </div>
+          </sc-for>
+          <p style="margin:0;font-size:12px;font-weight:var(--w-sm);line-height:17px;color:var(--ink-soft)">True minus U+2212, never a hyphen. Gains get +; teal only on outcomes that are good for the user. Spending stays ink — red is reserved for losses and exceeded budgets.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:20px;display:flex;flex-direction:column;gap:8px">
+            <div style="font-size:16px;line-height:22px;font-weight:600">Spacing · 4px grid</div>
+            <sc-for list="{{ spacing }}" as="s" hint-placeholder-count="7">
+              <div style="display:flex;align-items:center;gap:10px;font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)"><span style="width:24px;text-align:right">{{ s.v }}</span><span style="height:10px;width:{{ s.w }};background:var(--primary);border-radius:2px"></span></div>
+            </sc-for>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:20px;display:flex;flex-direction:column;gap:12px">
+            <div style="font-size:16px;line-height:22px;font-weight:600">Radii</div>
+            <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap">
+              <div style="display:flex;flex-direction:column;gap:6px;align-items:center"><span style="width:48px;height:32px;border:1px solid var(--border-strong);border-radius:6px"></span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">6 · input</span></div>
+              <div style="display:flex;flex-direction:column;gap:6px;align-items:center"><span style="width:56px;height:48px;border:1px solid var(--border-strong);border-radius:12px"></span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">12 · card</span></div>
+              <div style="display:flex;flex-direction:column;gap:6px;align-items:center"><span style="width:64px;height:24px;border:1px solid var(--border-strong);border-radius:999px"></span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">999 · pill</span></div>
+            </div>
+            <div style="font-size:16px;line-height:22px;font-weight:600;margin-top:4px">Targets</div>
+            <div style="font-size:12px;font-weight:var(--w-sm);line-height:17px;color:var(--ink-soft)">Min 24px, aim 32px. Rows 36px (compact 32px). Card padding 16–20.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:20px;display:flex;flex-direction:column;gap:12px">
+        <div style="font-size:16px;line-height:22px;font-weight:600">Elevation</div>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:12px;background:var(--bg);border-radius:12px">
+          <div style="height:72px;border-radius:12px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:flex-end;padding:8px;font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">Card · {{ m.elev1 }}</div>
+          <div style="height:72px;border-radius:12px;background:var(--surface-raised);border:1px solid var(--border);box-shadow:var(--shadow);display:flex;align-items:flex-end;padding:8px;font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">Raised · {{ m.elev2 }}</div>
+          <div style="height:72px;border-radius:12px;background:var(--surface-raised);border:1px solid var(--border);box-shadow:var(--shadow-pop);display:flex;align-items:flex-end;padding:8px;font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">Popover · {{ m.elev3 }}</div>
+        </div>
+        <div style="font-size:16px;line-height:22px;font-weight:600;margin-top:4px">Icons</div>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">
+          <sc-for list="{{ icons }}" as="i" hint-placeholder-count="9">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:44px"><span style="width:16px;height:16px;border-radius:{{ i.r }};border:{{ i.b }};display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;line-height:1;color:{{ i.c }}">{{ i.g }}</span><span>{{ i.n }}</span></div>
+          </sc-for>
+        </div>
+        <div style="font-size:12px;font-weight:var(--w-sm);line-height:17px;color:var(--ink-soft)">16px glyphs, 1,5px stroke, always paired with a word. In-app: SF Symbols at matching weight.</div>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:20px;display:flex;flex-direction:column;gap:8px">
+        <div style="font-size:16px;line-height:22px;font-weight:600">Motion</div>
+        <sc-for list="{{ motion }}" as="mo" hint-placeholder-count="6">
+          <div style="display:grid;grid-template-columns:150px minmax(0,1fr);gap:12px;font-size:13px;line-height:18px;padding:6px 0;border-bottom:1px solid var(--border)">
+            <span style="font-weight:600">{{ mo.k }}</span><span style="color:var(--ink-soft)">{{ mo.v }}</span>
+          </div>
+        </sc-for>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
+          <button style="height:32px;padding:0 14px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:500;cursor:pointer;transition:background-color 120ms ease-out" style-hover="background:var(--neutral-tint)" style-active="background:var(--border)">Hover me · 120 ms</button>
+          <span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted)">No animated counting numbers.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1 HEADER -->
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;align-items:baseline;gap:12px"><h3 style="margin:0;font-size:18px;line-height:24px;font-weight:600">1 · Sticky header</h3><span style="font-size:13px;color:var(--ink-muted)">56px · surface + hairline · ⌘1–6 switch tabs</span></div>
+      <div style="position:relative;background:var(--bg);border:1px solid var(--border);border-radius:12px;overflow:hidden;height:180px">
+        <div style="position:sticky;top:0;background:var(--surface);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center;gap:16px;padding:0 16px">
+          <div style="display:flex;align-items:center;gap:8px;flex:none"><span style="width:24px;height:24px;border-radius:6px;background:var(--logo)"></span><span style="font-size:15px;font-weight:600">Centwise</span></div>
+          <div style="display:flex;gap:2px;padding:3px;background:var(--neutral-tint);border-radius:8px;flex:none">
+            <sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="6">
+              <button onClick="{{ tb.select }}" style="height:30px;padding:0 10px;border-radius:6px;border:none;background:{{ tb.bg }};box-shadow:{{ tb.sh }};color:{{ tb.fg }};font:inherit;font-size:13px;font-weight:{{ tb.w }};display:flex;align-items:center;gap:6px;cursor:pointer;transition:background-color 120ms ease-out">{{ tb.label }}<span style="font-size:12px;font-weight:500;color:var(--ink-muted)">{{ tb.key }}</span></button>
+            </sc-for>
+          </div>
+          <div style="flex:1"></div>
+          <div style="display:flex;gap:8px;flex:none">
+            <sc-for list="{{ dropdowns }}" as="dd" hint-placeholder-count="3">
+              <button style="height:32px;padding:0 10px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;cursor:pointer" style-hover="background:var(--neutral-tint)"><span style="color:var(--ink-muted);font-size:12px">{{ dd.k }}</span>{{ dd.v }}<span style="font-size:10px;color:var(--ink-soft)">▼</span></button>
+            </sc-for>
+          </div>
+        </div>
+        <div style="padding:16px;font-size:13px;color:var(--ink-muted)">Page content scrolls under the header.</div>
+        <button title="Calculator (⌘K)" style="position:absolute;right:16px;bottom:16px;width:48px;height:48px;border-radius:999px;border:none;background:var(--primary);color:var(--on-primary);font:inherit;font-size:20px;font-weight:600;box-shadow:var(--shadow-pop);cursor:pointer" style-hover="background:var(--primary-hover)">±</button>
+        <span style="position:absolute;right:72px;bottom:28px;font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">Calculator ⌘K</span>
+      </div>
+    </div>
+
+    <!-- 2 KPI + 3 CARD -->
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;align-items:baseline;gap:12px"><h3 style="margin:0;font-size:18px;line-height:24px;font-weight:600">2 · KPI tiles</h3><span style="font-size:13px;color:var(--ink-muted)">Whole euros · compared with your usual month (median of last 6)</span></div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px">
+        <sc-for list="{{ kpiHero }}" as="k" hint-placeholder-count="3">
+          <div style="position:relative;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:20px;display:flex;flex-direction:column;gap:6px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+              <span style="font-size:13px;font-weight:500;color:var(--ink-soft)">{{ k.label }}</span>
+              <button onClick="{{ k.toggle }}" aria-label="What is this?" style="width:24px;height:24px;border-radius:999px;border:none;background:transparent;color:var(--ink-muted);display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:var(--neutral-tint)"><span style="width:14px;height:14px;border-radius:50%;border:1.5px solid currentColor;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;line-height:1">i</span></button>
+            </div>
+            <span style="font-size:28px;line-height:34px;font-weight:600;letter-spacing:-.01em">{{ k.value }}</span>
+            <span style="font-size:13px;line-height:18px;color:var(--ink-soft);display:flex;gap:6px;align-items:baseline"><span style="color:{{ k.cc }};font-size:11px">{{ k.ci }}</span>{{ k.cmp }}</span>
+            <sc-if value="{{ k.open }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute;top:44px;right:12px;z-index:2;width:260px;background:var(--surface-raised);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-pop);padding:12px 14px;display:flex;flex-direction:column;gap:6px">
+                <span style="font-size:13px;font-weight:600">{{ k.label }}</span>
+                <span style="font-size:13px;line-height:18px;color:var(--ink-soft);text-wrap:pretty">{{ k.help }}</span>
+                <a href="#" style="font-size:13px;color:var(--primary)">How it’s calculated →</a>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px">
+        <sc-for list="{{ kpiCompact }}" as="k" hint-placeholder-count="3">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:12px 16px;display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+            <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;font-weight:500;color:var(--ink-soft)">{{ k.label }}</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft);display:flex;gap:4px"><span style="color:{{ k.cc }}">{{ k.ci }}</span>{{ k.cmp }}</span></div>
+            <span style="font-size:20px;line-height:26px;font-weight:600">{{ k.value }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px;align-items:start">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <h3 style="margin:0;font-size:18px;line-height:24px;font-weight:600">3 · Card</h3>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);display:flex;flex-direction:column">
+          <div style="display:flex;align-items:center;gap:8px;padding:16px 20px 8px"><span style="font-size:16px;line-height:22px;font-weight:600">Upcoming bills</span><span style="width:14px;height:14px;border-radius:50%;border:1.5px solid var(--ink-muted);color:var(--ink-muted);display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;line-height:1">i</span><span style="flex:1"></span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted)">next 14 days</span></div>
+          <div style="padding:0 20px;display:flex;flex-direction:column">
+            <sc-for list="{{ bills }}" as="b" hint-placeholder-count="3">
+              <div style="display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:12px;align-items:center;height:36px;border-bottom:1px solid var(--border);font-size:13px"><span style="color:var(--ink-muted)">{{ b.d }}</span><span>{{ b.n }}</span><span style="text-align:right">{{ b.a }}</span></div>
+            </sc-for>
+          </div>
+          <div style="padding:12px 20px 16px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px;color:var(--ink-soft)">Total −1.326,48 €</span><a href="#" style="font-size:13px;font-weight:500;color:var(--primary)">Open calendar →</a></div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <h3 style="margin:0;font-size:18px;line-height:24px;font-weight:600">4 · Status badges</h3>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:20px;display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{ badges }}" as="bd" hint-placeholder-count="5">
+            <span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 8px 0 5px;border-radius:6px;background:{{ bd.bg }};color:{{ bd.fg }};font-size:12px;font-weight:var(--w-sm)"><span style="width:14px;height:14px;border-radius:50%;border:1.5px solid currentColor;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;line-height:1">{{ bd.i }}</span>{{ bd.w }}</span>
+          </sc-for>
+        </div>
+        <h3 style="margin:8px 0 0;font-size:18px;line-height:24px;font-weight:600">5 · Goal progress</h3>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:20px;display:flex;flex-direction:column;gap:16px">
+          <sc-for list="{{ goals }}" as="g" hint-placeholder-count="3">
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:13px"><span style="font-weight:600">{{ g.name }}</span><span style="color:var(--ink-soft)">{{ g.amt }}</span></div>
+              <div style="height:8px;border-radius:999px;background:var(--track);overflow:hidden"><div style="height:100%;width:{{ g.pct }};background:{{ g.fill }};border-radius:999px"></div></div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:var(--w-sm)"><span style="color:{{ g.nc }}">{{ g.note }}</span><span style="color:var(--ink-soft)">{{ g.pct }}</span></div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 BUDGET -->
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><h3 style="margin:0;font-size:18px;line-height:24px;font-weight:600">6 · Budget vs real</h3><span style="font-size:13px;color:var(--ink-muted)">Grey track = budget · teal within · amber from 80% (variable) · red only when exceeded · │ usual month</span></div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:16px 20px;display:flex;flex-direction:column">
+        <sc-for list="{{ budget }}" as="r" hint-placeholder-count="6">
+          <div style="display:grid;grid-template-columns:120px minmax(0,1fr) 210px;gap:16px;align-items:center;min-height:48px;border-bottom:1px solid var(--border)">
+            <span style="font-size:13px;font-weight:500">{{ r.cat }}</span>
+            <div style="position:relative;height:28px">
+              <div style="position:absolute;left:0;top:8px;height:12px;width:{{ r.trackW }};background:var(--track);border-radius:4px"></div>
+              <div style="position:absolute;left:0;top:8px;height:12px;width:{{ r.fillW }};background:{{ r.fill }};border:{{ r.fillB }};box-sizing:border-box;border-radius:4px"></div>
+              <div title="Usual month" style="position:absolute;top:2px;left:{{ r.usualL }};width:2px;height:24px;background:var(--ink-muted);border-radius:1px"></div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px">
+              <span style="font-size:13px;font-weight:600">{{ r.label }}</span>
+              <span style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:var(--w-sm);color:{{ r.sc }}"><span style="width:13px;height:13px;border-radius:50%;border:1.5px solid currentColor;display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;line-height:1">{{ r.si }}</span>{{ r.sw }}</span>
+            </div>
+          </div>
+        </sc-for>
+        <div style="padding-top:12px;font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">Bars show each category as a share of its own budget, so short and long budgets compare fairly.</div>
+      </div>
+    </div>
+
+    <!-- 7 TABLE -->
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><h3 style="margin:0;font-size:18px;line-height:24px;font-weight:600">7 · Data table</h3><span style="font-size:13px;color:var(--ink-muted)">Sticky header · hairlines, no zebra · selected = primary-tint · keyboard focus = inset ring · ↑↓ move, ↵ edit</span></div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);overflow:hidden">
+        <div style="max-height:300px;overflow:auto">
+          <div style="position:sticky;top:0;z-index:1;background:var(--surface);display:grid;grid-template-columns:80px minmax(0,2fr) minmax(0,1.3fr) minmax(0,1fr) 120px;gap:12px;padding:0 16px;height:32px;align-items:center;border-bottom:1px solid var(--border-strong);font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)"><span>Date</span><span>Payee</span><span>Category</span><span>Account</span><span style="text-align:right">Amount</span></div>
+          <sc-for list="{{ rows }}" as="r" hint-placeholder-count="8">
+            <div style="display:grid;grid-template-columns:80px minmax(0,2fr) minmax(0,1.3fr) minmax(0,1fr) 120px;gap:12px;padding:0 16px;height:{{ rowH }};align-items:center;border-bottom:1px solid var(--border);font-size:13px;font-weight:var(--w-table);background:{{ r.bg }};box-shadow:{{ r.ring }};cursor:default" style-hover="background:var(--neutral-tint)">
+              <span style="color:var(--ink-soft)">{{ r.d }}</span>
+              <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.p }}</span>
+              <span><span style="display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:999px;background:{{ r.chipBg }};color:{{ r.chipFg }};font-size:12px;font-weight:var(--w-sm)"><span style="width:8px;height:8px;border-radius:50%;background:{{ r.dot }}"></span>{{ r.c }}</span></span>
+              <span style="color:var(--ink-soft)">{{ r.acc }}</span>
+              <span style="text-align:right;color:{{ r.ac }}">{{ r.a }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:12px;padding:0 16px;height:36px;align-items:center;border-top:1px solid var(--border-strong);font-size:13px;font-weight:600"><span>8 transactions · 1 selected</span><span style="text-align:right">{{ rowsTotal }}</span></div>
+      </div>
+    </div>
+
+    <!-- 8 FORMS -->
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><h3 style="margin:0;font-size:18px;line-height:24px;font-weight:600">8 · Inputs &amp; bulk entry</h3><span style="font-size:13px;color:var(--ink-muted)">Defaults pre-filled · recent categories first · focus = 2px ring + 2px offset</span></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;align-items:start">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <label style="display:flex;flex-direction:column;gap:6px;grid-column:1 / -1"><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">Payee</span><span style="height:32px;border:1px solid var(--border-strong);border-radius:6px;background:var(--surface);display:flex;align-items:center;padding:0 10px;font-size:14px">REWE Markt</span></label>
+          <label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">Amount · focused</span><span style="height:32px;border:1px solid var(--primary);border-radius:6px;background:var(--surface);display:flex;align-items:center;gap:6px;padding:0 10px;font-size:14px;box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--focus-ring)"><span style="color:var(--ink-soft)">−</span><span style="flex:1;text-align:right">64,18</span><span style="color:var(--ink-muted)">€</span></span></label>
+          <label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">Date</span><span style="height:32px;border:1px solid var(--border-strong);border-radius:6px;background:var(--surface);display:flex;align-items:center;justify-content:space-between;padding:0 10px;font-size:14px">19.11.2026<span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted)">Today</span></span></label>
+          <label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">Amount · error</span><span style="height:32px;border:1.5px solid var(--negative);border-radius:6px;background:var(--surface);display:flex;align-items:center;gap:6px;padding:0 10px;font-size:14px"><span style="flex:1;text-align:right">64.18,0</span><span style="color:var(--ink-muted)">€</span></span><span style="display:flex;gap:6px;align-items:center;font-size:12px;font-weight:var(--w-sm);color:var(--negative)"><span style="width:13px;height:13px;border-radius:50%;border:1.5px solid currentColor;display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;line-height:1;flex:none">×</span>Use a comma for cents, e.g. 64,18</span></label>
+          <label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">Account · disabled</span><span style="height:32px;border:1px solid var(--border);border-radius:6px;background:var(--neutral-tint);display:flex;align-items:center;padding:0 10px;font-size:14px;color:var(--ink-muted)">Girokonto (locked)</span></label>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:20px;display:flex;flex-direction:column;gap:6px">
+          <span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">Category · open</span>
+          <span style="height:32px;border:1px solid var(--primary);border-radius:6px;background:var(--surface);display:flex;align-items:center;justify-content:space-between;padding:0 10px;font-size:14px;box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--focus-ring)">Groc<span style="font-size:10px;color:var(--ink-soft)">▲</span></span>
+          <div style="margin-top:4px;background:var(--surface-raised);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-pop);padding:6px;display:flex;flex-direction:column">
+            <span style="padding:6px 8px 4px;font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted)">Recent</span>
+            <sc-for list="{{ catRecent }}" as="c" hint-placeholder-count="3">
+              <div style="height:32px;border-radius:6px;padding:0 8px;display:flex;align-items:center;gap:8px;font-size:14px;background:{{ c.bg }}" style-hover="background:var(--neutral-tint)"><span style="width:8px;height:8px;border-radius:50%;background:{{ c.dot }}"></span><span style="flex:1">{{ c.n }}</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted)">{{ c.hint }}</span></div>
+            </sc-for>
+            <span style="margin:4px 0;border-top:1px solid var(--border)"></span>
+            <span style="padding:4px 8px;font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted)">All categories</span>
+            <sc-for list="{{ catAll }}" as="c" hint-placeholder-count="3">
+              <div style="height:32px;border-radius:6px;padding:0 8px;display:flex;align-items:center;gap:8px;font-size:14px" style-hover="background:var(--neutral-tint)"><span style="width:8px;height:8px;border-radius:50%;background:{{ c.dot }}"></span>{{ c.n }}</div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);overflow:hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border)"><span style="font-size:16px;font-weight:600">Bulk entry</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted)">Tab next cell · ↵ new row · ⌘↵ save all</span></div>
+        <div style="display:grid;grid-template-columns:120px minmax(0,2fr) minmax(0,1.3fr) 140px;font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft);border-bottom:1px solid var(--border-strong)"><span style="padding:8px 12px">Date</span><span style="padding:8px 12px">Payee</span><span style="padding:8px 12px">Category</span><span style="padding:8px 12px;text-align:right">Amount</span></div>
+        <sc-for list="{{ bulk }}" as="b" hint-placeholder-count="4">
+          <div style="display:grid;grid-template-columns:120px minmax(0,2fr) minmax(0,1.3fr) 140px;font-size:13px;border-bottom:1px solid var(--border)">
+            <sc-for list="{{ b.cells }}" as="c" hint-placeholder-count="4">
+              <span style="height:36px;display:flex;align-items:center;justify-content:{{ c.j }};padding:0 12px;border-right:1px solid var(--border);color:{{ c.fg }};box-shadow:{{ c.ring }};background:{{ c.bg }}">{{ c.v }}</span>
+            </sc-for>
+          </div>
+        </sc-for>
+        <div style="padding:10px 16px;font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">Grey values are defaults (today, last category for this payee) — accept with Tab.</div>
+      </div>
+    </div>
+
+    <!-- 9 BUTTONS -->
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><h3 style="margin:0;font-size:18px;line-height:24px;font-weight:600">9 · Buttons</h3><span style="font-size:13px;color:var(--ink-muted)">32px · radius 6 · destructive asks once before acting</span></div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:20px;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+          <button style="height:32px;padding:0 14px;border-radius:6px;border:none;background:var(--primary);color:var(--on-primary);font:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:background-color 120ms ease-out" style-hover="background:var(--primary-hover)">Save transaction</button>
+          <button style="height:32px;padding:0 14px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:500;cursor:pointer;transition:background-color 120ms ease-out" style-hover="background:var(--neutral-tint)">Import CSV</button>
+          <button style="height:32px;padding:0 12px;border-radius:6px;border:none;background:transparent;color:var(--primary);font:inherit;font-size:13px;font-weight:500;cursor:pointer;transition:background-color 120ms ease-out" style-hover="background:var(--primary-tint)">Cancel</button>
+          <sc-if value="{{ notConfirming }}" hint-placeholder-val="{{ true }}">
+            <button onClick="{{ askDelete }}" style="height:32px;padding:0 14px;border-radius:6px;border:1px solid var(--negative);background:var(--surface);color:var(--negative);font:inherit;font-size:13px;font-weight:500;cursor:pointer;transition:background-color 120ms ease-out" style-hover="background:var(--negative-tint)">Delete 3 transactions…</button>
+          </sc-if>
+          <sc-if value="{{ confirming }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:8px;padding:4px 4px 4px 12px;border-radius:8px;background:var(--negative-tint);color:var(--ink)">
+              <span style="font-size:13px">Delete 3 transactions? You can undo for 10 seconds.</span>
+              <button onClick="{{ cancelDelete }}" style="height:28px;padding:0 10px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:500;cursor:pointer">Keep</button>
+              <button onClick="{{ doDelete }}" style="height:28px;padding:0 10px;border-radius:6px;border:none;background:var(--negative);color:var(--on-negative);font:inherit;font-size:13px;font-weight:600;cursor:pointer">Delete</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ deleted }}" hint-placeholder-val="{{ false }}">
+            <span style="font-size:13px;color:var(--ink-soft)">3 transactions deleted. <a href="#" onClick="{{ undo }}" style="color:var(--primary)">Undo</a></span>
+          </sc-if>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted)">
+          <button style="height:32px;padding:0 14px;border-radius:6px;border:none;background:var(--primary);color:var(--on-primary);font:inherit;font-size:13px;font-weight:600;box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--focus-ring)">Focused</button>
+          <button style="height:32px;padding:0 14px;border-radius:6px;border:none;background:var(--primary-hover);color:var(--on-primary);font:inherit;font-size:13px;font-weight:600">Hover</button>
+          <button disabled="disabled" style="height:32px;padding:0 14px;border-radius:6px;border:1px solid var(--border);background:var(--neutral-tint);color:var(--ink-muted);font:inherit;font-size:13px;font-weight:500">Disabled</button>
+          <button style="height:24px;padding:0 8px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:12px;font-weight:500">Compact 24px</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10 FORECAST -->
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><h3 style="margin:0;font-size:18px;line-height:24px;font-weight:600">10 · Forecast chart</h3><span style="font-size:13px;color:var(--ink-muted)">Solid ink = actual · dashed primary = most likely · bands = 50% and 80% of likely futures</span></div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:20px;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <span style="font-size:16px;line-height:22px;font-weight:600">In 8 of 10 likely futures you stay above 2.000 € through May.</span>
+          <span style="font-size:13px;color:var(--ink-soft)">Most likely balance in May: about 4.050 €. The range widens because later months are less certain.</span>
+        </div>
+        <svg viewBox="0 0 680 240" style="width:100%;height:auto;display:block;overflow:visible">
+          <path d="{{ fc.grid }}" style="stroke:var(--border);stroke-width:1;fill:none"></path>
+          <path d="{{ fc.band80 }}" style="fill:var(--band80);stroke:none"></path>
+          <path d="{{ fc.band50 }}" style="fill:var(--band50);stroke:none"></path>
+          <line x1="{{ fc.todayX }}" x2="{{ fc.todayX }}" y1="14" y2="212" style="stroke:var(--ink-soft);stroke-width:1"></line>
+          <text x="{{ fc.todayX }}" y="10" text-anchor="middle" style="fill:var(--ink-soft);font-size:12px;font-weight:600">Today</text>
+          <path d="{{ fc.actual }}" style="fill:none;stroke:var(--ink);stroke-width:2;stroke-linejoin:round;stroke-linecap:round"></path>
+          <path d="{{ fc.median }}" style="fill:none;stroke:var(--primary);stroke-width:2;stroke-dasharray:6 4;stroke-linecap:round"></path>
+          <circle cx="{{ fc.todayX }}" cy="{{ fc.todayY }}" r="4" style="fill:var(--surface);stroke:var(--ink);stroke-width:2"></circle>
+          <sc-for list="{{ fc.yLabels }}" as="yl" hint-placeholder-count="6"><text x="48" y="{{ yl.y }}" text-anchor="end" dominant-baseline="middle" style="fill:var(--ink-muted);font-size:12px;font-weight:500">{{ yl.t }}</text></sc-for>
+          <sc-for list="{{ fc.xLabels }}" as="xl" hint-placeholder-count="12"><text x="{{ xl.x }}" y="232" text-anchor="middle" style="fill:var(--ink-muted);font-size:12px;font-weight:500">{{ xl.t }}</text></sc-for>
+          <text x="{{ fc.endX }}" y="{{ fc.medY }}" dominant-baseline="middle" style="fill:var(--primary);font-size:12px;font-weight:600">4.050 € likely</text>
+          <text x="{{ fc.endX }}" y="{{ fc.hi50Y }}" dominant-baseline="middle" style="fill:var(--ink-soft);font-size:12px;font-weight:500">50% range</text>
+          <text x="{{ fc.endX }}" y="{{ fc.hi80Y }}" dominant-baseline="middle" style="fill:var(--ink-soft);font-size:12px;font-weight:500">80% range</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- 11 STATES -->
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><h3 style="margin:0;font-size:18px;line-height:24px;font-weight:600">11 · Empty, loading, error</h3><span style="font-size:13px;color:var(--ink-muted)">Calm copy, one next step each</span></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:24px 20px;display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+          <span style="width:32px;height:32px;border-radius:50%;background:var(--neutral-tint);color:var(--ink-soft);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600">+</span>
+          <span style="font-size:16px;font-weight:600">No transactions in December yet</span>
+          <span style="font-size:13px;line-height:18px;color:var(--ink-soft);text-wrap:pretty">Add one by hand or import your bank’s CSV — it takes about a minute.</span>
+          <div style="display:flex;gap:8px;margin-top:4px"><button style="height:32px;padding:0 14px;border-radius:6px;border:none;background:var(--primary);color:var(--on-primary);font:inherit;font-size:13px;font-weight:600">Add transaction</button><button style="height:32px;padding:0 14px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:500">Import CSV</button></div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:24px 20px;display:flex;flex-direction:column;gap:10px">
+          <span style="height:14px;width:40%;border-radius:4px;background:var(--neutral-tint)"></span>
+          <span style="height:28px;width:60%;border-radius:6px;background:var(--neutral-tint)"></span>
+          <span style="height:12px;width:80%;border-radius:4px;background:var(--neutral-tint)"></span>
+          <span style="height:12px;width:70%;border-radius:4px;background:var(--neutral-tint)"></span>
+          <span style="margin-top:auto;font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted)">Skeleton appears only after 300 ms; static, no shimmer under reduced motion.</span>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:24px 20px;display:flex;flex-direction:column;gap:10px">
+          <span style="font-size:16px;font-weight:600">Importing bank_nov.csv</span>
+          <div style="height:8px;border-radius:999px;background:var(--track);overflow:hidden"><div style="height:100%;width:64%;background:var(--primary);border-radius:999px"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--ink-soft)"><span>412 of 640 rows</span><span>64%</span></div>
+          <span style="font-size:13px;line-height:18px;color:var(--ink-soft)">3 likely duplicates found — you’ll review them before anything is saved.</span>
+          <button style="align-self:flex-start;height:32px;padding:0 12px;border-radius:6px;border:none;background:transparent;color:var(--primary);font:inherit;font-size:13px;font-weight:500">Cancel import</button>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:24px 20px;display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+          <span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 8px 0 5px;border-radius:6px;background:var(--info-tint);color:var(--info);font-size:12px;font-weight:var(--w-sm)"><span style="width:14px;height:14px;border-radius:50%;border:1.5px solid currentColor;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;line-height:1">i</span>Couldn’t finish</span>
+          <span style="font-size:16px;font-weight:600">The forecast couldn’t be updated</span>
+          <span style="font-size:13px;line-height:18px;color:var(--ink-soft);text-wrap:pretty">No data was lost — all your entries are saved. The last forecast from 18.11. is still shown.</span>
+          <button style="height:32px;padding:0 14px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:500">Try again</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  </div>
+  </sc-for>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;rowDensity&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;comfortable&quot;,&quot;compact&quot;],&quot;default&quot;:&quot;comfortable&quot;,&quot;tsType&quot;:&quot;'comfortable'|'compact'&quot;}}">
+const BASE = {
+  light: { 'bg':'#F7F8FA','surface':'#FFFFFF','surface-raised':'#FFFFFF','border':'#E2E8F0','border-strong':'#7D8A9E','ink':'#1E293B','ink-soft':'#475569','ink-muted':'#5E6E82','primary':'#24508F','primary-hover':'#1D4278','primary-tint':'#EAF0F8','secondary':'#0F766E','positive':'#0F766E','positive-tint':'#E6F4F1','negative':'#B42318','negative-tint':'#FCEBE9','warning':'#B45309','warning-tint':'#FDF1E3','warning-ink':'#92400E','info':'#24508F','info-tint':'#EAF0F8','neutral-tint':'#F1F5F9','invest':'#7C4DBE','invest-tint':'#F1EBFA','gold':'#F2C14E','gold-ink':'#8A6100','logo':'#6D28D9','focus-ring':'#24508F','on-primary':'#FFFFFF','on-negative':'#FFFFFF','track':'#E2E8F0','shadow':'0 1px 2px rgba(15,23,42,.06)','shadow-pop':'0 8px 24px rgba(15,23,42,.12)','band50':'rgba(36,80,143,.24)','band80':'rgba(36,80,143,.12)','w-sm':'500','w-table':'400',
+    chart:['#24508F','#E69F00','#56B4E9','#009E73','#CC79A7','#D55E00','#8C6D31','#94A3B8'] },
+  dark: { 'bg':'#111827','surface':'#1A2332','surface-raised':'#222D3F','border':'#2A3546','border-strong':'#64748B','ink':'#E6EAF0','ink-soft':'#C8D1DC','ink-muted':'#AEB9C8','primary':'#9BBDF0','primary-hover':'#B4CDF4','primary-tint':'#1B2E4D','secondary':'#5ECDBB','positive':'#5ECDBB','positive-tint':'#12352F','negative':'#F7A891','negative-tint':'#3D1F1A','warning':'#E8B04A','warning-tint':'#3A2A12','warning-ink':'#E8B04A','info':'#9BBDF0','info-tint':'#1B2E4D','neutral-tint':'#243042','invest':'#C3AEF0','invest-tint':'#2B2347','gold':'#F2C14E','gold-ink':'#F2C14E','logo':'#A78BFA','focus-ring':'#9BBDF0','on-primary':'#111827','on-negative':'#111827','track':'#334155','shadow':'none','shadow-pop':'none','band50':'rgba(155,189,240,.24)','band80':'rgba(155,189,240,.12)','w-sm':'600','w-table':'500',
+    chart:['#7AA7E6','#F0B640','#7CC8F0','#33C49A','#DE9AC2','#F08A4B','#C9A86A','#8D9AAD'] }
+};
+function toVars(P) { const v = {}; Object.keys(P).forEach(k => { if (k !== 'chart') v['--' + k] = P[k]; }); P.chart.forEach((c, i) => v['--chart-' + (i + 1)] = c); return v; }
+const eur = (n, dec = 2, sign = false) => { if (n == null) return '—'; const s = Math.abs(n).toLocaleString('de-DE', { minimumFractionDigits: dec, maximumFractionDigits: dec }); return (n < 0 ? '−' : (sign && n > 0 ? '+' : '')) + s + '\u00A0€'; };
+const ICON = { pos:'✓', warn:'!', neg:'×', info:'i', neu:'–' };
+
+function forecast() {
+  const W = 680, pl = 56, pr = 100, pt = 16, pb = 28, H = 240;
+  const x = i => pl + i * (W - pl - pr) / 11, y = v => pt + (6000 - v) / 5000 * (H - pt - pb);
+  const actual = [2850, 3120, 2640, 3010, 3380, 3284];
+  const med = [3284, 3050, 3300, 3520, 3700, 3840, 4050], b50 = [0, 250, 400, 520, 650, 780, 900], b80 = [0, 500, 800, 1050, 1300, 1550, 1800];
+  const line = pts => pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ');
+  const band = b => line(med.map((v, i) => [x(i + 5), y(v + b[i])]).concat(med.map((v, i) => [x(i + 5), y(v - b[i])]).reverse())) + ' Z';
+  let grid = ''; const yLabels = [];
+  for (let v = 1000; v <= 6000; v += 1000) { grid += `M${pl} ${y(v)} L${W - pr + 8} ${y(v)} `; yLabels.push({ y: y(v), t: eur(v, 0) }); }
+  const months = ['Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May'];
+  return { grid, yLabels, xLabels: months.map((t, i) => ({ x: x(i), t })), actual: line(actual.map((v, i) => [x(i), y(v)])), median: line(med.map((v, i) => [x(i + 5), y(v)])), band50: band(b50), band80: band(b80), todayX: x(5), todayY: y(3284), endX: x(11) + 8, medY: y(4050), hi50Y: y(4050 + 900) + 2, hi80Y: y(4050 + 1800) + 6 };
+}
+const FC = forecast();
+const BUDGET = [
+  { cat:'Groceries', budget:450, real:312.40, usual:398, variable:true },
+  { cat:'Dining out', budget:150, real:128.90, usual:120, variable:true },
+  { cat:'Transport', budget:120, real:64.20, usual:95, variable:true },
+  { cat:'Clothing', budget:100, real:134.50, usual:70, variable:true },
+  { cat:'Hobbies', budget:80, real:71.00, usual:60, variable:true },
+  { cat:'Gifts', budget:null, real:45.00, usual:30 }
+];
+function budgetRows() {
+  return BUDGET.map(r => {
+    const scale = 0.78; let o = { cat: r.cat };
+    if (r.budget == null) return { ...o, trackW:'0%', fillW: (r.real / 150 * 78) + '%', fill:'var(--neutral-tint)', fillB:'1px solid var(--border-strong)', usualL: (r.usual / 150 * 78) + '%', label: eur(r.real, 0) + ' spent', si: ICON.neu, sw: 'No budget set', sc:'var(--ink-soft)' };
+    const pct = r.real / r.budget, left = r.budget - r.real;
+    o = { ...o, trackW: (scale * 100) + '%', fillW: Math.min(pct * scale * 100, 100) + '%', fillB:'none', usualL: (r.usual / r.budget * scale * 100) + '%', label: `${eur(r.real, 0)} of ${eur(r.budget, 0)}` };
+    if (pct > 1) return { ...o, fill:'var(--negative)', si: ICON.neg, sw: `Over by ${eur(-left, 0)}`, sc:'var(--negative)' };
+    if (r.variable && pct >= .8) return { ...o, fill:'var(--warning)', si: ICON.warn, sw: `Close to limit · ${eur(left, 0)} left`, sc:'var(--warning-ink)' };
+    return { ...o, fill:'var(--positive)', si: ICON.pos, sw: `On track · ${eur(left, 0)} left`, sc:'var(--positive)' };
+  });
+}
+const CAT = { Groceries:1, Income:4, Utilities:3, Household:7, 'Dining out':2, Investments:0, Clothing:5, Transport:6 };
+const ROWS = [
+  ['19.11.', 'REWE Markt', 'Groceries', 'Girokonto', -64.18],
+  ['18.11.', 'Salary · Müller & Partner', 'Income', 'Girokonto', 3420],
+  ['18.11.', 'Stadtwerke', 'Utilities', 'Girokonto', -86],
+  ['17.11.', 'Amazon', 'Household', 'Kreditkarte', -29.99],
+  ['16.11.', 'Trattoria Da Enzo', 'Dining out', 'Kreditkarte', -48.5],
+  ['15.11.', 'ETF savings plan · FTSE All-World', 'Investments', 'Depot', -500],
+  ['14.11.', 'dm-drogerie markt', 'Household', 'Girokonto', -17.45],
+  ['13.11.', 'Zalando', 'Clothing', 'Kreditkarte', -89.9]
+];
+
+class Component extends DCLogic {
+  state = { tab: 0, pop: 1, confirm: 'idle' };
+  renderVals() {
+    const s = this.state, compact = this.props.rowDensity === 'compact';
+    const modes = ['light', 'dark'].map(k => ({
+      id: 'sg-' + k, label: k === 'light' ? 'Light mode' : 'Dark mode', sub: k === 'light' ? 'Default' : 'Elevation by lighter surface · small text +100 weight',
+      vars: toVars(BASE[k]),
+      elev1: k === 'light' ? '1px border' : 'surface', elev2: k === 'light' ? '+ 0 1px 2px' : 'surface-raised', elev3: k === 'light' ? '0 8px 24px' : 'raised + border',
+      type: [
+        ['display-kpi', '28/34 · 600', 28, 34, 600, '8.420 €'], ['page-title', '22/28 · 600', 22, 28, 600, 'Overview'], ['kpi', '20/26 · 600', 20, 26, 600, '3.284 €'],
+        ['card-title', '16/22 · 600', 16, 22, 600, 'Budget vs real'], ['body', '14/20 · 400', 14, 20, 400, 'You kept 612 € more than usual.'],
+        ['table', '13/18 · ' + (k === 'dark' ? '500' : '400'), 13, 18, k === 'dark' ? 500 : 400, 'REWE Markt   −64,18 €'], ['label · badge · axis', '12/16 · ' + (k === 'dark' ? '600' : '500'), 12, 16, k === 'dark' ? 600 : 500, 'Close to limit · Nov']
+      ].map(([name, spec, sz, lh, w, sample]) => ({ name, spec, size: sz + 'px', lh: lh + 'px', w, sample }))
+    }));
+    const tabs = ['Overview', 'Transactions', 'Calendar', 'Forecast', 'Net worth', 'Settings'].map((label, i) => ({
+      label, key: '⌘' + (i + 1), bg: s.tab === i ? 'var(--surface)' : 'transparent', sh: s.tab === i ? '0 1px 2px rgba(15,23,42,.12)' : 'none', fg: s.tab === i ? 'var(--ink)' : 'var(--ink-soft)', w: s.tab === i ? 600 : 500, select: () => this.setState({ tab: i })
+    }));
+    const help = ['Income minus spending this month, excluding transfers between your own accounts.', 'Money you can reach within a few days: current accounts, savings and cash. Investments are not included.', 'Growth of your net worth this month from saving and investing, before market changes.'];
+    const kpiHero = [
+      ['Kept this month', eur(612, 0, true), '▲', 'var(--positive)', '148 € more than your usual month'],
+      ['Liquidity', eur(8420, 0), '–', 'var(--ink-soft)', 'Covers about 3,1 months of spending'],
+      ['Wealth built', eur(1050, 0, true), '▲', 'var(--positive)', '210 € more than your usual month']
+    ].map(([label, value, ci, cc, cmp], i) => ({ label, value, ci, cc, cmp, help: help[i], open: s.pop === i, toggle: () => this.setState(st => ({ pop: st.pop === i ? -1 : i })) }));
+    const kpiCompact = [
+      ['Balance', eur(3284, 0), '▲', 'var(--ink-soft)', '96 € above usual'],
+      ['Cash in', eur(4180, 0), '=', 'var(--ink-soft)', 'About the same as usual'],
+      ['Cash out', eur(-3568, 0), '▼', 'var(--ink-soft)', '92 € less than usual']
+    ].map(([label, value, ci, cc, cmp]) => ({ label, value, ci, cc, cmp }));
+    const C = BASE.light.chart.map((_, i) => `var(--chart-${i + 1})`);
+    const rows = ROWS.map(([d, p, c, acc, a], i) => ({
+      d, p, c, acc, a: eur(a, 2, true), ac: a > 0 ? 'var(--positive)' : 'var(--ink)',
+      dot: C[CAT[c]], chipBg: c === 'Investments' ? 'var(--invest-tint)' : 'var(--neutral-tint)', chipFg: c === 'Investments' ? 'var(--invest)' : 'var(--ink-soft)',
+      bg: i === 2 ? 'var(--primary-tint)' : 'transparent', ring: i === 4 ? 'inset 0 0 0 2px var(--focus-ring)' : 'none'
+    }));
+    const total = ROWS.reduce((t, r) => t + r[4], 0);
+    const cell = (v, opt = {}) => ({ v, j: opt.r ? 'flex-end' : 'flex-start', fg: opt.def ? 'var(--ink-muted)' : 'var(--ink)', ring: opt.focus ? 'inset 0 0 0 2px var(--focus-ring)' : 'none', bg: opt.focus ? 'var(--surface)' : 'transparent' });
+    const bulk = [
+      { cells: [cell('19.11.2026'), cell('Bäckerei Frank'), cell('Groceries'), cell('−4,80 €', { r: 1 })] },
+      { cells: [cell('19.11.2026'), cell('Shell Tankstelle'), cell('Transport'), cell('−58,30 €', { r: 1 })] },
+      { cells: [cell('19.11.2026', { def: 1 }), cell('Netflix'), cell('Subscriptions', { def: 1 }), cell('−13,99 €', { r: 1, focus: 1 })] },
+      { cells: [cell('19.11.2026', { def: 1 }), cell('Payee', { def: 1 }), cell('Category', { def: 1 }), cell('0,00 €', { r: 1, def: 1 })] }
+    ];
+    return {
+      modes, tabs, kpiHero, kpiCompact, rows, bulk, fc: FC, budget: budgetRows(),
+      rowH: (compact ? 32 : 36) + 'px', rowsTotal: eur(total, 2, true),
+      numbers: [
+        ['Gain / income', eur(1234.56, 2, true), 'var(--positive)'], ['Spending', eur(-89.9), 'var(--ink)'], ['Real loss (e.g. sold below cost)', eur(-89.9), 'var(--negative)'],
+        ['Zero (table)', eur(0), 'var(--ink-soft)'], ['Zero (KPI / chart)', eur(0, 0), 'var(--ink-soft)'], ['No data', '—', 'var(--ink-muted)'], ['KPI tile, whole euros', eur(8420, 0), 'var(--ink)']
+      ].map(([label, value, color]) => ({ label, value, color })),
+      spacing: [4, 8, 12, 16, 24, 32, 48].map(v => ({ v, w: (v * 2) + 'px' })),
+      icons: [['✓', 'positive', 'var(--positive)'], ['!', 'warning', 'var(--warning)'], ['×', 'negative', 'var(--negative)'], ['i', 'info', 'var(--info)'], ['–', 'neutral', 'var(--ink-soft)']].map(([g, n, c]) => ({ g, n, c, r: '50%', b: '1.5px solid currentColor' }))
+        .concat([['▲', 'up', 'var(--ink)'], ['▼', 'down', 'var(--ink)'], ['★', 'reached', 'var(--gold-ink)'], ['⌘', 'shortcut', 'var(--ink-soft)']].map(([g, n, c]) => ({ g, n, c, r: '0', b: 'none' }))),
+      motion: [['Hover / press', '120 ms ease-out · colour only'], ['Panels, popovers', '200–250 ms ease-out · fade + 4px slide'], ['Tab / filter change', 'Instant swap < 100 ms, no transition'], ['Loading', 'Skeleton only after 300 ms; determinate bar for imports'], ['Goal reached', 'Gold fill plays once per goal, then rests'], ['Reduced motion', 'All movement → 150 ms cross-fade']].map(([k, v]) => ({ k, v })),
+      bills: [['21.11.', 'Rent · Wohnbau Süd', -1150], ['24.11.', 'Telekom Mobilfunk', -39.95], ['28.11.', 'Allianz Haftpflicht', -136.53]].map(([d, n, a]) => ({ d, n, a: eur(a) })),
+      badges: [['pos', 'On track', 'var(--positive-tint)', 'var(--positive)'], ['warn', 'Close to limit', 'var(--warning-tint)', 'var(--warning-ink)'], ['neg', 'Over budget', 'var(--negative-tint)', 'var(--negative)'], ['info', 'Imported', 'var(--info-tint)', 'var(--info)'], ['neu', 'No budget', 'var(--neutral-tint)', 'var(--ink-soft)']].map(([i, w, bg, fg]) => ({ i: ICON[i], w, bg, fg })),
+      goals: [
+        { name:'Emergency fund', amt:'6.400 € of 9.000 €', pct:'71%', fill:'var(--secondary)', note:'About 9 months to go at your usual pace', nc:'var(--ink-soft)' },
+        { name:'Holiday · Portugal', amt:'1.180 € of 1.500 €', pct:'79%', fill:'var(--secondary)', note:'320 € to go · on pace for June', nc:'var(--ink-soft)' },
+        { name:'New bike', amt:'1.200 € of 1.200 €', pct:'100%', fill:'var(--gold)', note:'★ Goal reached on 12.11.2026', nc:'var(--gold-ink)' }
+      ],
+      dropdowns: [{ k:'Month', v:'November' }, { k:'Year', v:'2026' }, { k:'Profile', v:'Personal' }],
+      catRecent: [{ n:'Groceries', dot:C[1], hint:'used 2 days ago', bg:'var(--primary-tint)' }, { n:'Dining out', dot:C[2], hint:'3 days ago', bg:'transparent' }, { n:'Transport', dot:C[6], hint:'5 days ago', bg:'transparent' }],
+      catAll: [{ n:'Clothing', dot:C[5] }, { n:'Gifts', dot:C[4] }, { n:'Household', dot:C[7] }],
+      notConfirming: s.confirm === 'idle', confirming: s.confirm === 'ask', deleted: s.confirm === 'done',
+      askDelete: () => this.setState({ confirm: 'ask' }), cancelDelete: () => this.setState({ confirm: 'idle' }), doDelete: () => this.setState({ confirm: 'done' }),
+      undo: e => { e.preventDefault(); this.setState({ confirm: 'idle' }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

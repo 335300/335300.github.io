@@ -1,0 +1,79 @@
+{
+  "verified_on": "2026-11-17",
+  "note": "Statuses: FINAL, PROVISIONAL, EXPECTED, CABINET, DRAFT, OPEN, DEPENDS. A null value means 'not known yet'.",
+  "payroll_rules": {
+    "2025": {
+      "gfb": {"value": 12096, "status": "FINAL"},
+      "z2": {"value": 17443, "status": "FINAL"},
+      "a2": {"value": 932.30, "status": "FINAL"},
+      "b2": {"value": 1400, "status": "FINAL"},
+      "z3": {"value": 68480, "status": "FINAL"},
+      "a3": {"value": 176.64, "status": "FINAL"},
+      "b3": {"value": 2397, "status": "FINAL"},
+      "c3": {"value": 1015.13, "status": "FINAL"},
+      "z4": {"value": 277825, "status": "FINAL"},
+      "c4": {"value": 10911.92, "status": "FINAL"},
+      "c5": {"value": 19246.67, "status": "FINAL"},
+      "soli_free": {"value": 19950, "status": "FINAL"},
+      "pension": {"value": 18.6, "status": "FINAL"},
+      "pension_cap": {"value": 8050, "status": "FINAL"},
+      "midi_low": {"value": 556, "status": "FINAL"},
+      "midi_high": {"value": 2000, "status": "FINAL"}
+    },
+    "2026": {
+      "gfb": {"value": 12348, "status": "FINAL"},
+      "z2": {"value": 17799, "status": "FINAL"},
+      "a2": {"value": 914.51, "status": "FINAL"},
+      "b2": {"value": 1400, "status": "FINAL"},
+      "z3": {"value": 69878, "status": "FINAL"},
+      "a3": {"value": 173.10, "status": "FINAL"},
+      "b3": {"value": 2397, "status": "FINAL"},
+      "c3": {"value": 1034.87, "status": "FINAL"},
+      "z4": {"value": 277825, "status": "FINAL"},
+      "c4": {"value": 11135.63, "status": "FINAL"},
+      "c5": {"value": 19470.38, "status": "FINAL"},
+      "soli_free": {"value": 20350, "status": "FINAL"},
+      "pension": {"value": 18.6, "status": "FINAL"},
+      "pension_cap": {"value": 8450, "status": "FINAL"},
+      "midi_low": {"value": 603, "status": "FINAL"},
+      "midi_high": {"value": 2000, "status": "FINAL"}
+    },
+    "2027": {
+      "gfb": {"value": 12564, "status": "DRAFT", "source": "EStReformG 2027 draft (Haufe 2026-09-21)"},
+      "z2": {"value": null, "status": "OPEN", "source": "final BMF PAP 2027"},
+      "a2": {"value": null, "status": "OPEN", "source": "final BMF PAP 2027"},
+      "b2": {"value": null, "status": "OPEN", "source": "final BMF PAP 2027"},
+      "z3": {"value": 70599, "status": "DRAFT", "source": "42 % from 70,600 (Haufe)"},
+      "a3": {"value": null, "status": "OPEN", "source": "final BMF PAP 2027"},
+      "b3": {"value": null, "status": "OPEN", "source": "final BMF PAP 2027"},
+      "c3": {"value": null, "status": "OPEN", "source": "final BMF PAP 2027"},
+      "z4": {"value": null, "status": "OPEN", "source": "final BMF PAP 2027"},
+      "c4": {"value": null, "status": "OPEN", "source": "final BMF PAP 2027"},
+      "c5": {"value": null, "status": "OPEN", "source": "final BMF PAP 2027"},
+      "soli_free": {"value": null, "status": "OPEN", "source": "final BMF PAP 2027"},
+      "pension": {"value": 18.6, "status": "EXPECTED", "source": "DRV / Haufe"},
+      "pension_cap": {"value": 8850, "status": "CABINET", "source": "BMAS 2026-10-07, Bundesrat vote pending"},
+      "midi_low": {"value": 633, "status": "FINAL", "source": "AOK; minimum wage 14.60 (MiLoV5)"},
+      "midi_high": {"value": 2000, "status": "FINAL", "source": "§ 20 (2) SGB IV"}
+    }
+  },
+  "other_config": {
+    "EMPLOYEE_ALLOWANCE": {
+      "2025": {"value": 1230, "status": "FINAL"},
+      "2026": {"value": 1230, "status": "FINAL"},
+      "2027": {"value": 1430, "status": "DRAFT", "source": "EStReformG 2027 draft"}
+    },
+    "SPECIAL_EXPENSES_ALLOWANCE": {
+      "2026": {"value": 36, "status": "FINAL"},
+      "2027": {"value": 36, "status": "FINAL", "source": "§ 10c EStG, no change announced"}
+    },
+    "COMMUTE_RATE_PER_KM": {
+      "2026": {"value": 0.38, "status": "FINAL"},
+      "2027": {"value": 0.38, "status": "FINAL", "source": "BMF LStH 2026 Anhang 14, unlimited in time"}
+    },
+    "WERKSTUDENT_MAX_LONG_WEEKS": {
+      "2026": {"value": 26, "status": "FINAL"},
+      "2027": {"value": 26, "status": "FINAL"}
+    }
+  }
+}

@@ -1,0 +1,318 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Centwise palette (Designs/Palette Sheet + Style Guide, 2026-11-19).
+ * Colours are RGB channels so Tailwind can add opacity: rgb(var(--c-x) / 0.5).
+ * Code never uses a hex value or a hue name — only these names.
+ *
+ * Light is the default. Dark applies when the Mac is in dark mode (unless the
+ * page is forced light with data-theme="light" on <html>) or when
+ * data-theme="dark" is set. lib/appearance.ts sets/removes that attribute.
+ */
+:root {
+  color-scheme: light;
+
+  --c-bg: 247 248 250;             /* #F7F8FA */
+  --c-surface: 255 255 255;        /* #FFFFFF cards */
+  --c-surface-raised: 255 255 255; /* #FFFFFF popovers, menus, dialogs */
+  --c-border: 226 232 240;         /* #E2E8F0 hairline (decorative only) */
+  --c-border-strong: 125 138 158;  /* #7D8A9E input and control outlines (3:1) */
+  --c-track: 226 232 240;          /* #E2E8F0 empty part of bars */
+
+  --c-ink: 30 41 59;               /* #1E293B main text */
+  --c-ink-soft: 71 85 105;         /* #475569 secondary text */
+  --c-ink-muted: 94 110 130;       /* #5E6E82 captions — only at 13px or larger */
+
+  --c-primary: 36 80 143;          /* #24508F Centwise Blue: actions, selection, forecasts */
+  --c-primary-hover: 29 66 120;    /* #1D4278 */
+  --c-primary-tint: 234 240 248;   /* #EAF0F8 selected rows */
+  --c-on-primary: 255 255 255;
+  --c-focus-ring: 36 80 143;       /* #24508F */
+
+  --c-secondary: 15 118 110;       /* #0F766E teal — the one "good" colour */
+  --c-secondary-tint: 230 244 241; /* #E6F4F1 */
+  --c-positive: 15 118 110;        /* #0F766E same teal as secondary */
+  --c-positive-tint: 230 244 241;  /* #E6F4F1 */
+  --c-negative: 180 35 24;         /* #B42318 exceeded budgets, real losses */
+  --c-negative-tint: 252 235 233;  /* #FCEBE9 */
+  --c-on-negative: 255 255 255;
+  --c-warning: 180 83 9;           /* #B45309 approaching a limit (fills, icons) */
+  --c-warning-tint: 253 241 227;   /* #FDF1E3 */
+  --c-warning-ink: 146 64 14;      /* #92400E warning text */
+  --c-info: 36 80 143;             /* #24508F */
+  --c-info-tint: 234 240 248;      /* #EAF0F8 */
+  --c-neutral-tint: 241 245 249;   /* #F1F5F9 "no budget", chips, skeletons */
+
+  --c-invest: 124 77 190;          /* #7C4DBE money that builds an asset */
+  --c-invest-tint: 241 235 250;    /* #F1EBFA */
+  --c-gold: 242 193 78;            /* #F2C14E celebration fill only — never text */
+  --c-gold-ink: 138 97 0;          /* #8A6100 text-safe gold ("Goal reached") */
+  --c-logo: 109 40 217;            /* #6D28D9 violet — the logo only */
+  --c-on-logo: 255 255 255;
+  --c-scrim: 15 23 42;             /* behind dialogs (used at 35 %) */
+
+  /* Chart identity (Okabe–Ito based): categories only, never good/bad. */
+  --c-chart-1: 36 80 143;          /* #24508F navy */
+  --c-chart-2: 230 159 0;          /* #E69F00 orange */
+  --c-chart-3: 86 180 233;         /* #56B4E9 sky */
+  --c-chart-4: 0 158 115;          /* #009E73 bluish green */
+  --c-chart-5: 204 121 167;        /* #CC79A7 reddish purple */
+  --c-chart-6: 213 94 0;           /* #D55E00 vermillion */
+  --c-chart-7: 140 109 49;         /* #8C6D31 ochre */
+  --c-chart-8: 148 163 184;        /* #94A3B8 "Other" grey */
+
+  /* Forecast range bands: primary at a fixed opacity. */
+  --c-band: 36 80 143;
+  --a-band50: 0.24;
+  --a-band80: 0.12;
+
+  /* Small text weight: +100 in dark mode. */
+  --w-sm: 500;
+  --w-table: 400;
+
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.06);
+  --shadow-raised: 0 1px 2px rgb(15 23 42 / 0.06);
+  --shadow-pop: 0 8px 24px rgb(15 23 42 / 0.12);
+  --shadow-tab: 0 1px 2px rgb(15 23 42 / 0.12);
+  --a-scrim: 0.35;
+}
+
+/* Dark values. One block, used twice: Mac in dark mode (not forced light), or forced dark. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --c-bg: 17 24 39;              /* #111827 */
+    --c-surface: 26 35 50;         /* #1A2332 */
+    --c-surface-raised: 34 45 63;  /* #222D3F */
+    --c-border: 42 53 70;          /* #2A3546 */
+    --c-border-strong: 100 116 139;/* #64748B */
+    --c-track: 51 65 85;           /* #334155 */
+    --c-ink: 230 234 240;          /* #E6EAF0 */
+    --c-ink-soft: 200 209 220;     /* #C8D1DC */
+    --c-ink-muted: 174 185 200;    /* #AEB9C8 */
+    --c-primary: 155 189 240;      /* #9BBDF0 */
+    --c-primary-hover: 180 205 244;/* #B4CDF4 */
+    --c-primary-tint: 27 46 77;    /* #1B2E4D */
+    --c-on-primary: 17 24 39;      /* #111827 */
+    --c-focus-ring: 155 189 240;
+    --c-secondary: 94 205 187;     /* #5ECDBB */
+    --c-secondary-tint: 18 53 47;  /* #12352F */
+    --c-positive: 94 205 187;
+    --c-positive-tint: 18 53 47;
+    --c-negative: 247 168 145;     /* #F7A891 */
+    --c-negative-tint: 61 31 26;   /* #3D1F1A */
+    --c-on-negative: 17 24 39;
+    --c-warning: 232 176 74;       /* #E8B04A */
+    --c-warning-tint: 58 42 18;    /* #3A2A12 */
+    --c-warning-ink: 232 176 74;
+    --c-info: 155 189 240;
+    --c-info-tint: 27 46 77;
+    --c-neutral-tint: 36 48 66;    /* #243042 */
+    --c-invest: 195 174 240;       /* #C3AEF0 */
+    --c-invest-tint: 43 35 71;     /* #2B2347 */
+    --c-gold: 242 193 78;
+    --c-gold-ink: 242 193 78;
+    --c-logo: 167 139 250;         /* #A78BFA */
+    --c-on-logo: 17 24 39;
+    --c-scrim: 0 0 0;
+    --c-chart-1: 122 167 230;      /* #7AA7E6 */
+    --c-chart-2: 240 182 64;       /* #F0B640 */
+    --c-chart-3: 124 200 240;      /* #7CC8F0 */
+    --c-chart-4: 51 196 154;       /* #33C49A */
+    --c-chart-5: 222 154 194;      /* #DE9AC2 */
+    --c-chart-6: 240 138 75;       /* #F08A4B */
+    --c-chart-7: 201 168 106;      /* #C9A86A */
+    --c-chart-8: 141 154 173;      /* #8D9AAD */
+    --c-band: 155 189 240;
+    --w-sm: 600;
+    --w-table: 500;
+    --shadow-card: none;
+    --shadow-raised: none;
+    --shadow-pop: none;
+    --shadow-tab: none;
+    --a-scrim: 0.55;
+  }
+}
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --c-bg: 17 24 39;
+  --c-surface: 26 35 50;
+  --c-surface-raised: 34 45 63;
+  --c-border: 42 53 70;
+  --c-border-strong: 100 116 139;
+  --c-track: 51 65 85;
+  --c-ink: 230 234 240;
+  --c-ink-soft: 200 209 220;
+  --c-ink-muted: 174 185 200;
+  --c-primary: 155 189 240;
+  --c-primary-hover: 180 205 244;
+  --c-primary-tint: 27 46 77;
+  --c-on-primary: 17 24 39;
+  --c-focus-ring: 155 189 240;
+  --c-secondary: 94 205 187;
+  --c-secondary-tint: 18 53 47;
+  --c-positive: 94 205 187;
+  --c-positive-tint: 18 53 47;
+  --c-negative: 247 168 145;
+  --c-negative-tint: 61 31 26;
+  --c-on-negative: 17 24 39;
+  --c-warning: 232 176 74;
+  --c-warning-tint: 58 42 18;
+  --c-warning-ink: 232 176 74;
+  --c-info: 155 189 240;
+  --c-info-tint: 27 46 77;
+  --c-neutral-tint: 36 48 66;
+  --c-invest: 195 174 240;
+  --c-invest-tint: 43 35 71;
+  --c-gold: 242 193 78;
+  --c-gold-ink: 242 193 78;
+  --c-logo: 167 139 250;
+  --c-on-logo: 17 24 39;
+  --c-scrim: 0 0 0;
+  --c-chart-1: 122 167 230;
+  --c-chart-2: 240 182 64;
+  --c-chart-3: 124 200 240;
+  --c-chart-4: 51 196 154;
+  --c-chart-5: 222 154 194;
+  --c-chart-6: 240 138 75;
+  --c-chart-7: 201 168 106;
+  --c-chart-8: 141 154 173;
+  --c-band: 155 189 240;
+  --w-sm: 600;
+  --w-table: 500;
+  --shadow-card: none;
+  --shadow-raised: none;
+  --shadow-pop: none;
+  --shadow-tab: none;
+  --a-scrim: 0.55;
+}
+
+html, body, #root { height: 100%; }
+body {
+  @apply bg-bg text-ink font-sans antialiased;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* Keyboard focus is always visible: 2px ring with a 2px gap (components may draw their own). */
+:focus-visible {
+  outline: 2px solid rgb(var(--c-focus-ring));
+  outline-offset: 2px;
+}
+
+@layer utilities {
+  /* Tabular numerals so columns of money line up. */
+  .num { font-variant-numeric: tabular-nums; }
+  .drag { -webkit-app-region: drag; }
+  .no-drag { -webkit-app-region: no-drag; }
+}
+
+@layer components {
+  /* ---- Inputs (32px, radius 6, focus = 2px ring + 2px offset) ---- */
+  .input {
+    @apply h-8 w-full rounded-input border border-line-strong bg-surface px-2.5 text-body text-ink
+      placeholder:text-ink-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-focus-ring
+      focus:ring-offset-2 focus:ring-offset-surface disabled:border-line disabled:bg-neutral-tint disabled:text-ink-muted;
+    transition: border-color 120ms ease-out;
+  }
+  textarea.input { @apply h-auto py-1.5; }
+  .input-error { @apply border-negative; border-width: 1.5px; }
+  .label { @apply mb-1.5 block text-label text-ink-soft; }
+
+  /* ---- Buttons (32px, radius 6; compact 24px) ---- */
+  .btn {
+    @apply inline-flex h-8 items-center justify-center gap-1.5 whitespace-nowrap rounded-input px-3.5 text-[13px] font-medium
+      focus:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-surface
+      disabled:cursor-not-allowed;
+    transition: background-color 120ms ease-out, color 120ms ease-out, border-color 120ms ease-out;
+  }
+  .btn-primary {
+    @apply btn bg-primary font-semibold text-on-primary hover:bg-primary-hover
+      disabled:border disabled:border-line disabled:bg-neutral-tint disabled:font-medium disabled:text-ink-muted;
+  }
+  .btn-secondary {
+    @apply btn border border-line-strong bg-surface text-ink hover:bg-neutral-tint active:bg-line
+      disabled:border-line disabled:bg-neutral-tint disabled:text-ink-muted;
+  }
+  /* Quiet text action ("Cancel", "Adjust budget"). */
+  .btn-ghost { @apply btn px-3 text-primary hover:bg-primary-tint disabled:text-ink-muted disabled:hover:bg-transparent; }
+  /* Icon-only button (close ×, arrows). Always give it an aria-label. */
+  .btn-icon { @apply btn px-1.5 text-ink-soft hover:bg-neutral-tint hover:text-ink disabled:text-ink-muted disabled:hover:bg-transparent; }
+  .btn-danger {
+    @apply btn border border-negative bg-surface text-negative hover:bg-negative-tint
+      disabled:border-line disabled:bg-neutral-tint disabled:text-ink-muted;
+  }
+  .btn-danger-solid { @apply btn bg-negative font-semibold text-on-negative hover:opacity-90; }
+  .btn-sm { @apply h-6 px-2 text-xs; }
+
+  /* ---- Data table: sticky header, hairlines, no zebra ---- */
+  .data-table { @apply w-full border-collapse text-left; }
+  .data-table thead th {
+    @apply sticky top-0 z-[1] h-8 whitespace-nowrap border-b border-line-strong bg-surface px-3 text-label text-ink-soft;
+  }
+  .data-table tbody td { @apply h-9 whitespace-nowrap border-b border-line px-3 text-table text-ink; }
+  /* A cell that may wrap (long notes): add .cell-wrap. */
+  .data-table tbody td.cell-wrap { @apply whitespace-normal; }
+  .data-table tbody tr { transition: background-color 120ms ease-out; }
+  .data-table tbody tr:hover { @apply bg-neutral-tint; }
+  .data-table tbody tr[aria-selected='true'], .data-table tbody tr.is-selected { @apply bg-primary-tint; }
+  .data-table tbody tr:focus-visible { outline: none; box-shadow: inset 0 0 0 2px rgb(var(--c-focus-ring)); }
+  .data-table tfoot td { @apply h-9 border-t border-line-strong px-3 text-[13px] font-semibold; }
+  .data-table .cell-num { @apply num text-right; }
+  .data-table-compact tbody td { @apply h-8; }
+
+  /* ---- Category chip (pill) ---- */
+  .chip { @apply inline-flex h-[22px] items-center gap-1.5 whitespace-nowrap rounded-pill bg-neutral-tint px-2 text-label text-ink-soft; }
+}
+
+/* Recharts tooltip fallback: keep it on-palette. */
+.recharts-default-tooltip {
+  border-radius: 8px !important;
+  border-color: rgb(var(--c-border)) !important;
+  background: rgb(var(--c-surface-raised)) !important;
+}
+
+/*
+ * Joint profile (for Isa): 14px minimum text everywhere. App.tsx sets
+ * data-profile="joint" on <html>; these rules lift every smaller size.
+ */
+[data-profile='joint'] .text-xs,
+[data-profile='joint'] .text-label,
+[data-profile='joint'] .text-table,
+[data-profile='joint'] .text-\[10px\],
+[data-profile='joint'] .text-\[11px\],
+[data-profile='joint'] .text-\[12px\],
+[data-profile='joint'] .text-\[13px\],
+[data-profile='joint'] .data-table thead th,
+[data-profile='joint'] .data-table tbody td,
+[data-profile='joint'] .data-table tfoot td,
+[data-profile='joint'] .chip,
+[data-profile='joint'] .label,
+[data-profile='joint'] .btn,
+[data-profile='joint'] .btn-primary,
+[data-profile='joint'] .btn-secondary,
+[data-profile='joint'] .btn-ghost,
+[data-profile='joint'] .btn-icon,
+[data-profile='joint'] .btn-danger,
+[data-profile='joint'] .btn-danger-solid,
+[data-profile='joint'] .btn-sm {
+  font-size: 14px;
+  line-height: 20px;
+}
+[data-profile='joint'] .recharts-text,
+[data-profile='joint'] .recharts-legend-item-text,
+[data-profile='joint'] .recharts-label {
+  font-size: 14px;
+}
+
+/* Reduced motion: no movement, only quick fades. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-property: opacity, background-color, color, border-color !important;
+    transition-duration: 150ms !important;
+  }
+}

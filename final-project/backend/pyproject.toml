@@ -1,0 +1,22 @@
+[project]
+name = "personal-centwise-backend"
+version = "1.0.0"
+description = "Backend for Personal Centwise — local personal finance app"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "pydantic>=2.9",
+    "cryptography>=43",
+    # Apple Calendar (macOS EventKit) for the Calendar tab and the iPhone sync.
+    "pyobjc-framework-EventKit>=10",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "httpx>=0.27", "pyinstaller>=6.0"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = [
+    "ignore:Using `httpx` with `starlette.testclient` is deprecated",
+]

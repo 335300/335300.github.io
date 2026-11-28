@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Settings</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<style>body{margin:0;background:#DDE2E9;-webkit-font-smoothing:antialiased}a{color:#24508F;text-decoration:none}a:hover{color:#183A6B;text-decoration:underline}kbd{font-family:inherit}</style>
+</helmet>
+<section style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Helvetica,Arial,sans-serif;font-variant-numeric:tabular-nums;padding:48px;display:flex;flex-direction:column;gap:24px">
+  <div style="display:flex;flex-direction:column;gap:6px;color:#1E293B">
+    <div style="font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#475569">Personal Centwise · Screens</div>
+    <h1 style="margin:0;font-size:28px;line-height:34px;font-weight:600">Settings</h1>
+    <div style="display:flex;gap:16px;font-size:13px;flex-wrap:wrap"><a href="#S1">S1 Personal · light</a><a href="#S2">S2 Personal · dark</a><span style="color:#5E6E82">· Personal profile only ·</span><a href="Overview.dc.html">Overview</a><a href="Transactions.dc.html">Transactions</a><a href="Calendar.dc.html">Calendar</a><a href="Forecast.dc.html">Forecast</a><a href="Net worth.dc.html">Net worth</a><a href="Style Guide.dc.html">Style guide</a></div>
+  </div>
+  <div style="display:flex;gap:48px;flex-wrap:wrap;align-items:flex-start">
+
+  <sc-for list="{{ modes }}" as="m" hint-placeholder-count="2">
+  <div id="{{ m.id }}" style="display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;align-items:center;gap:10px"><span style="background:#1E293B;color:#FFFFFF;font-size:13px;font-weight:600;padding:3px 8px;border-radius:6px">{{ m.id }}</span><span style="font-size:15px;font-weight:600;color:#1E293B">{{ m.label }}</span></div>
+    <div data-screen-label="{{ m.label }}" style="{{ m.vars }}">
+    <div style="width:1440px;background:var(--bg);color:var(--ink);border-radius:12px;overflow:hidden;box-shadow:0 24px 64px rgba(15,23,42,.18);border:1px solid var(--border);position:relative">
+      <div style="height:28px;background:var(--surface);display:flex;align-items:center;gap:8px;padding:0 12px"><span style="width:12px;height:12px;border-radius:50%;background:#FF5F57"></span><span style="width:12px;height:12px;border-radius:50%;background:#FEBC2E"></span><span style="width:12px;height:12px;border-radius:50%;background:#28C840"></span></div>
+      <div style="position:sticky;top:0;z-index:3;background:var(--surface);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center;gap:20px;padding:0 24px">
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:24px;height:24px;border-radius:6px;background:var(--logo)"></span><span style="font-size:15px;font-weight:600">Centwise</span></div>
+        <nav aria-label="Main" style="display:flex;gap:2px;padding:3px;background:var(--neutral-tint);border-radius:8px">
+          <sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="6">
+            <a href="{{ tb.href }}" aria-current="{{ tb.cur }}" style="height:30px;padding:0 12px;border-radius:6px;background:{{ tb.bg }};box-shadow:{{ tb.sh }};color:{{ tb.fg }};font-size:13px;font-weight:{{ tb.w }};display:flex;align-items:center;gap:6px;text-decoration:none" style-hover="color:var(--ink);text-decoration:none">{{ tb.label }}<span style="font-size:12px;font-weight:500;color:var(--ink-muted)">{{ tb.key }}</span></a>
+          </sc-for>
+        </nav>
+        <div style="flex:1"></div>
+        <sc-for list="{{ dropdowns }}" as="dd" hint-placeholder-count="3">
+          <button style="height:32px;padding:0 10px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;cursor:pointer" style-hover="background:var(--neutral-tint)"><span style="color:var(--ink-muted);font-size:12px">{{ dd.k }}</span>{{ dd.v }}<span aria-hidden="true" style="font-size:10px;color:var(--ink-soft)">▼</span></button>
+        </sc-for>
+      </div>
+
+      <div style="padding:24px 32px 88px;display:flex;flex-direction:column;gap:20px">
+        <div style="display:flex;flex-direction:column;gap:2px"><h2 style="margin:0;font-size:22px;line-height:28px;font-weight:600">Settings</h2><span style="font-size:13px;color:var(--ink-soft)">Your data stays on this Mac. Nothing here is sent anywhere.</span></div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:12px 16px;display:flex;align-items:center;gap:16px">
+          <span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 8px 0 5px;border-radius:6px;background:var(--positive-tint);color:var(--positive);font-size:12px;font-weight:var(--w-sm);flex:none"><span aria-hidden="true" style="width:14px;height:14px;border-radius:50%;border:1.5px solid currentColor;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;line-height:1">✓</span>Data safe</span>
+          <span style="font-size:14px;line-height:20px;flex:1"><b style="font-weight:600">20 automatic backups kept on this Mac.</b> <span style="color:var(--ink-soft)">Last one today at 08:12. For extra safety, make an encrypted backup to a USB stick once a month.</span></span>
+          <span style="font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">~/Library/Application Support/Personal Centwise/</span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:16px 20px 20px;display:flex;flex-direction:column;gap:16px">
+              <span style="font-size:16px;line-height:22px;font-weight:600">Appearance</span>
+              <sc-for list="{{ appearance }}" as="a" hint-placeholder-count="2">
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+                  <span style="display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;font-weight:500">{{ a.label }}</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">{{ a.hint }}</span></span>
+                  <div role="group" aria-label="{{ a.label }}" style="display:flex;gap:2px;padding:3px;background:var(--neutral-tint);border-radius:8px">
+                    <sc-for list="{{ a.opts }}" as="o" hint-placeholder-count="3"><button aria-pressed="{{ o.pressed }}" onClick="{{ o.pick }}" style="height:28px;padding:0 12px;border-radius:6px;border:none;background:{{ o.bg }};box-shadow:{{ o.sh }};color:{{ o.fg }};font:inherit;font-size:13px;font-weight:{{ o.w }};cursor:pointer">{{ o.t }}</button></sc-for>
+                  </div>
+                </div>
+              </sc-for>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:12px;border-top:1px solid var(--border)"><span style="display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;font-weight:500">Motion</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">Follows “Reduce motion” in your Mac’s settings. When it is on, panels fade instead of sliding.</span></span><span style="font-size:13px;color:var(--ink-soft);flex:none">Now: off</span></div>
+            </div>
+
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:16px 20px 20px;display:flex;flex-direction:column;gap:14px">
+              <span style="font-size:16px;line-height:22px;font-weight:600">Make an encrypted backup</span>
+              <span style="font-size:13px;color:var(--ink-soft)">One file with both profiles, locked with a password you choose.</span>
+              <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">Password (at least 10 characters)<input type="password" value="kaffee-lauf-2026" autocomplete="new-password" style="height:32px;padding:0 10px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;box-sizing:border-box"></label>
+              <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">The same password again<input type="password" value="kaffee-lauf-2062" aria-invalid="true" aria-describedby="pw-err" autocomplete="new-password" style="height:32px;padding:0 10px;border-radius:6px;border:2px solid var(--negative);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;box-sizing:border-box"><span id="pw-err" style="display:flex;gap:5px;align-items:center;color:var(--negative)"><span aria-hidden="true" style="width:13px;height:13px;border-radius:50%;border:1.5px solid currentColor;display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;line-height:1">×</span>The two passwords are not the same.</span></label>
+              <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:8px;background:var(--warning-tint);color:var(--warning-ink);font-size:13px;line-height:18px"><span aria-hidden="true" style="flex:none;width:16px;height:16px;margin-top:1px;border-radius:50%;border:1.5px solid currentColor;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;line-height:1">!</span><span><b style="font-weight:600">The password is not stored anywhere.</b> If you forget it, nobody can open the backup — not even this app. Write it down somewhere safe.</span></div>
+              <button disabled style="align-self:flex-start;height:32px;padding:0 14px;border-radius:6px;border:none;background:var(--neutral-tint);color:var(--ink-muted);font:inherit;font-size:13px;font-weight:600;cursor:not-allowed">Make backup and save…</button>
+            </div>
+
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:16px 20px 20px;display:flex;flex-direction:column;gap:12px">
+              <span style="font-size:16px;line-height:22px;font-weight:600">Export everything</span>
+              <span style="font-size:13px;color:var(--ink-soft)">Plain, unencrypted files — for a spreadsheet or your tax adviser. Keep them private.</span>
+              <div style="display:flex;gap:8px"><button style="height:32px;padding:0 14px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:500;cursor:pointer" style-hover="background:var(--neutral-tint)">Save all data (JSON)…</button><button style="height:32px;padding:0 14px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:500;cursor:pointer" style-hover="background:var(--neutral-tint)">Save transactions (CSV)…</button></div>
+              <span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft);display:flex;gap:5px;align-items:center"><span aria-hidden="true" style="color:var(--positive)">✓</span>Saved as centwise-transactions-2026-11-19.csv</span>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:16px 20px 20px;display:flex;flex-direction:column;gap:14px">
+              <span style="font-size:16px;line-height:22px;font-weight:600">Verify or restore a backup</span>
+              <div style="display:flex;align-items:center;gap:10px"><button style="height:32px;padding:0 12px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:500;cursor:pointer;flex:none" style-hover="background:var(--neutral-tint)">Choose backup file…</button><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">centwise-2026-11-01.pcbackup</span></div>
+              <div style="display:flex;gap:8px;align-items:flex-end">
+                <label style="flex:1;display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">Its password<input type="password" value="kaffee-lauf-2026" autocomplete="off" style="height:32px;padding:0 10px;border-radius:6px;border:1px solid var(--focus-ring);box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--focus-ring);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;box-sizing:border-box"></label>
+                <button style="height:32px;padding:0 14px;border-radius:6px;border:none;background:var(--primary);color:var(--on-primary);font:inherit;font-size:13px;font-weight:600;cursor:pointer" style-hover="background:var(--primary-hover)">Verify backup</button>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--bg)">
+                <span style="display:inline-flex;align-self:flex-start;align-items:center;gap:6px;height:24px;padding:0 8px 0 5px;border-radius:6px;background:var(--positive-tint);color:var(--positive);font-size:12px;font-weight:var(--w-sm)"><span aria-hidden="true" style="width:14px;height:14px;border-radius:50%;border:1.5px solid currentColor;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;line-height:1">✓</span>The backup passed the check</span>
+                <ul style="margin:0;padding-left:18px;font-size:13px;line-height:20px;color:var(--ink-soft)"><li>Personal: 1.284 transactions, years 2025, 2026, 4 goals</li><li>Joint: 412 transactions, years 2026, 1 goal</li></ul>
+                <sc-if value="{{ notConfirming }}" hint-placeholder-val="{{ false }}"><button onClick="{{ openConfirm }}" style="align-self:flex-start;height:32px;padding:0 12px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:500;cursor:pointer">Restore this backup…</button></sc-if>
+                <sc-if value="{{ confirming }}" hint-placeholder-val="{{ true }}">
+                  <div role="alertdialog" aria-label="Confirm restore" style="display:flex;flex-direction:column;gap:10px;padding:12px;border-radius:8px;border:1px solid var(--negative);background:var(--surface)">
+                    <span style="font-size:13px;line-height:19px">This <b style="font-weight:600">replaces</b> the data of Personal and Joint with the backup from 1 November. Your current data is saved as an automatic backup first, so you can go back.</span>
+                    <div style="display:flex;gap:8px;justify-content:flex-end"><button onClick="{{ closeConfirm }}" style="height:32px;padding:0 14px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:500;cursor:pointer">Keep my current data</button><button style="height:32px;padding:0 14px;border-radius:6px;border:none;background:var(--negative);color:var(--on-negative);font:inherit;font-size:13px;font-weight:600;cursor:pointer">Replace with backup</button></div>
+                  </div>
+                </sc-if>
+              </div>
+            </div>
+
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:16px 20px 20px;display:flex;flex-direction:column;gap:12px">
+              <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:16px;line-height:22px;font-weight:600">Apple Calendar</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--positive);display:flex;gap:4px;align-items:center"><span aria-hidden="true">✓</span>Access allowed</span></div>
+              <span style="font-size:13px;color:var(--ink-soft)">Show these calendars next to your money dates in the Calendar tab.</span>
+              <sc-for list="{{ calendars }}" as="c" hint-placeholder-count="3">
+                <label style="display:flex;align-items:center;gap:10px;height:32px;font-size:13px;cursor:pointer"><input type="checkbox" checked="{{ c.on }}" onChange="{{ c.toggle }}" style="width:16px;height:16px;margin:0;accent-color:var(--primary)"><span style="width:10px;height:10px;border-radius:3px;background:{{ c.dot }}"></span>{{ c.n }}</label>
+              </sc-for>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid var(--border)"><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">Centwise also adds a “Centwise bills” calendar.</span><button style="height:32px;padding:0 12px;border-radius:6px;border:none;background:transparent;color:var(--negative);font:inherit;font-size:13px;font-weight:500;cursor:pointer" style-hover="background:var(--negative-tint)">Remove the Centwise calendars…</button></div>
+            </div>
+
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:16px 20px 20px;display:flex;flex-direction:column;gap:10px">
+              <span style="font-size:16px;line-height:22px;font-weight:600">Keyboard shortcuts</span>
+              <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 24px">
+                <sc-for list="{{ keys }}" as="k" hint-placeholder-count="10">
+                  <div style="display:flex;justify-content:space-between;align-items:center;height:32px;border-bottom:1px solid var(--border);font-size:13px"><span style="color:var(--ink-soft)">{{ k.t }}</span><kbd style="font-size:12px;font-weight:var(--w-sm);padding:0 6px;line-height:20px;border-radius:6px;border:1px solid var(--border-strong);background:var(--bg);color:var(--ink)">{{ k.k }}</kbd></div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button aria-label="Calculator (⌘K)" title="Calculator (⌘K)" style="position:absolute;right:24px;bottom:24px;width:48px;height:48px;border-radius:999px;border:none;background:var(--primary);color:var(--on-primary);font:inherit;font-size:20px;font-weight:600;box-shadow:var(--shadow-pop);cursor:pointer" style-hover="background:var(--primary-hover)">±</button>
+    </div>
+    </div>
+  </div>
+  </sc-for>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{}'>
+const BASE = {
+  light: { 'bg':'#F7F8FA','surface':'#FFFFFF','surface-raised':'#FFFFFF','border':'#E2E8F0','border-strong':'#7D8A9E','ink':'#1E293B','ink-soft':'#475569','ink-muted':'#5E6E82','primary':'#24508F','primary-hover':'#1D4278','primary-tint':'#EAF0F8','secondary':'#0F766E','positive':'#0F766E','positive-tint':'#E6F4F1','negative':'#B42318','on-negative':'#FFFFFF','negative-tint':'#FCEBE9','warning':'#B45309','warning-tint':'#FDF1E3','warning-ink':'#92400E','info':'#24508F','info-tint':'#EAF0F8','neutral-tint':'#F1F5F9','invest':'#7C4DBE','invest-tint':'#F1EBFA','gold':'#F2C14E','gold-ink':'#8A6100','logo':'#6D28D9','focus-ring':'#24508F','on-primary':'#FFFFFF','track':'#E2E8F0','shadow':'0 1px 2px rgba(15,23,42,.06)','shadow-pop':'0 8px 24px rgba(15,23,42,.12)','w-sm':'500','w-table':'400',
+    chart:['#24508F','#E69F00','#56B4E9','#009E73','#CC79A7','#D55E00','#8C6D31','#94A3B8'] },
+  dark: { 'bg':'#111827','surface':'#1A2332','surface-raised':'#222D3F','border':'#2A3546','border-strong':'#64748B','ink':'#E6EAF0','ink-soft':'#C8D1DC','ink-muted':'#AEB9C8','primary':'#9BBDF0','primary-hover':'#B4CDF4','primary-tint':'#1B2E4D','secondary':'#5ECDBB','positive':'#5ECDBB','positive-tint':'#12352F','negative':'#F7A891','on-negative':'#111827','negative-tint':'#3D1F1A','warning':'#E8B04A','warning-tint':'#3A2A12','warning-ink':'#E8B04A','info':'#9BBDF0','info-tint':'#1B2E4D','neutral-tint':'#243042','invest':'#C3AEF0','invest-tint':'#2B2347','gold':'#F2C14E','gold-ink':'#F2C14E','logo':'#A78BFA','focus-ring':'#9BBDF0','on-primary':'#111827','track':'#334155','shadow':'none','shadow-pop':'none','w-sm':'600','w-table':'500',
+    chart:['#7AA7E6','#F0B640','#7CC8F0','#33C49A','#DE9AC2','#F08A4B','#C9A86A','#8D9AAD'] }
+};
+function toVars(P) { const v = {}; Object.keys(P).forEach(k => { if (k !== 'chart') v['--' + k] = P[k]; }); P.chart.forEach((c, i) => v['--chart-' + (i + 1)] = c); return v; }
+const PAGES = ['Overview.dc.html', 'Transactions.dc.html', 'Calendar.dc.html', 'Forecast.dc.html', 'Net worth.dc.html', 'Settings.dc.html'];
+const tabsFor = (labels, active) => labels.map((label, i) => ({ label, key: '⌘' + (i + 1), href: PAGES[i], cur: i === active ? 'page' : 'false', bg: i === active ? 'var(--surface)' : 'transparent', sh: i === active ? '0 1px 2px rgba(15,23,42,.12)' : 'none', fg: i === active ? 'var(--ink)' : 'var(--ink-soft)', w: i === active ? 600 : 500 }));
+const seg = (opts, cur, set) => opts.map(t => ({ t, pressed: t === cur ? 'true' : 'false', pick: () => set(t), bg: t === cur ? 'var(--surface)' : 'transparent', sh: t === cur ? '0 1px 2px rgba(15,23,42,.12)' : 'none', fg: t === cur ? 'var(--ink)' : 'var(--ink-soft)', w: t === cur ? 600 : 500 }));
+
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { theme: 'Light', density: 'Comfortable', confirm: true, cals: { Personal: true, University: true, Work: false } }; }
+  renderVals() {
+    const st = this.state;
+    return {
+      modes: [
+        { id:'S1', label:'Personal · light (default)', vars: toVars(BASE.light) },
+        { id:'S2', label:'Personal · dark', vars: toVars(BASE.dark) }
+      ],
+      tabs: tabsFor(['Overview', 'Transactions', 'Calendar', 'Forecast', 'Net worth', 'Settings'], 5),
+      dropdowns: [{ k:'Month', v:'November' }, { k:'Year', v:'2026' }, { k:'Profile', v:'Personal' }],
+      appearance: [
+        { label:'Theme', hint:'Light is the default. Dark is tuned separately, not inverted.', opts: seg(['Light', 'Dark', 'Match Mac'], st.theme, t => this.setState({ theme: t })) },
+        { label:'Table rows', hint:'Compact fits about 20% more rows on screen.', opts: seg(['Comfortable', 'Compact'], st.density, t => this.setState({ density: t })) }
+      ],
+      confirming: !!st.confirm, notConfirming: !st.confirm,
+      openConfirm: () => this.setState({ confirm: true }), closeConfirm: () => this.setState({ confirm: false }),
+      calendars: [['Personal', 'var(--chart-3)'], ['University', 'var(--chart-5)'], ['Work', 'var(--chart-7)']].map(([n, dot]) => ({ n, dot, on: !!st.cals[n], toggle: () => this.setState({ cals: { ...st.cals, [n]: !st.cals[n] } }) })),
+      keys: [['Overview … Settings', '⌘1–6'], ['Add transaction', '⌘N'], ['Search transactions', '⌘F'], ['Calculator', '⌘K'], ['Save all rows', '⌘↵'], ['Previous / next month', '⌘[  ⌘]'], ['Switch profile', '⌘P'], ['Import CSV', '⌘I']].map(([t, k]) => ({ t, k }))
+    };
+  }
+}
+</script>
+</body>
+</html>

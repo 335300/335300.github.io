@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<style>body{margin:0;background:#DDE2E9;-webkit-font-smoothing:antialiased}a{color:#24508F;text-decoration:none}a:hover{color:#183A6B;text-decoration:underline}</style>
+</helmet>
+<section style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Helvetica,Arial,sans-serif;font-variant-numeric:tabular-nums;padding:48px;display:flex;flex-direction:column;gap:24px">
+  <div style="display:flex;flex-direction:column;gap:6px;color:#1E293B">
+    <div style="font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#475569">Personal Centwise · Deliverable C</div>
+    <h1 style="margin:0;font-size:28px;line-height:34px;font-weight:600">Overview screens</h1>
+    <div style="display:flex;gap:16px;font-size:13px"><a href="#C1">C1 Personal · light</a><a href="#C2">C2 Personal · dark</a><a href="#C3">C3 Joint · light</a><a href="Style Guide.dc.html">Style guide</a><a href="Palette Sheet.dc.html">Palette sheet</a></div>
+  </div>
+  <div style="display:flex;gap:48px;flex-wrap:wrap;align-items:flex-start">
+
+  <sc-for list="{{ modes }}" as="m" hint-placeholder-count="2">
+  <div id="{{ m.id }}" style="display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;align-items:center;gap:10px"><span style="background:#1E293B;color:#FFFFFF;font-size:13px;font-weight:600;padding:3px 8px;border-radius:6px">{{ m.id }}</span><span style="font-size:15px;font-weight:600;color:#1E293B">{{ m.label }}</span></div>
+    <div data-screen-label="{{ m.label }}" style="{{ m.vars }}">
+    <div style="width:1440px;background:var(--bg);color:var(--ink);border-radius:12px;overflow:hidden;box-shadow:0 24px 64px rgba(15,23,42,.18);border:1px solid var(--border);position:relative">
+      <div style="height:28px;background:var(--surface);display:flex;align-items:center;gap:8px;padding:0 12px"><span style="width:12px;height:12px;border-radius:50%;background:#FF5F57"></span><span style="width:12px;height:12px;border-radius:50%;background:#FEBC2E"></span><span style="width:12px;height:12px;border-radius:50%;background:#28C840"></span></div>
+      <div style="position:sticky;top:0;z-index:3;background:var(--surface);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center;gap:20px;padding:0 24px">
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:24px;height:24px;border-radius:6px;background:var(--logo)"></span><span style="font-size:15px;font-weight:600">Centwise</span></div>
+        <div style="display:flex;gap:2px;padding:3px;background:var(--neutral-tint);border-radius:8px">
+          <sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="6">
+            <button style="height:30px;padding:0 12px;border-radius:6px;border:none;background:{{ tb.bg }};box-shadow:{{ tb.sh }};color:{{ tb.fg }};font:inherit;font-size:13px;font-weight:{{ tb.w }};display:flex;align-items:center;gap:6px;cursor:pointer" style-hover="color:var(--ink)">{{ tb.label }}<span style="font-size:12px;font-weight:500;color:var(--ink-muted)">{{ tb.key }}</span></button>
+          </sc-for>
+        </div>
+        <div style="flex:1"></div>
+        <sc-for list="{{ dropdowns }}" as="dd" hint-placeholder-count="3">
+          <button style="height:32px;padding:0 10px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;cursor:pointer" style-hover="background:var(--neutral-tint)"><span style="color:var(--ink-muted);font-size:12px">{{ dd.k }}</span>{{ dd.v }}<span style="font-size:10px;color:var(--ink-soft)">▼</span></button>
+        </sc-for>
+      </div>
+
+      <div style="padding:24px 32px 88px;display:flex;flex-direction:column;gap:20px">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px">
+          <div style="display:flex;flex-direction:column;gap:2px"><h2 style="margin:0;font-size:22px;line-height:28px;font-weight:600">Overview</h2><span style="font-size:13px;color:var(--ink-soft)">November 2026 · day 19 of 30 · last import today, 08:12</span></div>
+          <div style="display:flex;gap:8px">
+            <button style="height:32px;padding:0 14px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:500;cursor:pointer" style-hover="background:var(--neutral-tint)">Import CSV</button>
+            <button style="height:32px;padding:0 14px;border-radius:6px;border:none;background:var(--primary);color:var(--on-primary);font:inherit;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;cursor:pointer" style-hover="background:var(--primary-hover)">Add transaction<span style="font-size:12px;font-weight:500;opacity:.85">⌘N</span></button>
+          </div>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:12px 16px;display:flex;align-items:center;gap:16px">
+          <span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 8px 0 5px;border-radius:6px;background:{{ att.bg }};color:{{ att.fg }};font-size:12px;font-weight:var(--w-sm);flex:none"><span style="width:14px;height:14px;border-radius:50%;border:1.5px solid currentColor;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;line-height:1">{{ att.icon }}</span>{{ att.badge }}</span>
+          <span style="font-size:14px;line-height:20px;flex:1"><b style="font-weight:600">{{ att.title }}</b> <span style="color:var(--ink-soft)">{{ att.text }}</span></span>
+          <sc-if value="{{ att.hasAction }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;gap:8px;flex:none">
+              <button style="height:32px;padding:0 12px;border-radius:6px;border:none;background:transparent;color:var(--primary);font:inherit;font-size:13px;font-weight:500;cursor:pointer" style-hover="background:var(--primary-tint)">Adjust budget</button>
+              <button style="height:32px;padding:0 14px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:500;cursor:pointer" style-hover="background:var(--neutral-tint)">Move 35 € from Transport</button>
+            </div>
+          </sc-if>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px">
+          <sc-for list="{{ kpiHero }}" as="k" hint-placeholder-count="3">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:20px;display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:13px;font-weight:500;color:var(--ink-soft)">{{ k.label }}</span><span style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;color:var(--ink-muted)"><span style="width:14px;height:14px;border-radius:50%;border:1.5px solid currentColor;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;line-height:1">i</span></span></div>
+              <span style="font-size:28px;line-height:34px;font-weight:600;letter-spacing:-.01em">{{ k.value }}</span>
+              <span style="font-size:13px;line-height:18px;color:var(--ink-soft);display:flex;gap:6px;align-items:baseline"><span style="color:{{ k.cc }};font-size:11px">{{ k.ci }}</span>{{ k.cmp }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:-4px">
+          <sc-for list="{{ kpiCompact }}" as="k" hint-placeholder-count="3">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:12px 16px;display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+              <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;font-weight:500;color:var(--ink-soft)">{{ k.label }}</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft);display:flex;gap:4px"><span>{{ k.ci }}</span>{{ k.cmp }}</span></div>
+              <span style="font-size:20px;line-height:26px;font-weight:600">{{ k.value }}</span>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:16px;align-items:start">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);display:flex;flex-direction:column">
+              <div style="display:flex;align-items:baseline;gap:12px;padding:16px 20px 4px"><span style="font-size:16px;line-height:22px;font-weight:600">Budget vs real</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted)">variable budgets · │ usual month</span></div>
+              <div style="padding:0 20px">
+                <sc-for list="{{ budget }}" as="r" hint-placeholder-count="6">
+                  <div style="display:grid;grid-template-columns:110px minmax(0,1fr) 220px;gap:16px;align-items:center;min-height:46px;border-bottom:1px solid var(--border)">
+                    <span style="font-size:13px;font-weight:500">{{ r.cat }}</span>
+                    <div style="position:relative;height:28px">
+                      <div style="position:absolute;left:0;top:8px;height:12px;width:{{ r.trackW }};background:var(--track);border-radius:4px"></div>
+                      <div style="position:absolute;left:0;top:8px;height:12px;width:{{ r.fillW }};background:{{ r.fill }};border:{{ r.fillB }};box-sizing:border-box;border-radius:4px"></div>
+                      <div style="position:absolute;top:2px;left:{{ r.usualL }};width:2px;height:24px;background:var(--ink-muted);border-radius:1px"></div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px">
+                      <span style="font-size:13px;font-weight:600">{{ r.label }}</span>
+                      <span style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:var(--w-sm);color:{{ r.sc }}"><span style="width:13px;height:13px;border-radius:50%;border:1.5px solid currentColor;display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;line-height:1">{{ r.si }}</span>{{ r.sw }}</span>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="padding:12px 20px 16px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px;color:var(--ink-soft)">752 € of 900 € spent · 11 days left</span><a href="#" style="font-size:13px;font-weight:500;color:var(--primary)">All budgets →</a></div>
+            </div>
+
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:16px 20px 20px;display:flex;flex-direction:column;gap:12px">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font-size:16px;line-height:22px;font-weight:600">Forecast · next 6 months</span><a href="#" style="font-size:13px;font-weight:500;color:var(--primary)">Open forecast →</a></div>
+              <div style="display:flex;flex-direction:column;gap:2px">
+                <span style="font-size:15px;line-height:21px;font-weight:600">In 8 of 10 likely futures you stay above 2.000 € through May.</span>
+                <span style="font-size:13px;color:var(--ink-soft)">Most likely balance in May: about 4.050 €. Based on 24 months of history and your planned bills.</span>
+              </div>
+              <svg viewBox="0 0 680 240" style="width:100%;height:auto;display:block;overflow:visible">
+                <path d="{{ fc.grid }}" style="stroke:var(--border);stroke-width:1;fill:none"></path>
+                <path d="{{ fc.band80 }}" style="fill:var(--band80);stroke:none"></path>
+                <path d="{{ fc.band50 }}" style="fill:var(--band50);stroke:none"></path>
+                <line x1="{{ fc.todayX }}" x2="{{ fc.todayX }}" y1="14" y2="212" style="stroke:var(--ink-soft);stroke-width:1"></line>
+                <text x="{{ fc.todayX }}" y="10" text-anchor="middle" style="fill:var(--ink-soft);font-size:12px;font-weight:600">Today</text>
+                <path d="{{ fc.actual }}" style="fill:none;stroke:var(--ink);stroke-width:2;stroke-linejoin:round;stroke-linecap:round"></path>
+                <path d="{{ fc.median }}" style="fill:none;stroke:var(--primary);stroke-width:2;stroke-dasharray:6 4;stroke-linecap:round"></path>
+                <circle cx="{{ fc.todayX }}" cy="{{ fc.todayY }}" r="4" style="fill:var(--surface);stroke:var(--ink);stroke-width:2"></circle>
+                <sc-for list="{{ fc.yLabels }}" as="yl" hint-placeholder-count="6"><text x="48" y="{{ yl.y }}" text-anchor="end" dominant-baseline="middle" style="fill:var(--ink-muted);font-size:12px;font-weight:500">{{ yl.t }}</text></sc-for>
+                <sc-for list="{{ fc.xLabels }}" as="xl" hint-placeholder-count="12"><text x="{{ xl.x }}" y="232" text-anchor="middle" style="fill:var(--ink-muted);font-size:12px;font-weight:500">{{ xl.t }}</text></sc-for>
+                <text x="{{ fc.endX }}" y="{{ fc.medY }}" dominant-baseline="middle" style="fill:var(--primary);font-size:12px;font-weight:600">{{ fc.medLabel }}</text>
+                <text x="{{ fc.endX }}" y="{{ fc.hi50Y }}" dominant-baseline="middle" style="fill:var(--ink-soft);font-size:12px;font-weight:500">50% range</text>
+                <text x="{{ fc.endX }}" y="{{ fc.hi80Y }}" dominant-baseline="middle" style="fill:var(--ink-soft);font-size:12px;font-weight:500">80% range</text>
+              </svg>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:16px 20px 20px;display:flex;flex-direction:column;gap:16px">
+              <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:16px;line-height:22px;font-weight:600">Savings goals</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted)">8.780 € saved</span></div>
+              <sc-for list="{{ goals }}" as="g" hint-placeholder-count="3">
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:13px"><span style="font-weight:600">{{ g.name }}</span><span style="color:var(--ink-soft)">{{ g.amt }}</span></div>
+                  <div style="height:8px;border-radius:999px;background:var(--track);overflow:hidden"><div style="height:100%;width:{{ g.pct }};background:{{ g.fill }};border-radius:999px"></div></div>
+                  <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:var(--w-sm)"><span style="color:{{ g.nc }}">{{ g.note }}</span><span style="color:var(--ink-soft)">{{ g.pct }}</span></div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);display:flex;flex-direction:column">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;padding:16px 20px 8px"><span style="font-size:16px;line-height:22px;font-weight:600">Upcoming bills</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted)">next 14 days</span></div>
+              <div style="padding:0 20px">
+                <sc-for list="{{ bills }}" as="b" hint-placeholder-count="5">
+                  <div style="display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:12px;align-items:center;height:36px;border-bottom:1px solid var(--border);font-size:13px"><span style="color:var(--ink-muted)">{{ b.d }}</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ b.n }}</span><span style="text-align:right">{{ b.a }}</span></div>
+                </sc-for>
+              </div>
+              <div style="padding:12px 20px 16px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px;color:var(--ink-soft)">Covered by balance <span style="color:var(--positive)">✓</span></span><a href="#" style="font-size:13px;font-weight:500;color:var(--primary)">Calendar →</a></div>
+            </div>
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:16px 20px;display:flex;flex-direction:column;gap:8px">
+              <span style="font-size:16px;line-height:22px;font-weight:600">Invested this month</span>
+              <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:999px;background:var(--invest-tint);color:var(--invest);font-size:12px;font-weight:var(--w-sm)">ETF savings plan</span><span style="font-size:20px;font-weight:600">500 €</span></div>
+              <span style="font-size:13px;color:var(--ink-soft)">Same as every month since March. Market value changes are shown in Net worth.</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);overflow:hidden">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;padding:16px 20px 8px"><span style="font-size:16px;line-height:22px;font-weight:600">Recent transactions</span><a href="#" style="font-size:13px;font-weight:500;color:var(--primary)">All transactions ⌘2 →</a></div>
+          <div style="display:grid;grid-template-columns:80px minmax(0,2fr) minmax(0,1.3fr) minmax(0,1fr) 140px;gap:12px;padding:0 20px;height:32px;align-items:center;border-bottom:1px solid var(--border-strong);font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)"><span>Date</span><span>Payee</span><span>Category</span><span>Account</span><span style="text-align:right">Amount</span></div>
+          <sc-for list="{{ rows }}" as="r" hint-placeholder-count="6">
+            <div style="display:grid;grid-template-columns:80px minmax(0,2fr) minmax(0,1.3fr) minmax(0,1fr) 140px;gap:12px;padding:0 20px;height:{{ rowH }};align-items:center;border-bottom:1px solid var(--border);font-size:13px;font-weight:var(--w-table);background:{{ r.bg }}" style-hover="background:var(--neutral-tint)">
+              <span style="color:var(--ink-soft)">{{ r.d }}</span><span>{{ r.p }}</span>
+              <span><span style="display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:999px;background:{{ r.chipBg }};color:{{ r.chipFg }};font-size:12px;font-weight:var(--w-sm)"><span style="width:8px;height:8px;border-radius:50%;background:{{ r.dot }}"></span>{{ r.c }}</span></span>
+              <span style="color:var(--ink-soft)">{{ r.acc }}</span><span style="text-align:right;color:{{ r.ac }}">{{ r.a }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <button title="Calculator (⌘K)" style="position:absolute;right:24px;bottom:24px;width:48px;height:48px;border-radius:999px;border:none;background:var(--primary);color:var(--on-primary);font:inherit;font-size:20px;font-weight:600;box-shadow:var(--shadow-pop);cursor:pointer" style-hover="background:var(--primary-hover)">±</button>
+    </div>
+    </div>
+  </div>
+  </sc-for>
+
+  <div id="C3" style="display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;align-items:center;gap:10px"><span style="background:#1E293B;color:#FFFFFF;font-size:13px;font-weight:600;padding:3px 8px;border-radius:6px">C3</span><span style="font-size:15px;font-weight:600;color:#1E293B">Joint profile · light · 14px minimum</span></div>
+    <div data-screen-label="Joint overview" style="{{ jointVars }}">
+    <div style="width:1200px;background:var(--bg);color:var(--ink);border-radius:12px;overflow:hidden;box-shadow:0 24px 64px rgba(15,23,42,.18);border:1px solid var(--border)">
+      <div style="height:28px;background:var(--surface);display:flex;align-items:center;gap:8px;padding:0 12px"><span style="width:12px;height:12px;border-radius:50%;background:#FF5F57"></span><span style="width:12px;height:12px;border-radius:50%;background:#FEBC2E"></span><span style="width:12px;height:12px;border-radius:50%;background:#28C840"></span></div>
+      <div style="background:var(--surface);border-bottom:1px solid var(--border);height:64px;display:flex;align-items:center;gap:24px;padding:0 32px">
+        <div style="display:flex;align-items:center;gap:10px"><span style="width:28px;height:28px;border-radius:7px;background:var(--logo)"></span><span style="font-size:17px;font-weight:600">Centwise</span></div>
+        <div style="display:flex;gap:2px;padding:3px;background:var(--neutral-tint);border-radius:10px">
+          <sc-for list="{{ jointTabs }}" as="tb" hint-placeholder-count="4">
+            <button style="height:38px;padding:0 18px;border-radius:8px;border:none;background:{{ tb.bg }};box-shadow:{{ tb.sh }};color:{{ tb.fg }};font:inherit;font-size:15px;font-weight:{{ tb.w }};cursor:pointer">{{ tb.label }}</button>
+          </sc-for>
+        </div>
+        <div style="flex:1"></div>
+        <button style="height:38px;padding:0 14px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:15px;font-weight:500;display:flex;align-items:center;gap:8px">November 2026<span style="font-size:11px;color:var(--ink-soft)">▼</span></button>
+        <button style="height:38px;padding:0 14px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:15px;font-weight:500;display:flex;align-items:center;gap:8px">Joint<span style="font-size:11px;color:var(--ink-soft)">▼</span></button>
+      </div>
+
+      <div style="padding:32px 40px 40px;display:flex;flex-direction:column;gap:24px">
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <span style="font-size:15px;color:var(--ink-soft)">Our shared money · November</span>
+          <h2 style="margin:0;font-size:32px;line-height:40px;font-weight:600">This month we kept 412 €.</h2>
+          <span style="font-size:16px;line-height:24px;color:var(--ink-soft);display:flex;gap:8px;align-items:baseline"><span style="color:var(--positive);font-size:13px">▲</span>That’s 60 € more than in a usual month.</span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px">
+          <sc-for list="{{ jointKpi }}" as="k" hint-placeholder-count="3">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:24px;display:flex;flex-direction:column;gap:8px">
+              <span style="font-size:15px;font-weight:500;color:var(--ink-soft)">{{ k.label }}</span>
+              <span style="font-size:30px;line-height:36px;font-weight:600">{{ k.value }}</span>
+              <span style="font-size:14px;line-height:20px;color:var(--ink-soft)">{{ k.note }}</span>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:16px 24px;display:flex;align-items:center;gap:16px">
+          <span style="display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px 0 6px;border-radius:6px;background:var(--warning-tint);color:var(--warning-ink);font-size:14px;font-weight:500;flex:none"><span style="width:16px;height:16px;border-radius:50%;border:1.5px solid currentColor;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;line-height:1">!</span>Worth a look</span>
+          <span style="font-size:16px;line-height:24px;flex:1">Groceries are close to this month’s plan: <b style="font-weight:600">38 € left for 11 days.</b></span>
+          <button style="height:40px;padding:0 16px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:15px;font-weight:500;cursor:pointer" style-hover="background:var(--neutral-tint)">See groceries</button>
+        </div>
+
+        <div style="display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px;align-items:start">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:20px 24px 24px;display:flex;flex-direction:column;gap:12px">
+            <span style="font-size:18px;line-height:24px;font-weight:600">Looking ahead</span>
+            <span style="font-size:16px;line-height:24px">In 8 of 10 likely futures our shared account stays above <b style="font-weight:600">1.000 €</b> until May.</span>
+            <svg viewBox="0 0 680 250" style="width:100%;height:auto;display:block;overflow:visible">
+              <path d="{{ jfc.grid }}" style="stroke:var(--border);stroke-width:1;fill:none"></path>
+              <path d="{{ jfc.band80 }}" style="fill:var(--band80);stroke:none"></path>
+              <path d="{{ jfc.band50 }}" style="fill:var(--band50);stroke:none"></path>
+              <line x1="{{ jfc.todayX }}" x2="{{ jfc.todayX }}" y1="14" y2="212" style="stroke:var(--ink-soft);stroke-width:1"></line>
+              <text x="{{ jfc.todayX }}" y="8" text-anchor="middle" style="fill:var(--ink-soft);font-size:15px;font-weight:600">Today</text>
+              <path d="{{ jfc.actual }}" style="fill:none;stroke:var(--ink);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round"></path>
+              <path d="{{ jfc.median }}" style="fill:none;stroke:var(--primary);stroke-width:2.5;stroke-dasharray:7 5;stroke-linecap:round"></path>
+              <sc-for list="{{ jfc.yLabels }}" as="yl" hint-placeholder-count="4"><text x="48" y="{{ yl.y }}" text-anchor="end" dominant-baseline="middle" style="fill:var(--ink-muted);font-size:15px;font-weight:500">{{ yl.t }}</text></sc-for>
+              <sc-for list="{{ jfc.xLabelsSparse }}" as="xl" hint-placeholder-count="6"><text x="{{ xl.x }}" y="240" text-anchor="middle" style="fill:var(--ink-muted);font-size:15px;font-weight:500">{{ xl.t }}</text></sc-for>
+              <text x="{{ jfc.endX }}" y="{{ jfc.medY }}" dominant-baseline="middle" style="fill:var(--primary);font-size:15px;font-weight:600">{{ jfc.medLabel }}</text>
+            </svg>
+            <span style="font-size:14px;line-height:20px;color:var(--ink-soft)">Black line: what happened. Dashed line: most likely path. Shaded area: the range we’d expect — wider further out because the future is less certain.</span>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);display:flex;flex-direction:column">
+            <span style="font-size:18px;line-height:24px;font-weight:600;padding:20px 24px 8px">Coming up</span>
+            <div style="padding:0 24px">
+              <sc-for list="{{ jointBills }}" as="b" hint-placeholder-count="4">
+                <div style="display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:12px;align-items:center;height:48px;border-bottom:1px solid var(--border);font-size:15px"><span style="color:var(--ink-soft)">{{ b.d }}</span><span>{{ b.n }}</span><span style="text-align:right;font-weight:500">{{ b.a }}</span></div>
+              </sc-for>
+            </div>
+            <div style="padding:14px 24px 20px;font-size:15px;color:var(--ink-soft);display:flex;gap:8px;align-items:center"><span style="color:var(--positive)">✓</span>Enough money for all of these.</div>
+          </div>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);overflow:hidden">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;padding:20px 24px 8px"><span style="font-size:18px;line-height:24px;font-weight:600">Latest from our shared account</span><a href="#" style="font-size:15px;font-weight:500;color:var(--primary)">See everything →</a></div>
+          <sc-for list="{{ jointRows }}" as="r" hint-placeholder-count="5">
+            <div style="display:grid;grid-template-columns:100px minmax(0,2fr) minmax(0,1.2fr) 160px;gap:16px;padding:0 24px;height:48px;align-items:center;border-top:1px solid var(--border);font-size:15px">
+              <span style="color:var(--ink-soft)">{{ r.d }}</span><span>{{ r.p }}</span>
+              <span><span style="display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:999px;background:var(--neutral-tint);color:var(--ink-soft);font-size:14px;font-weight:500"><span style="width:8px;height:8px;border-radius:50%;background:{{ r.dot }}"></span>{{ r.c }}</span></span>
+              <span style="text-align:right;color:{{ r.ac }};font-weight:500">{{ r.a }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;attention&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;problem&quot;,&quot;all clear&quot;],&quot;default&quot;:&quot;problem&quot;,&quot;tsType&quot;:&quot;'problem'|'all clear'&quot;},&quot;rowDensity&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;comfortable&quot;,&quot;compact&quot;],&quot;default&quot;:&quot;comfortable&quot;,&quot;tsType&quot;:&quot;'comfortable'|'compact'&quot;}}">
+const BASE = {
+  light: { 'bg':'#F7F8FA','surface':'#FFFFFF','surface-raised':'#FFFFFF','border':'#E2E8F0','border-strong':'#7D8A9E','ink':'#1E293B','ink-soft':'#475569','ink-muted':'#5E6E82','primary':'#24508F','primary-hover':'#1D4278','primary-tint':'#EAF0F8','secondary':'#0F766E','positive':'#0F766E','positive-tint':'#E6F4F1','negative':'#B42318','negative-tint':'#FCEBE9','warning':'#B45309','warning-tint':'#FDF1E3','warning-ink':'#92400E','info':'#24508F','info-tint':'#EAF0F8','neutral-tint':'#F1F5F9','invest':'#7C4DBE','invest-tint':'#F1EBFA','gold':'#F2C14E','gold-ink':'#8A6100','logo':'#6D28D9','focus-ring':'#24508F','on-primary':'#FFFFFF','track':'#E2E8F0','shadow':'0 1px 2px rgba(15,23,42,.06)','shadow-pop':'0 8px 24px rgba(15,23,42,.12)','band50':'rgba(36,80,143,.24)','band80':'rgba(36,80,143,.12)','w-sm':'500','w-table':'400',
+    chart:['#24508F','#E69F00','#56B4E9','#009E73','#CC79A7','#D55E00','#8C6D31','#94A3B8'] },
+  dark: { 'bg':'#111827','surface':'#1A2332','surface-raised':'#222D3F','border':'#2A3546','border-strong':'#64748B','ink':'#E6EAF0','ink-soft':'#C8D1DC','ink-muted':'#AEB9C8','primary':'#9BBDF0','primary-hover':'#B4CDF4','primary-tint':'#1B2E4D','secondary':'#5ECDBB','positive':'#5ECDBB','positive-tint':'#12352F','negative':'#F7A891','negative-tint':'#3D1F1A','warning':'#E8B04A','warning-tint':'#3A2A12','warning-ink':'#E8B04A','info':'#9BBDF0','info-tint':'#1B2E4D','neutral-tint':'#243042','invest':'#C3AEF0','invest-tint':'#2B2347','gold':'#F2C14E','gold-ink':'#F2C14E','logo':'#A78BFA','focus-ring':'#9BBDF0','on-primary':'#111827','track':'#334155','shadow':'none','shadow-pop':'none','band50':'rgba(155,189,240,.24)','band80':'rgba(155,189,240,.12)','w-sm':'600','w-table':'500',
+    chart:['#7AA7E6','#F0B640','#7CC8F0','#33C49A','#DE9AC2','#F08A4B','#C9A86A','#8D9AAD'] }
+};
+function toVars(P) { const v = {}; Object.keys(P).forEach(k => { if (k !== 'chart') v['--' + k] = P[k]; }); P.chart.forEach((c, i) => v['--chart-' + (i + 1)] = c); return v; }
+const eur = (n, dec = 2, sign = false) => { if (n == null) return '—'; const s = Math.abs(n).toLocaleString('de-DE', { minimumFractionDigits: dec, maximumFractionDigits: dec }); return (n < 0 ? '−' : (sign && n > 0 ? '+' : '')) + s + '\u00A0€'; };
+const ICON = { pos:'✓', warn:'!', neg:'×', neu:'–' };
+
+function forecast(k, yMin, yMax, step) {
+  const W = 680, pl = 56, pr = 100, pt = 16, pb = 28, H = 240;
+  const x = i => pl + i * (W - pl - pr) / 11, y = v => pt + (yMax - v) / (yMax - yMin) * (H - pt - pb);
+  const actual = [2850, 3120, 2640, 3010, 3380, 3284].map(v => v * k);
+  const med = [3284, 3050, 3300, 3520, 3700, 3840, 4050].map(v => v * k), b50 = [0, 250, 400, 520, 650, 780, 900].map(v => v * k), b80 = [0, 500, 800, 1050, 1300, 1550, 1800].map(v => v * k);
+  const line = pts => pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ');
+  const band = b => line(med.map((v, i) => [x(i + 5), y(v + b[i])]).concat(med.map((v, i) => [x(i + 5), y(v - b[i])]).reverse())) + ' Z';
+  let grid = ''; const yLabels = [];
+  for (let v = yMin; v <= yMax; v += step) { grid += `M${pl} ${y(v)} L${W - pr + 8} ${y(v)} `; yLabels.push({ y: y(v), t: eur(v, 0) }); }
+  const months = ['Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May'];
+  const xLabels = months.map((t, i) => ({ x: x(i), t }));
+  return { grid, yLabels, xLabels, xLabelsSparse: xLabels.filter((_, i) => i % 2 === 1), actual: line(actual.map((v, i) => [x(i), y(v)])), median: line(med.map((v, i) => [x(i + 5), y(v)])), band50: band(b50), band80: band(b80), todayX: x(5), todayY: y(actual[5]), endX: x(11) + 8, medY: y(med[6]), hi50Y: y(med[6] + b50[6]) + 2, hi80Y: y(med[6] + b80[6]) + 6, medLabel: eur(Math.round(med[6] / 10) * 10, 0) + ' likely' };
+}
+const FC = forecast(1, 1000, 6000, 1000), JFC = forecast(0.6, 0, 3600, 1200);
+const BUDGET = [
+  { cat:'Groceries', budget:450, real:312.40, usual:398, variable:true },
+  { cat:'Dining out', budget:150, real:128.90, usual:120, variable:true },
+  { cat:'Transport', budget:120, real:64.20, usual:95, variable:true },
+  { cat:'Clothing', budget:100, real:134.50, usual:70, variable:true },
+  { cat:'Hobbies', budget:80, real:71.00, usual:60, variable:true },
+  { cat:'Gifts', budget:null, real:45.00, usual:30 }
+];
+function budgetRows(fixClothing) {
+  return BUDGET.map(r0 => {
+    const r = fixClothing && r0.cat === 'Clothing' ? { ...r0, budget: 135 } : r0;
+    const scale = 78; let o = { cat: r.cat };
+    if (r.budget == null) return { ...o, trackW:'0%', fillW: (r.real / 150 * scale) + '%', fill:'var(--neutral-tint)', fillB:'1px solid var(--border-strong)', usualL: (r.usual / 150 * scale) + '%', label: eur(r.real, 0) + ' spent', si: ICON.neu, sw:'No budget set', sc:'var(--ink-soft)' };
+    const pct = r.real / r.budget, left = r.budget - r.real;
+    o = { ...o, trackW: scale + '%', fillW: Math.min(pct * scale, 100) + '%', fillB:'none', usualL: (r.usual / r.budget * scale) + '%', label: `${eur(r.real, 0)} of ${eur(r.budget, 0)}` };
+    if (pct > 1) return { ...o, fill:'var(--negative)', si: ICON.neg, sw:`Over by ${eur(-left, 0)}`, sc:'var(--negative)' };
+    if (r.variable && pct >= .8) return { ...o, fill:'var(--warning)', si: ICON.warn, sw:`Close to limit · ${eur(left, 0)} left`, sc:'var(--warning-ink)' };
+    return { ...o, fill:'var(--positive)', si: ICON.pos, sw:`On track · ${eur(left, 0)} left`, sc:'var(--positive)' };
+  });
+}
+const CAT = { Groceries:1, Income:4, Utilities:3, Household:7, 'Dining out':2, Investments:0, Clothing:5, Transport:6, Rent:3, Insurance:7 };
+const ROWS = [
+  ['19.11.', 'REWE Markt', 'Groceries', 'Girokonto', -64.18],
+  ['18.11.', 'Salary · Müller & Partner', 'Income', 'Girokonto', 3420],
+  ['18.11.', 'Stadtwerke', 'Utilities', 'Girokonto', -86],
+  ['16.11.', 'Trattoria Da Enzo', 'Dining out', 'Kreditkarte', -48.5],
+  ['15.11.', 'ETF savings plan · FTSE All-World', 'Investments', 'Depot', -500],
+  ['13.11.', 'Zalando', 'Clothing', 'Kreditkarte', -89.9]
+];
+const tabsFor = labels => labels.map((label, i) => ({ label, key: '⌘' + (i + 1), bg: i === 0 ? 'var(--surface)' : 'transparent', sh: i === 0 ? '0 1px 2px rgba(15,23,42,.12)' : 'none', fg: i === 0 ? 'var(--ink)' : 'var(--ink-soft)', w: i === 0 ? 600 : 500 }));
+const C = BASE.light.chart.map((_, i) => `var(--chart-${i + 1})`);
+
+class Component extends DCLogic {
+  renderVals() {
+    const allClear = this.props.attention === 'all clear';
+    const compact = this.props.rowDensity === 'compact';
+    const att = allClear
+      ? { bg:'var(--positive-tint)', fg:'var(--positive)', icon:'✓', badge:'All on track', title:'Nothing needs your attention.', text:'Every budget is within its limit this month.', hasAction:false }
+      : { bg:'var(--negative-tint)', fg:'var(--negative)', icon:'×', badge:'Over budget', title:'Clothing is 34,50 € over its 100 € budget.', text:'Transport has 55,80 € left — moving 35 € covers it. Everything else is on track.', hasAction:true };
+    return {
+      modes: [
+        { id:'C1', label:'Personal · light (default)', vars: toVars(BASE.light) },
+        { id:'C2', label:'Personal · dark', vars: toVars(BASE.dark) }
+      ],
+      jointVars: toVars(BASE.light),
+      att, fc: FC, jfc: JFC, budget: budgetRows(allClear), rowH: (compact ? 32 : 36) + 'px',
+      tabs: tabsFor(['Overview', 'Transactions', 'Calendar', 'Forecast', 'Net worth', 'Settings']),
+      jointTabs: tabsFor(['Overview', 'Transactions', 'Calendar', 'Forecast']),
+      dropdowns: [{ k:'Month', v:'November' }, { k:'Year', v:'2026' }, { k:'Profile', v:'Personal' }],
+      kpiHero: [
+        ['Kept this month', eur(612, 0, true), '▲', 'var(--positive)', '148 € more than your usual month'],
+        ['Liquidity', eur(8420, 0), '–', 'var(--ink-soft)', 'Covers about 3,1 months of spending'],
+        ['Wealth built', eur(1050, 0, true), '▲', 'var(--positive)', '210 € more than your usual month']
+      ].map(([label, value, ci, cc, cmp]) => ({ label, value, ci, cc, cmp })),
+      kpiCompact: [['Balance', eur(3284, 0), '▲', '96 € above usual'], ['Cash in', eur(4180, 0), '=', 'About the same as usual'], ['Cash out', eur(-3568, 0), '▼', '92 € less than usual']].map(([label, value, ci, cmp]) => ({ label, value, ci, cmp })),
+      goals: [
+        { name:'Emergency fund', amt:'6.400 € of 9.000 €', pct:'71%', fill:'var(--secondary)', note:'About 9 months to go', nc:'var(--ink-soft)' },
+        { name:'Holiday · Portugal', amt:'1.180 € of 1.500 €', pct:'79%', fill:'var(--secondary)', note:'On pace for June', nc:'var(--ink-soft)' },
+        { name:'New bike', amt:'1.200 € of 1.200 €', pct:'100%', fill:'var(--gold)', note:'★ Goal reached on 12.11.', nc:'var(--gold-ink)' }
+      ],
+      bills: [['21.11.', 'Rent · Wohnbau Süd', -1150], ['24.11.', 'Telekom Mobilfunk', -39.95], ['28.11.', 'Allianz Haftpflicht', -136.53], ['01.12.', 'Spotify Family', -17.99], ['02.12.', 'Fitnessstudio', -29.9]].map(([d, n, a]) => ({ d, n, a: eur(a) })),
+      rows: ROWS.map(([d, p, c, acc, a], i) => ({ d, p, c, acc, a: eur(a, 2, true), ac: a > 0 ? 'var(--positive)' : 'var(--ink)', dot: C[CAT[c]], chipBg: c === 'Investments' ? 'var(--invest-tint)' : 'var(--neutral-tint)', chipFg: c === 'Investments' ? 'var(--invest)' : 'var(--ink-soft)', bg: 'transparent' })),
+      jointKpi: [
+        { label:'In our shared account', value: eur(2140, 0), note:'Enough for this month’s remaining bills.' },
+        { label:'Spent together this month', value: eur(1868, 0), note:'About 40 € less than usual.' },
+        { label:'Bills still to pay', value: eur(310, 0), note:'3 bills before 1 December.' }
+      ],
+      jointBills: [['21.11.', 'Car insurance', -180], ['24.11.', 'Electricity', -86], ['30.11.', 'Home insurance', -44]].map(([d, n, a]) => ({ d, n, a: eur(a, 0) })),
+      jointRows: [
+        ['19.11.', 'REWE Markt', 'Groceries', -64.18], ['17.11.', 'IKEA', 'Household', -129], ['16.11.', 'Trattoria Da Enzo', 'Dining out', -48.5], ['15.11.', 'Monthly transfer · Josué', 'Income', 900], ['15.11.', 'Monthly transfer · partner', 'Income', 900]
+      ].map(([d, p, c, a]) => ({ d, p, c, a: eur(a, 2, true), ac: a > 0 ? 'var(--positive)' : 'var(--ink)', dot: C[CAT[c]] }))
+    };
+  }
+}
+</script>
+</body>
+</html>

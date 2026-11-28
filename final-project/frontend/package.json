@@ -1,0 +1,77 @@
+{
+  "name": "centwise-final-project",
+  "version": "1.0.0",
+  "description": "Centwise Final Project — local personal finance app",
+  "main": "main.js",
+  "private": true,
+  "author": "Centwise Final Project",
+  "scripts": {
+    "dev": "concurrently -k -n vite,electron -c blue,green \"vite --port 5173 --strictPort\" \"wait-on tcp:127.0.0.1:5173 && electron . --dev\"",
+    "build": "tsc --noEmit && vite build",
+    "start": "npm run build && electron .",
+    "typecheck": "tsc --noEmit"
+  },
+  "build": {
+    "appId": "io.centwise.final-project",
+    "productName": "Centwise Final Project",
+    "copyright": "Centwise Final Project",
+    "directories": {
+      "buildResources": "../assets"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "dist/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../backend/dist/centwise-final-project-backend",
+        "to": "backend",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "mac": {
+      "category": "public.app-category.finance",
+      "icon": "../assets/icon.icns",
+      "target": [
+        {
+          "target": "dir",
+          "arch": [
+            "arm64"
+          ]
+        }
+      ],
+      "darkModeSupport": true,
+      "identity": null,
+      "extendInfo": {
+        "NSCalendarsFullAccessUsageDescription": "Centwise Final Project shows your calendar events next to your money dates, and adds your money dates to its own Centwise calendars.",
+        "NSCalendarsUsageDescription": "Centwise Final Project shows your calendar events next to your money dates, and adds your money dates to its own Centwise calendars."
+      }
+    },
+    "asar": true
+  },
+  "devDependencies": {
+    "@tanstack/react-query": "^5.104.5",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^4.7.0",
+    "autoprefixer": "^10.6.1",
+    "concurrently": "^10.0.6",
+    "electron": "^33.4.11",
+    "electron-builder": "^26.15.3",
+    "lucide-react": "^1.61.0",
+    "playwright": "^1.64.1",
+    "postcss": "^8.5.31",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "recharts": "2.15",
+    "tailwindcss": "3.4",
+    "typescript": "5.6",
+    "vite": "^6.4.5",
+    "wait-on": "^9.5.1",
+    "zustand": "^5.0.15"
+  }
+}

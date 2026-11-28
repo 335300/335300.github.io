@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forecast</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<style>body{margin:0;background:#DDE2E9;-webkit-font-smoothing:antialiased}a{color:#24508F;text-decoration:none}a:hover{color:#183A6B;text-decoration:underline}</style>
+</helmet>
+<section style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Helvetica,Arial,sans-serif;font-variant-numeric:tabular-nums;padding:48px;display:flex;flex-direction:column;gap:24px">
+  <div style="display:flex;flex-direction:column;gap:6px;color:#1E293B">
+    <div style="font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#475569">Personal Centwise · Screens</div>
+    <h1 style="margin:0;font-size:28px;line-height:34px;font-weight:600">Forecast</h1>
+    <div style="display:flex;gap:16px;font-size:13px;flex-wrap:wrap"><a href="#F1">F1 Personal · light</a><a href="#F2">F2 Personal · dark</a><a href="#F3">F3 Joint · light</a><span style="color:#5E6E82">·</span><a href="Overview.dc.html">Overview</a><a href="Transactions.dc.html">Transactions</a><a href="Calendar.dc.html">Calendar</a><a href="Net worth.dc.html">Net worth</a><a href="Settings.dc.html">Settings</a><a href="Style Guide.dc.html">Style guide</a></div>
+  </div>
+  <div style="display:flex;gap:48px;flex-wrap:wrap;align-items:flex-start">
+
+  <sc-for list="{{ modes }}" as="m" hint-placeholder-count="2">
+  <div id="{{ m.id }}" style="display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;align-items:center;gap:10px"><span style="background:#1E293B;color:#FFFFFF;font-size:13px;font-weight:600;padding:3px 8px;border-radius:6px">{{ m.id }}</span><span style="font-size:15px;font-weight:600;color:#1E293B">{{ m.label }}</span></div>
+    <div data-screen-label="{{ m.label }}" style="{{ m.vars }}">
+    <div style="width:1440px;background:var(--bg);color:var(--ink);border-radius:12px;overflow:hidden;box-shadow:0 24px 64px rgba(15,23,42,.18);border:1px solid var(--border);position:relative">
+      <div style="height:28px;background:var(--surface);display:flex;align-items:center;gap:8px;padding:0 12px"><span style="width:12px;height:12px;border-radius:50%;background:#FF5F57"></span><span style="width:12px;height:12px;border-radius:50%;background:#FEBC2E"></span><span style="width:12px;height:12px;border-radius:50%;background:#28C840"></span></div>
+      <div style="position:sticky;top:0;z-index:3;background:var(--surface);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center;gap:20px;padding:0 24px">
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:24px;height:24px;border-radius:6px;background:var(--logo)"></span><span style="font-size:15px;font-weight:600">Centwise</span></div>
+        <nav aria-label="Main" style="display:flex;gap:2px;padding:3px;background:var(--neutral-tint);border-radius:8px">
+          <sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="6">
+            <a href="{{ tb.href }}" aria-current="{{ tb.cur }}" style="height:30px;padding:0 12px;border-radius:6px;background:{{ tb.bg }};box-shadow:{{ tb.sh }};color:{{ tb.fg }};font-size:13px;font-weight:{{ tb.w }};display:flex;align-items:center;gap:6px;text-decoration:none" style-hover="color:var(--ink);text-decoration:none">{{ tb.label }}<span style="font-size:12px;font-weight:500;color:var(--ink-muted)">{{ tb.key }}</span></a>
+          </sc-for>
+        </nav>
+        <div style="flex:1"></div>
+        <sc-for list="{{ dropdowns }}" as="dd" hint-placeholder-count="3">
+          <button style="height:32px;padding:0 10px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;cursor:pointer" style-hover="background:var(--neutral-tint)"><span style="color:var(--ink-muted);font-size:12px">{{ dd.k }}</span>{{ dd.v }}<span aria-hidden="true" style="font-size:10px;color:var(--ink-soft)">▼</span></button>
+        </sc-for>
+      </div>
+
+      <div style="padding:24px 32px 88px;display:flex;flex-direction:column;gap:20px">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px">
+          <div style="display:flex;flex-direction:column;gap:2px"><h2 style="margin:0;font-size:22px;line-height:28px;font-weight:600">Forecast</h2><span style="font-size:13px;color:var(--ink-soft)">Next 12 months · from 24 months of history, your budgets and planned bills · tracking starts January 2025 <a href="#" style="font-weight:500;color:var(--primary)">Change</a></span></div>
+          <div style="display:flex;gap:8px">
+            <button style="height:32px;padding:0 14px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:500;cursor:pointer" style-hover="background:var(--neutral-tint)">Income settings</button>
+            <button style="height:32px;padding:0 14px;border-radius:6px;border:none;background:var(--primary);color:var(--on-primary);font:inherit;font-size:13px;font-weight:600;cursor:pointer" style-hover="background:var(--primary-hover)">Add goal</button>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px">
+          <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="3">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:20px;display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:13px;font-weight:500;color:var(--ink-soft)">{{ k.label }}</span><button aria-label="{{ k.help }}" style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;color:var(--ink-muted);border:none;background:transparent;padding:0;cursor:pointer"><span style="width:14px;height:14px;border-radius:50%;border:1.5px solid currentColor;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;line-height:1">i</span></button></div>
+              <span style="font-size:28px;line-height:34px;font-weight:600;letter-spacing:-.01em">{{ k.value }}</span>
+              <span style="font-size:13px;line-height:18px;color:var(--ink-soft)">{{ k.note }}</span>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:16px 20px 20px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+            <span style="font-size:16px;line-height:22px;font-weight:600">Projected balance — next 12 months</span>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;cursor:pointer"><input type="checkbox" role="switch" checked="{{ goalsOn }}" onChange="{{ toggleGoals }}" style="width:16px;height:16px;margin:0;accent-color:var(--primary)">Include goal purchases</label>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:2px">
+            <span style="font-size:15px;line-height:21px;font-weight:600">{{ fc.sentence }}</span>
+            <span style="font-size:13px;color:var(--ink-soft)">{{ fc.sub }}</span>
+          </div>
+          <svg viewBox="0 0 1300 300" role="img" aria-label="{{ fc.sentence }}" style="width:100%;height:auto;display:block;overflow:visible">
+            <path d="{{ fc.grid }}" style="stroke:var(--border);stroke-width:1;fill:none"></path>
+            <path d="{{ fc.band80 }}" style="fill:var(--band80);stroke:none"></path>
+            <path d="{{ fc.band50 }}" style="fill:var(--band50);stroke:none"></path>
+            <line x1="{{ fc.todayX }}" x2="{{ fc.todayX }}" y1="16" y2="268" style="stroke:var(--ink-soft);stroke-width:1"></line>
+            <text x="{{ fc.todayX }}" y="10" text-anchor="middle" style="fill:var(--ink-soft);font-size:12px;font-weight:600">Today</text>
+            <path d="{{ fc.actual }}" style="fill:none;stroke:var(--ink);stroke-width:2;stroke-linejoin:round;stroke-linecap:round"></path>
+            <path d="{{ fc.median }}" style="fill:none;stroke:var(--primary);stroke-width:2;stroke-dasharray:6 4;stroke-linecap:round;stroke-linejoin:round"></path>
+            <circle cx="{{ fc.todayX }}" cy="{{ fc.todayY }}" r="4" style="fill:var(--surface);stroke:var(--ink);stroke-width:2"></circle>
+            <sc-if value="{{ fc.showGoal }}" hint-placeholder-val="{{ true }}">
+              <rect x="{{ fc.goalX }}" y="{{ fc.goalY }}" width="10" height="10" transform="{{ fc.goalRot }}" style="fill:var(--surface);stroke:var(--primary);stroke-width:2"></rect>
+              <text x="{{ fc.goalLX }}" y="{{ fc.goalLY }}" text-anchor="middle" style="fill:var(--ink-soft);font-size:12px;font-weight:600">Holiday · Portugal −1.500 €</text>
+            </sc-if>
+            <sc-for list="{{ fc.yLabels }}" as="yl" hint-placeholder-count="7"><text x="56" y="{{ yl.y }}" text-anchor="end" dominant-baseline="middle" style="fill:var(--ink-muted);font-size:12px;font-weight:500">{{ yl.t }}</text></sc-for>
+            <sc-for list="{{ fc.xLabels }}" as="xl" hint-placeholder-count="18"><text x="{{ xl.x }}" y="290" text-anchor="middle" style="fill:var(--ink-muted);font-size:12px;font-weight:500">{{ xl.t }}</text></sc-for>
+            <text x="{{ fc.endX }}" y="{{ fc.medY }}" dominant-baseline="middle" style="fill:var(--primary);font-size:12px;font-weight:600">{{ fc.medLabel }}</text>
+            <text x="{{ fc.endX }}" y="{{ fc.hi50Y }}" dominant-baseline="middle" style="fill:var(--ink-soft);font-size:12px;font-weight:500">50% range</text>
+            <text x="{{ fc.endX }}" y="{{ fc.hi80Y }}" dominant-baseline="middle" style="fill:var(--ink-soft);font-size:12px;font-weight:500">80% range</text>
+          </svg>
+          <div style="display:flex;align-items:center;gap:16px;padding:12px 16px;border-radius:8px;background:var(--bg);border:1px solid var(--border)">
+            <span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 8px 0 5px;border-radius:6px;background:{{ fc.cBg }};color:{{ fc.cFg }};font-size:12px;font-weight:var(--w-sm);flex:none"><span aria-hidden="true" style="width:14px;height:14px;border-radius:50%;border:1.5px solid currentColor;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;line-height:1">{{ fc.cIcon }}</span>{{ fc.cBadge }}</span>
+            <span style="font-size:14px;line-height:20px;flex:1"><b style="font-weight:600">{{ fc.cTitle }}</b> <span style="color:var(--ink-soft)">{{ fc.cText }}</span></span>
+            <sc-if value="{{ fc.cAction }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;gap:8px;flex:none"><button style="height:32px;padding:0 12px;border-radius:6px;border:none;background:transparent;color:var(--ink-soft);font:inherit;font-size:13px;font-weight:500;cursor:pointer" style-hover="background:var(--neutral-tint)">Keep as is</button><button style="height:32px;padding:0 14px;border-radius:6px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:500;cursor:pointer" style-hover="background:var(--neutral-tint)">Plan 50 € more a month</button></div>
+            </sc-if>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:16px;align-items:start">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);overflow:hidden">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;padding:16px 20px 8px"><span style="font-size:16px;line-height:22px;font-weight:600">Month by month</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted)">most likely figures · balance at month end</span></div>
+            <div style="display:grid;grid-template-columns:90px repeat(5,minmax(0,1fr)) minmax(0,1.3fr);gap:12px;padding:0 20px;height:32px;align-items:center;border-bottom:1px solid var(--border-strong);font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)"><span>Month</span><span style="text-align:right">Cash in</span><span style="text-align:right">Costs</span><span style="text-align:right">Investments</span><span style="text-align:right">Kept</span><span style="text-align:right">Balance</span><span style="text-align:right">8 in 10 between</span></div>
+            <sc-for list="{{ months }}" as="r" hint-placeholder-count="12">
+              <div style="display:grid;grid-template-columns:90px repeat(5,minmax(0,1fr)) minmax(0,1.3fr);gap:12px;padding:0 20px;height:{{ rowH }};align-items:center;border-bottom:1px solid var(--border);font-size:13px;font-weight:var(--w-table)" style-hover="background:var(--neutral-tint)">
+                <span style="display:flex;flex-direction:column;line-height:15px"><span style="font-weight:500">{{ r.m }}</span></span>
+                <span style="text-align:right">{{ r.inc }}</span>
+                <span style="text-align:right;display:flex;justify-content:flex-end;gap:6px;align-items:center"><sc-if value="{{ r.hasNote }}" hint-placeholder-val="{{ false }}"><span title="{{ r.note }}" style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft);border:1px solid var(--border-strong);border-radius:6px;padding:0 5px;line-height:17px">{{ r.note }}</span></sc-if>{{ r.cost }}</span>
+                <span style="text-align:right;color:var(--invest)">{{ r.inv }}</span>
+                <span style="text-align:right;color:{{ r.kc }}">{{ r.kept }}</span>
+                <span style="text-align:right;font-weight:600">{{ r.bal }}</span>
+                <span style="text-align:right;color:var(--ink-soft)">{{ r.range }}</span>
+              </div>
+            </sc-for>
+            <div style="display:grid;grid-template-columns:90px repeat(5,minmax(0,1fr)) minmax(0,1.3fr);gap:12px;padding:0 20px;height:40px;align-items:center;font-size:13px;font-weight:600"><span>12 months</span><span style="text-align:right">{{ tot.inc }}</span><span style="text-align:right">{{ tot.cost }}</span><span style="text-align:right;color:var(--invest)">{{ tot.inv }}</span><span style="text-align:right">{{ tot.kept }}</span><span></span><span></span></div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:16px 20px 20px;display:flex;flex-direction:column;gap:16px">
+              <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:16px;line-height:22px;font-weight:600">Savings goals</span><button style="height:28px;padding:0 8px;border-radius:6px;border:none;background:transparent;color:var(--primary);font:inherit;font-size:13px;font-weight:500;cursor:pointer" style-hover="background:var(--primary-tint)">+ Goal</button></div>
+              <sc-for list="{{ goals }}" as="g" hint-placeholder-count="4">
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:13px"><span style="font-weight:600;display:flex;gap:6px;align-items:center">{{ g.name }}<sc-if value="{{ g.together }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft);background:var(--neutral-tint);border-radius:999px;padding:0 7px;line-height:18px">Together</span></sc-if></span><span style="color:var(--ink-soft)">{{ g.amt }}</span></div>
+                  <div role="progressbar" aria-label="{{ g.name }}" aria-valuenow="{{ g.pctN }}" aria-valuemin="0" aria-valuemax="100" style="height:8px;border-radius:999px;background:var(--track);overflow:hidden"><div style="height:100%;width:{{ g.pct }};background:{{ g.fill }};border-radius:999px"></div></div>
+                  <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:var(--w-sm)"><span style="color:{{ g.nc }}">{{ g.note }}</span><span style="color:var(--ink-soft)">{{ g.pct }}</span></div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);display:flex;flex-direction:column">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;padding:16px 20px 8px"><span style="font-size:16px;line-height:22px;font-weight:600">Income calendar</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted)">payslips</span></div>
+              <div style="display:grid;grid-template-columns:minmax(0,1fr) 84px 84px 64px;gap:8px;padding:0 20px;height:28px;align-items:center;border-bottom:1px solid var(--border-strong);font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)"><span>Month worked</span><span style="text-align:right">Gross</span><span style="text-align:right">Net</span><span style="text-align:right">Paid in</span></div>
+              <sc-for list="{{ payslips }}" as="p" hint-placeholder-count="4">
+                <div style="display:grid;grid-template-columns:minmax(0,1fr) 84px 84px 64px;gap:8px;padding:0 20px;height:36px;align-items:center;border-bottom:1px solid var(--border);font-size:13px;color:{{ p.c }};font-style:{{ p.fs }}"><span>{{ p.m }}</span><span style="text-align:right">{{ p.g }}</span><span style="text-align:right">{{ p.n }}</span><span style="text-align:right;color:var(--ink-soft)">{{ p.d }}</span></div>
+              </sc-for>
+              <span style="padding:10px 20px 16px;font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">Italic = expected. Net pay follows the 2026 payroll rules for a working student; 2027 values are added in January.</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);overflow:hidden">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 20px 8px;gap:12px">
+            <div style="display:flex;align-items:baseline;gap:12px"><span style="font-size:16px;line-height:22px;font-weight:600">Plan by month</span><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted)">grey italic = filled in for you · ↺ = typed by hand</span></div>
+            <div role="group" aria-label="Show budgets as" style="display:flex;gap:2px;padding:3px;background:var(--neutral-tint);border-radius:8px"><button aria-pressed="true" style="height:26px;padding:0 10px;border-radius:6px;border:none;background:var(--surface);box-shadow:0 1px 2px rgba(15,23,42,.12);color:var(--ink);font:inherit;font-size:13px;font-weight:600">Euros</button><button aria-pressed="false" style="height:26px;padding:0 10px;border-radius:6px;border:none;background:transparent;color:var(--ink-soft);font:inherit;font-size:13px;font-weight:500;cursor:pointer">Share of income</button></div>
+          </div>
+          <div style="display:grid;grid-template-columns:minmax(0,1.4fr) repeat(6,minmax(0,1fr));gap:12px;padding:0 20px;height:32px;align-items:center;border-bottom:1px solid var(--border-strong);font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)"><span>Category</span><sc-for list="{{ gridMonths }}" as="gm" hint-placeholder-count="6"><span style="text-align:right">{{ gm }}</span></sc-for></div>
+          <sc-for list="{{ grid }}" as="sec" hint-placeholder-count="4">
+            <div style="padding:0 20px;height:28px;display:flex;align-items:center;background:var(--bg);border-bottom:1px solid var(--border);font-size:12px;font-weight:var(--w-sm);color:var(--ink-soft)">{{ sec.t }}</div>
+            <sc-for list="{{ sec.rows }}" as="r" hint-placeholder-count="3">
+              <div style="display:grid;grid-template-columns:minmax(0,1.4fr) repeat(6,minmax(0,1fr));gap:12px;padding:0 20px;height:{{ rowH }};align-items:center;border-bottom:1px solid var(--border);font-size:13px">
+                <span style="display:flex;align-items:center;gap:8px"><span style="width:8px;height:8px;border-radius:50%;background:{{ r.dot }}"></span>{{ r.n }}<sc-if value="{{ r.hasHint }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;font-weight:var(--w-sm);color:var(--ink-muted)">{{ r.hint }}</span></sc-if></span>
+                <sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="6"><span style="text-align:right;color:{{ c.c }};font-style:{{ c.fs }};padding:4px 6px;border-radius:6px;box-shadow:{{ c.ring }};background:{{ c.bg }}">{{ c.v }}</span></sc-for>
+              </div>
+            </sc-for>
+          </sc-for>
+          <div style="display:grid;grid-template-columns:minmax(0,1.4fr) repeat(6,minmax(0,1fr));gap:12px;padding:0 20px;height:40px;align-items:center;font-size:13px;font-weight:600;border-top:1px solid var(--border-strong)"><span>Planned kept</span><sc-for list="{{ gridKept }}" as="k" hint-placeholder-count="6"><span style="text-align:right;padding:0 6px">{{ k }}</span></sc-for></div>
+          <div style="padding:10px 20px 14px;font-size:13px;color:var(--ink-soft)">The forecast above uses your real spending history as well as this plan, so it is a little more careful than the plan.</div>
+        </div>
+      </div>
+      <button aria-label="Calculator (⌘K)" title="Calculator (⌘K)" style="position:absolute;right:24px;bottom:24px;width:48px;height:48px;border-radius:999px;border:none;background:var(--primary);color:var(--on-primary);font:inherit;font-size:20px;font-weight:600;box-shadow:var(--shadow-pop);cursor:pointer" style-hover="background:var(--primary-hover)">±</button>
+    </div>
+    </div>
+  </div>
+  </sc-for>
+
+  <div id="F3" style="display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;align-items:center;gap:10px"><span style="background:#1E293B;color:#FFFFFF;font-size:13px;font-weight:600;padding:3px 8px;border-radius:6px">F3</span><span style="font-size:15px;font-weight:600;color:#1E293B">Joint profile · light · 14px minimum</span></div>
+    <div data-screen-label="Joint forecast" style="{{ jointVars }}">
+    <div style="width:1200px;background:var(--bg);color:var(--ink);border-radius:12px;overflow:hidden;box-shadow:0 24px 64px rgba(15,23,42,.18);border:1px solid var(--border)">
+      <div style="height:28px;background:var(--surface);display:flex;align-items:center;gap:8px;padding:0 12px"><span style="width:12px;height:12px;border-radius:50%;background:#FF5F57"></span><span style="width:12px;height:12px;border-radius:50%;background:#FEBC2E"></span><span style="width:12px;height:12px;border-radius:50%;background:#28C840"></span></div>
+      <div style="background:var(--surface);border-bottom:1px solid var(--border);height:64px;display:flex;align-items:center;gap:24px;padding:0 32px">
+        <div style="display:flex;align-items:center;gap:10px"><span style="width:28px;height:28px;border-radius:7px;background:var(--logo)"></span><span style="font-size:17px;font-weight:600">Centwise</span></div>
+        <nav aria-label="Main" style="display:flex;gap:2px;padding:3px;background:var(--neutral-tint);border-radius:10px">
+          <sc-for list="{{ jointTabs }}" as="tb" hint-placeholder-count="4">
+            <a href="{{ tb.href }}" aria-current="{{ tb.cur }}" style="height:38px;padding:0 18px;border-radius:8px;background:{{ tb.bg }};box-shadow:{{ tb.sh }};color:{{ tb.fg }};font-size:15px;font-weight:{{ tb.w }};display:flex;align-items:center;text-decoration:none" style-hover="color:var(--ink);text-decoration:none">{{ tb.label }}</a>
+          </sc-for>
+        </nav>
+        <div style="flex:1"></div>
+        <button style="height:38px;padding:0 14px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:15px;font-weight:500;display:flex;align-items:center;gap:8px">November 2026<span aria-hidden="true" style="font-size:14px;color:var(--ink-soft)">▾</span></button>
+        <button style="height:38px;padding:0 14px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);font:inherit;font-size:15px;font-weight:500;display:flex;align-items:center;gap:8px">Joint<span aria-hidden="true" style="font-size:14px;color:var(--ink-soft)">▾</span></button>
+      </div>
+
+      <div style="padding:32px 40px 40px;display:flex;flex-direction:column;gap:24px">
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <span style="font-size:15px;color:var(--ink-soft)">What’s coming · next 6 months</span>
+          <h2 style="margin:0;font-size:32px;line-height:40px;font-weight:600">Our plan works: about 50 € is left over each month.</h2>
+          <span style="font-size:16px;line-height:24px;color:var(--ink-soft)">In 8 of 10 likely futures our shared account stays above 1.000 € until May.</span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px">
+          <sc-for list="{{ jointPlan }}" as="k" hint-placeholder-count="4">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:20px;display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:15px;font-weight:500;color:var(--ink-soft)">{{ k.label }}</span>
+              <span style="font-size:26px;line-height:32px;font-weight:600;color:{{ k.c }}">{{ k.value }}</span>
+              <span style="font-size:14px;line-height:20px;color:var(--ink-soft)">{{ k.note }}</span>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px;align-items:start">
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:20px 24px 24px;display:flex;flex-direction:column;gap:12px">
+              <span style="font-size:18px;line-height:24px;font-weight:600">Money in our shared account</span>
+              <svg viewBox="0 0 680 250" role="img" aria-label="Shared account balance: most likely about 2.190 euros in May, likely range 1.200 to 3.200 euros." style="width:100%;height:auto;display:block;overflow:visible">
+                <path d="{{ jfc.grid }}" style="stroke:var(--border);stroke-width:1;fill:none"></path>
+                <path d="{{ jfc.band80 }}" style="fill:var(--band80);stroke:none"></path>
+                <path d="{{ jfc.band50 }}" style="fill:var(--band50);stroke:none"></path>
+                <line x1="{{ jfc.todayX }}" x2="{{ jfc.todayX }}" y1="14" y2="212" style="stroke:var(--ink-soft);stroke-width:1"></line>
+                <text x="{{ jfc.todayX }}" y="8" text-anchor="middle" style="fill:var(--ink-soft);font-size:15px;font-weight:600">Today</text>
+                <path d="{{ jfc.actual }}" style="fill:none;stroke:var(--ink);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round"></path>
+                <path d="{{ jfc.median }}" style="fill:none;stroke:var(--primary);stroke-width:2.5;stroke-dasharray:7 5;stroke-linecap:round"></path>
+                <sc-for list="{{ jfc.yLabels }}" as="yl" hint-placeholder-count="4"><text x="48" y="{{ yl.y }}" text-anchor="end" dominant-baseline="middle" style="fill:var(--ink-muted);font-size:15px;font-weight:500">{{ yl.t }}</text></sc-for>
+                <sc-for list="{{ jfc.xLabels }}" as="xl" hint-placeholder-count="6"><text x="{{ xl.x }}" y="240" text-anchor="middle" style="fill:var(--ink-muted);font-size:15px;font-weight:500">{{ xl.t }}</text></sc-for>
+                <text x="{{ jfc.endX }}" y="{{ jfc.medY }}" dominant-baseline="middle" style="fill:var(--primary);font-size:15px;font-weight:600">{{ jfc.medLabel }}</text>
+              </svg>
+              <span style="font-size:14px;line-height:20px;color:var(--ink-soft)">Black line: what happened. Dashed line: most likely path. Shaded area: the range we’d expect.</span>
+            </div>
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);overflow:hidden">
+              <span style="display:block;font-size:18px;line-height:24px;font-weight:600;padding:20px 24px 8px">Month by month</span>
+              <div style="display:grid;grid-template-columns:minmax(0,1fr) repeat(4,minmax(0,1fr));gap:12px;padding:0 24px;height:40px;align-items:center;border-bottom:1px solid var(--border-strong);font-size:14px;font-weight:500;color:var(--ink-soft)"><span>Month</span><span style="text-align:right">We put in</span><span style="text-align:right">We spend</span><span style="text-align:right">For our goals</span><span style="text-align:right">In our pot after</span></div>
+              <sc-for list="{{ jointMonths }}" as="r" hint-placeholder-count="6">
+                <div style="display:grid;grid-template-columns:minmax(0,1fr) repeat(4,minmax(0,1fr));gap:12px;padding:0 24px;height:48px;align-items:center;border-bottom:1px solid var(--border);font-size:15px"><span style="font-weight:500">{{ r.m }}</span><span style="text-align:right;color:var(--positive)">{{ r.i }}</span><span style="text-align:right">{{ r.o }}</span><span style="text-align:right;color:var(--secondary)">{{ r.g }}</span><span style="text-align:right;font-weight:600">{{ r.b }}</span></div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);display:flex;flex-direction:column">
+              <span style="font-size:18px;line-height:24px;font-weight:600;padding:20px 24px 4px">What we pay each month</span>
+              <span style="font-size:14px;color:var(--ink-soft);padding:0 24px 8px">Usual amounts from the last 6 months.</span>
+              <div style="padding:0 24px">
+                <sc-for list="{{ jointCosts }}" as="b" hint-placeholder-count="8">
+                  <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;height:44px;border-bottom:1px solid var(--border);font-size:15px"><span style="display:flex;align-items:center;gap:8px"><span style="width:8px;height:8px;border-radius:50%;background:{{ b.dot }}"></span>{{ b.n }}</span><span style="text-align:right;font-weight:500">{{ b.a }}</span></div>
+                </sc-for>
+              </div>
+              <div style="padding:14px 24px 20px;display:flex;justify-content:space-between;font-size:15px;font-weight:600"><span>Together</span><span>1.650 €</span></div>
+            </div>
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:20px 24px 24px;display:flex;flex-direction:column;gap:10px">
+              <span style="font-size:18px;line-height:24px;font-weight:600">We buy</span>
+              <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:15px"><span style="font-weight:600">New sofa · March</span><span style="color:var(--ink-soft)">480 € of 1.200 €</span></div>
+              <div role="progressbar" aria-label="New sofa" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="height:10px;border-radius:999px;background:var(--track);overflow:hidden"><div style="height:100%;width:40%;background:var(--secondary);border-radius:999px"></div></div>
+              <span style="font-size:14px;line-height:20px;color:var(--ink-soft)">100 € a month gets us there on time — 50 € from each of us.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"rowDensity":{"editor":"enum","options":["comfortable","compact"],"default":"comfortable","tsType":"&#39;comfortable&#39;|&#39;compact&#39;"}}'>
+const BASE = {
+  light: { 'bg':'#F7F8FA','surface':'#FFFFFF','surface-raised':'#FFFFFF','border':'#E2E8F0','border-strong':'#7D8A9E','ink':'#1E293B','ink-soft':'#475569','ink-muted':'#5E6E82','primary':'#24508F','primary-hover':'#1D4278','primary-tint':'#EAF0F8','secondary':'#0F766E','secondary-tint':'#E6F4F1','positive':'#0F766E','positive-tint':'#E6F4F1','negative':'#B42318','negative-tint':'#FCEBE9','warning':'#B45309','warning-tint':'#FDF1E3','warning-ink':'#92400E','info':'#24508F','info-tint':'#EAF0F8','neutral-tint':'#F1F5F9','invest':'#7C4DBE','invest-tint':'#F1EBFA','gold':'#F2C14E','gold-ink':'#8A6100','logo':'#6D28D9','focus-ring':'#24508F','on-primary':'#FFFFFF','track':'#E2E8F0','shadow':'0 1px 2px rgba(15,23,42,.06)','shadow-pop':'0 8px 24px rgba(15,23,42,.12)','band50':'rgba(36,80,143,.24)','band80':'rgba(36,80,143,.12)','w-sm':'500','w-table':'400',
+    chart:['#24508F','#E69F00','#56B4E9','#009E73','#CC79A7','#D55E00','#8C6D31','#94A3B8'] },
+  dark: { 'bg':'#111827','surface':'#1A2332','surface-raised':'#222D3F','border':'#2A3546','border-strong':'#64748B','ink':'#E6EAF0','ink-soft':'#C8D1DC','ink-muted':'#AEB9C8','primary':'#9BBDF0','primary-hover':'#B4CDF4','primary-tint':'#1B2E4D','secondary':'#5ECDBB','secondary-tint':'#12352F','positive':'#5ECDBB','positive-tint':'#12352F','negative':'#F7A891','negative-tint':'#3D1F1A','warning':'#E8B04A','warning-tint':'#3A2A12','warning-ink':'#E8B04A','info':'#9BBDF0','info-tint':'#1B2E4D','neutral-tint':'#243042','invest':'#C3AEF0','invest-tint':'#2B2347','gold':'#F2C14E','gold-ink':'#F2C14E','logo':'#A78BFA','focus-ring':'#9BBDF0','on-primary':'#111827','track':'#334155','shadow':'none','shadow-pop':'none','band50':'rgba(155,189,240,.24)','band80':'rgba(155,189,240,.12)','w-sm':'600','w-table':'500',
+    chart:['#7AA7E6','#F0B640','#7CC8F0','#33C49A','#DE9AC2','#F08A4B','#C9A86A','#8D9AAD'] }
+};
+function toVars(P) { const v = {}; Object.keys(P).forEach(k => { if (k !== 'chart') v['--' + k] = P[k]; }); P.chart.forEach((c, i) => v['--chart-' + (i + 1)] = c); return v; }
+const eur = (n, dec = 2, sign = false) => { if (n == null) return '—'; const s = Math.abs(n).toLocaleString('de-DE', { minimumFractionDigits: dec, maximumFractionDigits: dec }); return (n < 0 ? '−' : (sign && n > 0 ? '+' : '')) + s + ' €'; };
+const num = (n, dec = 0) => Math.abs(n).toLocaleString('de-DE', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+const PAGES = ['Overview.dc.html', 'Transactions.dc.html', 'Calendar.dc.html', 'Forecast.dc.html', 'Net worth.dc.html', 'Settings.dc.html'];
+const tabsFor = (labels, active) => labels.map((label, i) => ({ label, key: '⌘' + (i + 1), href: PAGES[i], cur: i === active ? 'page' : 'false', bg: i === active ? 'var(--surface)' : 'transparent', sh: i === active ? '0 1px 2px rgba(15,23,42,.12)' : 'none', fg: i === active ? 'var(--ink)' : 'var(--ink-soft)', w: i === active ? 600 : 500 }));
+const C = BASE.light.chart.map((_, i) => `var(--chart-${i + 1})`);
+const line = pts => pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ');
+
+// 12 forecast months: Dec 2026 … Nov 2027. Balance change = kept (goal saving only earmarks money).
+const FMONTHS = ['Dec 2026', 'Jan 2027', 'Feb 2027', 'Mar 2027', 'Apr 2027', 'May 2027', 'Jun 2027', 'Jul 2027', 'Aug 2027', 'Sep 2027', 'Oct 2027', 'Nov 2027'];
+const KEPT = [-234, 250, 220, 180, 140, 210, 610, 240, 260, 200, 230, 260];
+const GOAL_BUY = { 6: 1500 };
+const B80 = [0, 500, 800, 1050, 1300, 1550, 1800, 1950, 2100, 2250, 2400, 2550, 2700];
+const B50 = [0, 250, 400, 520, 650, 780, 900, 980, 1050, 1120, 1200, 1280, 1350];
+const START = 3284, INCOME = 4180, INVEST = 500;
+
+function plan(goalsOn) {
+  let bal = START; const med = [START];
+  const rows = FMONTHS.map((m, i) => {
+    const buy = goalsOn ? (GOAL_BUY[i] || 0) : 0;
+    const kept = KEPT[i] - buy; bal += kept; med.push(bal);
+    const cost = INCOME - INVEST - kept;
+    return { m, kept, cost, bal, lo: bal - B80[i + 1], hi: bal + B80[i + 1], buy };
+  });
+  return { med, rows };
+}
+function chart(med, goalsOn) {
+  const W = 1300, pl = 64, pr = 110, pt = 20, H = 300, pb = 32, yMin = 0, yMax = 9000, step = 1500;
+  const n = 18, x = i => pl + i * (W - pl - pr) / (n - 1), y = v => pt + (yMax - v) / (yMax - yMin) * (H - pt - pb);
+  const actual = [2850, 3120, 2640, 3010, 3380, START];
+  const band = b => line(med.map((v, i) => [x(i + 5), y(v + b[i])]).concat(med.map((v, i) => [x(i + 5), y(Math.max(0, v - b[i]))]).reverse())) + ' Z';
+  let grid = ''; const yLabels = [];
+  for (let v = yMin; v <= yMax; v += step) { grid += `M${pl} ${y(v).toFixed(1)} L${W - pr + 8} ${y(v).toFixed(1)} `; yLabels.push({ y: y(v), t: eur(v, 0) }); }
+  const labels = ['Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan ’27', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'];
+  const gx = x(12), gy = y(med[7]);
+  return { grid, yLabels, xLabels: labels.map((t, i) => ({ x: x(i), t })),
+    actual: line(actual.map((v, i) => [x(i), y(v)])), median: line(med.map((v, i) => [x(i + 5), y(v)])),
+    band50: band(B50), band80: band(B80), todayX: x(5), todayY: y(START), endX: x(17) + 10,
+    medY: y(med[12]), hi50Y: y(med[12] + B50[12]) + 2, hi80Y: y(med[12] + B80[12]) + 6,
+    medLabel: eur(med[12], 0) + ' likely',
+    showGoal: goalsOn, goalX: gx - 5, goalY: gy - 5, goalRot: `rotate(45 ${gx} ${gy})`, goalLX: gx, goalLY: gy + 26 };
+}
+function jointChart() {
+  const W = 680, pl = 56, pr = 110, pt = 16, pb = 28, H = 240, yMin = 0, yMax = 3600, step = 1200;
+  const x = i => pl + i * (W - pl - pr) / 11, y = v => pt + (yMax - v) / (yMax - yMin) * (H - pt - pb);
+  const actual = [1710, 1870, 1585, 1810, 2030, 2140];
+  const med = [2140, 1940, 1990, 2040, 2090, 2140, 2190], b50 = [0, 150, 240, 310, 390, 470, 540], b80 = [0, 300, 480, 630, 780, 930, 1000];
+  const band = b => line(med.map((v, i) => [x(i + 5), y(v + b[i])]).concat(med.map((v, i) => [x(i + 5), y(v - b[i])]).reverse())) + ' Z';
+  let grid = ''; const yLabels = [];
+  for (let v = yMin; v <= yMax; v += step) { grid += `M${pl} ${y(v)} L${W - pr + 8} ${y(v)} `; yLabels.push({ y: y(v), t: eur(v, 0) }); }
+  const months = ['Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May'];
+  return { grid, yLabels, xLabels: months.map((t, i) => ({ x: x(i), t })).filter((_, i) => i % 2 === 1), actual: line(actual.map((v, i) => [x(i), y(v)])), median: line(med.map((v, i) => [x(i + 5), y(v)])), band50: band(b50), band80: band(b80), todayX: x(5), endX: x(11) + 10, medY: y(med[6]), medLabel: eur(med[6], 0) + ' likely' };
+}
+const GRID_MONTHS = ['Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May'];
+const FULL = { 'Dec 2026':'December', 'Jan 2027':'January', 'Feb 2027':'February', 'Mar 2027':'March', 'Apr 2027':'April', 'May 2027':'May 2027', 'Jun 2027':'June 2027', 'Jul 2027':'July 2027', 'Aug 2027':'August 2027', 'Sep 2027':'September 2027', 'Oct 2027':'October 2027', 'Nov 2027':'November 2027' };
+const CAT = { Salary:4, 'Side income':4,Rent:3, 'Transfer to Joint':7, 'Phone & broadcasting':3, Utilities:3, Subscriptions:3, Groceries:1, 'Dining out':2, Transport:6, Clothing:5, Hobbies:4, Gifts:4, 'ETF savings plan':0 };
+
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { goals: true }; }
+  renderVals() {
+    const goalsOn = this.state.goals !== false;
+    const compact = this.props.rowDensity === 'compact';
+    const P = plan(goalsOn), ch = chart(P.med, goalsOn);
+    const lowest = P.rows.reduce((a, r) => (r.lo < a.lo ? r : a), P.rows[0]);
+    const fc = { ...ch,
+      sentence: `In 8 of 10 likely futures you stay above ${eur(Math.floor(lowest.lo / 100) * 100, 0)} for the next 12 months.`,
+      sub: goalsOn ? 'Includes buying the Portugal holiday in June (1.500 €) from your goal money.' : 'Without goal purchases. Turn them on to see June after the holiday.',
+      cBg: goalsOn ? 'var(--info-tint)' : 'var(--positive-tint)', cFg: goalsOn ? 'var(--info)' : 'var(--positive)', cIcon: goalsOn ? 'i' : '✓', cBadge: goalsOn ? 'Worth knowing' : 'On track',
+      cTitle: `Tightest month: ${FULL[lowest.m]}.`,
+      cText: goalsOn ? `In the low case (1 in 10) the balance dips to about ${eur(Math.round(lowest.lo / 10) * 10, 0)}. Planning 50 € more a month until then lifts that to about ${eur(Math.round((lowest.lo + 350) / 10) * 10, 0)}.` : `Even in the low case the balance stays near ${eur(Math.round(lowest.lo / 10) * 10, 0)}. Nothing to do.`,
+      cAction: goalsOn };
+    const months = P.rows.map(r => ({ m: r.m, inc: eur(INCOME), cost: eur(-r.cost), inv: eur(-INVEST), kept: eur(r.kept, 2, true), kc: r.kept < 0 ? 'var(--ink)' : 'var(--positive)', bal: eur(r.bal), range: `${num(r.lo)}–${num(r.hi)} €`, hasNote: r.buy > 0 || r.m === 'Dec 2026', note: r.buy > 0 ? 'incl. holiday' : 'Christmas' }));
+    const sum = k => P.rows.reduce((s, r) => s + r[k], 0);
+    const cell = (v, opts = {}) => ({ v: v == null ? '—' : num(v, 2), c: opts.auto ? 'var(--ink-soft)' : 'var(--ink)', fs: opts.auto ? 'italic' : 'normal', ring: opts.edit ? 'inset 0 0 0 2px var(--focus-ring)' : 'none', bg: opts.hand ? 'var(--neutral-tint)' : 'transparent' });
+    const row = (n, vals, opts = {}) => ({ n, dot: C[CAT[n]], hasHint: !!opts.hint, hint: opts.hint || '', cells: vals.map((v, i) => cell(v, { auto: opts.auto, edit: opts.edit === i, hand: opts.hand === i })) });
+    const six = v => [v, v, v, v, v, v];
+    const grid = [
+      { t: 'Income', rows: [row('Salary', six(3420), { auto: true, hint: 'follows the income calendar' }), row('Side income', six(760))] },
+      { t: 'Fixed costs', rows: [row('Rent', six(1150)), row('Transfer to Joint', six(900), { auto: true, hint: 'follows the Joint plan' }), row('Phone & broadcasting', six(58.31)), row('Utilities', six(86)), row('Subscriptions', six(47.89))] },
+      { t: 'Variable costs', rows: [row('Groceries', six(450)), row('Dining out', [220, 150, 150, 150, 150, 150], { hand: 0, hint: '↺' }), row('Transport', six(120)), row('Clothing', six(135), { edit: 1 }), row('Gifts', [350, 30, 30, 30, 30, 30])] },
+      { t: 'Investments', rows: [row('ETF savings plan', six(500))] }
+    ];
+    const gridKept = GRID_MONTHS.map((_, i) => {
+      const out = 1150 + 900 + 58.31 + 86 + 47.89 + 450 + (i === 0 ? 220 : 150) + 120 + 135 + (i === 0 ? 350 : 30) + 500;
+      return eur(INCOME - out, 2, true);
+    });
+    return {
+      modes: [
+        { id:'F1', label:'Personal · light (default)', vars: toVars(BASE.light) },
+        { id:'F2', label:'Personal · dark', vars: toVars(BASE.dark) }
+      ],
+      jointVars: toVars(BASE.light),
+      tabs: tabsFor(['Overview', 'Transactions', 'Calendar', 'Forecast', 'Net worth', 'Settings'], 3),
+      jointTabs: tabsFor(['Overview', 'Transactions', 'Calendar', 'Forecast'], 3),
+      dropdowns: [{ k:'Month', v:'November' }, { k:'Year', v:'2026' }, { k:'Profile', v:'Personal' }],
+      rowH: (compact ? 32 : 36) + 'px',
+      kpis: [
+        { label:'Lowest point', value: eur(Math.min(...P.med.slice(1)), 0), note: 'December · most likely month-end balance', help:'About the lowest point' },
+        { label:'Free to use · lowest', value: eur(1240, 0), note: 'After bills and money set aside for goals', help:'About free to use' },
+        { label:'Expected per month', value: eur(Math.round(KEPT.reduce((a, b) => a + b, 0) / 12), 0, true), note: 'Kept on average, before goal purchases', help:'About expected per month' }
+      ],
+      goalsOn, toggleGoals: () => this.setState({ goals: !goalsOn }),
+      fc, months,
+      tot: { inc: eur(INCOME * 12), cost: eur(-sum('cost')), inv: eur(-INVEST * 12), kept: eur(sum('kept'), 2, true) },
+      goals: [
+        { name:'Emergency fund', amt:'6.400 € of 9.000 €', pct:'71%', pctN:71, fill:'var(--secondary)', note:'300 € a month · ready in August 2027', nc:'var(--ink-soft)', together:false },
+        { name:'Holiday · Portugal', amt:'1.180 € of 1.500 €', pct:'79%', pctN:79, fill:'var(--secondary)', note:'Buy in June 2027 · on pace', nc:'var(--ink-soft)', together:false },
+        { name:'Sofa', amt:'480 € of 1.200 €', pct:'40%', pctN:40, fill:'var(--secondary)', note:'Your share: 50 € a month', nc:'var(--ink-soft)', together:true },
+        { name:'New bike', amt:'1.200 € of 1.200 €', pct:'100%', pctN:100, fill:'var(--gold)', note:'★ Goal reached on 12.11.', nc:'var(--gold-ink)', together:false }
+      ],
+      payslips: [
+        { m:'August 2026', g:'4.650,00', n:'3.398,12', d:'17.09.', c:'var(--ink)', fs:'normal' },
+        { m:'September 2026', g:'4.650,00', n:'3.398,12', d:'16.10.', c:'var(--ink)', fs:'normal' },
+        { m:'October 2026', g:'4.700,00', n:'3.420,00', d:'18.11.', c:'var(--ink)', fs:'normal' },
+        { m:'November 2026', g:'4.700,00', n:'3.420,00', d:'~18.12.', c:'var(--ink-soft)', fs:'italic' }
+      ],
+      gridMonths: GRID_MONTHS, grid, gridKept,
+      jfc: jointChart(),
+      jointPlan: [
+        { label:'Together each month', value: eur(1800, 0, true), c:'var(--positive)', note:'900 € from each of us.' },
+        { label:'Our costs', value: eur(-1650, 0), c:'var(--ink)', note:'Usual month. December is about 250 € more.' },
+        { label:'For our goals', value: eur(100, 0), c:'var(--ink)', note:'Set aside for the sofa.' },
+        { label:'In our pot after', value: eur(50, 0, true), c:'var(--positive)', note:'Left over in a usual month.' }
+      ],
+      jointCosts: [['Groceries', 520, 1], ['Car', 310, 6], ['Trips and presents', 236, 4], ['Eating out', 160, 2], ['Household', 140, 7], ['Electricity and heating', 140, 3], ['Insurance', 90, 5], ['Internet and streaming', 54, 0]].map(([n, a, ci]) => ({ n, a: eur(a, 0), dot: C[ci] })),
+      jointMonths: [['December', 1800, -1900, 100, 1940], ['January', 1800, -1650, 100, 1990], ['February', 1800, -1650, 100, 2040], ['March', 1800, -1650, 100, 2090], ['April', 1800, -1650, 100, 2140], ['May', 1800, -1650, 100, 2190]].map(([m, i, o, g, b]) => ({ m, i: eur(i, 0, true), o: eur(o, 0), g: eur(g, 0), b: eur(b, 0) }))
+    };
+  }
+}
+</script>
+</body>
+</html>
